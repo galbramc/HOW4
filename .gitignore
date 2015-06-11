@@ -2,3 +2,6 @@
 *.p2d
 *.p3d
 *.grm
+.project
+.pydevproject
+grid.in*
