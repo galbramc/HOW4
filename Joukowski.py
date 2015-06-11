@@ -4,7 +4,10 @@ from numpy import pi, sin, cos, tan, log10
 from scipy.interpolate import interp1d
 from scipy import integrate
 from scipy import optimize
-from plot3d import writePlot2D, writePlot3D
+from plot3d import writePlot2D, writePlot3D, writeOVERFLOW
+from grm import writeGRM
+from vtk import writeVTK
+from fec import writeFEC
 
 import pylab as pyl
 
@@ -33,7 +36,7 @@ def FindStretching(n, h_min, Hc):
     return guess;
     
 
-def make_airfoil(Dfarfield, ref, Q, TriFlag, farang=0.0, nchordwise=20,
+def make_airfoil(Dfarfield, ref, Q, TriFlag, FileFormat, farang=0.0, nchordwise=20,
                  nxwake=9, rxwakecenter=3.0, rxwakefary=0.35, nnormal=14,
                  rnormal=2.8, rnormalfar=3.0, TEfac=1.0, Ufac=1.0,
                  wakeangle=0.0, reynolds=1.e6, filename_base="Joukowski"):
@@ -218,9 +221,13 @@ def make_airfoil(Dfarfield, ref, Q, TriFlag, farang=0.0, nchordwise=20,
     #pyl.plot(XC,YC,'o')
     #pyl.show()
    
-    writePlot2D(filename_base + '_ref'+str(ref)+ '_Q'+str(Q)+'.p2d', XC, YC)
-    writePlot3D(filename_base + '_ref'+str(ref)+ '_Q'+str(Q)+'.p3d', XC, YC)
- 
+    if FileFormat == 'p2d':
+        writePlot2D(filename_base + '_ref'+str(ref)+ '_Q'+str(Q)+'.p2d', XC, YC)
+    if FileFormat == 'p3d':
+        writePlot3D(filename_base + '_ref'+str(ref)+ '_Q'+str(Q)+'.p3d', XC, YC)
+    if FileFormat == 'in':
+        writeOVERFLOW('grid.in.'+str(ref), XC, YC)
+    
     #--------------------#
     # Vertices, unrolled #
     #--------------------#
@@ -252,9 +259,11 @@ def make_airfoil(Dfarfield, ref, Q, TriFlag, farang=0.0, nchordwise=20,
     # write file    #
     #---------------#
 
-    #writeGRM(filename_base, ref, Q, E, V, nLE, NC, nWK, nWB, nr);
-    #writeVTK(filename_base, ref, Q, E, V);
-    #writeFEC(filename_base, ref, Q, E, V, nLE, NC, nWK, nWB, nr);
+    if FileFormat == 'grm':
+        writeGRM(filename_base, ref, Q, E, V, nLE, NC, nWK, nWB, nr);
+    if FileFormat == 'fec':
+        writeVTK(filename_base, ref, Q, E, V);
+        writeFEC(filename_base, ref, Q, E, V, nLE, NC, nWK, nWB, nr);
 
     return
     
@@ -281,257 +290,7 @@ def block_elem(N, Q):
       
     return E
 
-def writeGRM(filename_base, ref, Q, E, V, nLE, NC, nWK, nWB, nr):
-    #=========================#
-    # Write out the grid file #
-    #=========================#
 
-    f = open(filename_base + '_ref'+str(ref)+ '_Q'+str(Q)+'.grm', 'w')
-     
-    nelem = E.shape[0];
-    #if (TriFlag): nelem = nelem*2;
-    print 'Elements : ', nelem
-    nnode = V.shape[0];
-    f.write('2 ' + str(nnode) + ' 1 3\n') #dim nNodes negrp nbfgrp
-     
-    #----------#
-    # Vertices #
-    #----------#
-    floatformat = "{:3.16e}"
-    
-    for i in xrange(nnode):
-        f.write(floatformat.format(V[i,0]) + ' ' + floatformat.format(V[i,1]) + '\n')
-      
-    #----------------#
-    # Boundary faces #
-    #----------------#
-        
-    # Airfoil
-    nb = int((nLE-1)/Q) #(nLE-1)/2+(nTE-1)/2;
-    f.write(str(nb) + '\n');
-    f.write('PXE_Shape_Edge\n')
-    for i in xrange(int((nLE-1)/Q)):
-        f.write(str(NC[nWK-1+Q*i,0]) + ' ' + str(NC[nWK-1+Q*(i+1),0]) + '\n')
-    
-      
-    # Farfield inflow
-    f.write(str(int((nWB-1)/Q)) + '\n')
-    f.write('PXE_Shape_Edge\n')
-    for i in xrange(int((nWB-1)/Q)):
-      f.write(str(NC[Q*i,nr-1]) + ' ' + str(NC[Q*(i+1),nr-1]) + '\n')
-      
-    # Farfield Outflow
-    nb = int(2*(nr-1)/Q);
-    f.write(str(nb) + '\n')
-    f.write('PXE_Shape_Edge\n')
-    for i in xrange(int((nr-1)/Q)):
-        f.write(str(NC[0,Q*i]) + ' ' + str(NC[0,Q*(i+1)]) + '\n')
-
-    for i in xrange(int((nr-1)/Q)):
-        f.write(str(NC[nWB-1,Q*i]) + ' ' + str(NC[nWB-1,Q*(i+1)]) + '\n')
-    
-      
-      
-    #----------#
-    # Elements #
-    #----------#
-      
-#     if (TriFlag)
-#       fprintf(fid, '%d %d TriLagrange\n', nelem, Q);
-#       j=1; for ic=(Q+1):-1:1, for ir=1:ic,N1a(j)=(ir-1)*(Q+1)+ic; j=j+1; end; end;
-#       j=1; for ic=1:(Q+1), for ir=(Q+1):-1:ic,N2a(j)=(ir-1)*(Q+1)+ic; j=j+1; end; end;
-#       j=1; for ir=1:(Q+1), for ic=1:(Q+2-ir),N1b(j)=(ir-1)*(Q+1)+ic; j=j+1; end; end;
-#       j=1; for ic=(Q+1):-1:1, for ir=(Q+2-ic):Q+1,N2b(j)=(ir-1)*(Q+1)+ic; j=j+1; end; end;
-#       for k=1:nelem/2,
-#         xy = V(E(k,6), :); % a node inside the elem
-#         if (xy(2) > 0.)
-#           N1 = N1a; 
-#           N2 = N2a; 
-#         else
-#           N1 = N1b;
-#           N2 = N2b;
-#         end
-#         fprintf(fid, '%d %d %d %d %d %d %d %d %d %d\n', E(k,N1));
-#         fprintf(fid, '%d %d %d %d %d %d %d %d %d %d\n', E(k,N2));
-#       end
-#     else
-    f.write(str(nelem)+'\n')
-    f.write(str(Q)+'\n')
-    f.write('PXE_Shape_Quad\n')
-    f.write('UniformNodeDistribution\n')
-    for e in xrange(nelem):
-        for k in xrange((Q+1)*(Q+1)):
-            f.write(str(E[e,k])+' ')
-        f.write('\n')
-      
-    f.close()
-    return
-
-def writeVTK(filename_base, ref, Q, E, V):
-    #=========================#
-    # Write out the grid file #
-    #=========================#
-
-    f = open(filename_base + '_ref'+str(ref)+ '_Q'+str(Q)+'.vtk', 'w')
-
-    f.write('# vtk DataFile Version 2\n');
-    f.write(filename_base + ', level ' + str(ref) + ' order ' + str(Q) + '\n');
-    f.write('ASCII\n\n');
-    f.write('DATASET UNSTRUCTURED_GRID\n');
-    
-    nelem = E.shape[0];
-    nnode = V.shape[0];
-
-    #----------#
-    # Vertices #
-    #----------#
-    f.write('POINTS ' + str(nnode) + ' float\n');
-    floatformat = "{:3.16e}"
-    for i in xrange(nnode):
-        f.write(floatformat.format(V[i,0]) + ' ' +
-                floatformat.format(V[i,1]) + ' 0\n')
-      
-    #----------#
-    # Elements #
-    #----------#
-    # Write as linear quads
-    
-    f.write('CELLS '+ str(nelem)+ ' ' + str(5*nelem) + '\n');
-    for e in xrange(nelem):
-        f.write('4   ');
-        f.write(str(E[e,1-1]-1)+' ');
-        f.write(str(E[e,Q+1-1]-1)+' ');
-        f.write(str(E[e,(Q+1)*(Q+1)-1]-1)+' ');
-        f.write(str(E[e,Q*(Q+1)+1-1]-1)+' ');
-        f.write('\n');
-
-    #------------------------------------------------#
-    # Element types: Linear tri = 5; linear quad = 9 #
-    #------------------------------------------------#
-    f.write('CELL_TYPES ' + str(nelem) + '\n');
-    for e in xrange(nelem):
-        f.write('9\n');
-                
-    f.close()
-    return
-
-def writeFEC(filename_base, ref, Q, E, V, nLE, NC, nWK, nWB, nr):
-    #=========================#
-    # Write out the grid file #
-    # UBC curved FE format    #
-    #                         #
-    # Also writes the boundary#
-    # shape in GRUMMP .bdry   #
-    # format                  #
-    #=========================#
-
-    if (Q != 3):
-        print("Error: can't write cubic FE data with Q = " + str(Q) + '\n');
-        return;
-    
-    f = open(filename_base + '_ref'+str(ref)+'.fec', 'w')
-
-    nelem = E.shape[0];
-    nnode = V.shape[0];
-
-    f.write(str(nnode) + ' ' + str(nelem) + ' 4\n');
-    
-    #----------#
-    # Vertices #
-    #----------#
-    floatformat = "{:3.16e}"
-    for i in xrange(nnode):
-        f.write(floatformat.format(V[i,0]) + ' ' +
-                floatformat.format(V[i,1]) + '\n')
-      
-    #----------#
-    # Elements #
-    #----------#
-    # Write as cubic quads
-    
-    for e in xrange(nelem):
-        f.write('12   ');
-        # First write the four corners
-        f.write(str(E[e,0]-1)+' ');
-        f.write(str(E[e,3]-1)+' ');
-        f.write(str(E[e,15]-1)+' ');
-        f.write(str(E[e,12]-1)+' ');
-        # Now write the edge nodes, CCW from vert 0
-        f.write(str(E[e,1]-1)+' ');
-        f.write(str(E[e,2]-1)+' ');
-        f.write(str(E[e,7]-1)+' ');
-        f.write(str(E[e,11]-1)+' ');
-        f.write(str(E[e,14]-1)+' ');
-        f.write(str(E[e,13]-1)+' ');
-        f.write(str(E[e,8]-1)+' ');
-        f.write(str(E[e,4]-1)+' ');
-        f.write('\n');
-
-    f.close()
-
-    f = open(filename_base + '_ref'+str(ref)+'.bdry', 'w')
-    #----------------#
-    # Boundary faces #
-    #----------------#
-
-    # Number of points, number of curves
-    f.write(str(nLE + nWB + 2*nr - 4) + ' 3\n');
-    # Airfoil coords
-    f.write('# airfoil coordinates ' + str(nLE-1) + ' points\n');
-    for i in xrange(0,nLE-1):
-        index = NC[nWK-2+i,0]
-        f.write(floatformat.format(V[index,0]) + ' ' +
-                floatformat.format(V[index,1]) + '\n')
-#        f.write(str(i) + ' ' + floatformat.format(V[index,0]) + ' ' +
-#                floatformat.format(V[index,1]) + '\n')
-
-      
-    # Farfield inflow
-    f.write('#inflow ' + str(nWB) + ' points\n')
-    for i in xrange(nWB):
-        index = NC[i, nr-1] - 1
-        f.write(floatformat.format(V[index,0]) + ' ' +
-                floatformat.format(V[index,1]) + '\n')
-#        f.write(str(i  +nLE-1) + ' ' + floatformat.format(V[index,0]) + ' ' +
-#                floatformat.format(V[index,1]) + '\n')
-
-    # Farfield Outflow
-    nb = int(2*(nr-1));
-    f.write('#outflow ' + str(nb) + ' points \n')
-    for i in xrange(1,nr-1):
-        index = NC[0,nr - i - 1] - 1
-        f.write(floatformat.format(V[index,0]) + ' ' +
-                floatformat.format(V[index,1]) + '\n')
-#        f.write(str(i + nLE-1 + nWB-1) + ' ' + floatformat.format(V[index,0]) + ' ' +
-#                floatformat.format(V[index,1]) + '\n')
-    f.write('#outflow part 2\n')
-    for i in xrange(nr-1):
-        index = NC[nWB-1,i] - 1
-        f.write(floatformat.format(V[index,0]) + ' ' +
-                floatformat.format(V[index,1]) + '\n')
-#        f.write(str(i + nLE-1 + nWB-1 + nr) + ' ' + floatformat.format(V[index,0]) + ' ' +
-#                floatformat.format(V[index,1]) + '\n')
-
-    # Airfoil surface
-    f.write('spline r 1 b 1 ' + str(nLE) + ' ');
-    for i in xrange(0, nLE-1):
-        f.write(str(i) + ' ')
-    f.write(' 0\n')
-    
-    # Inflow part of domain
-    f.write('spline b 5 r 1 ' + str(nWB) + ' ')
-    for i in xrange(nWB):
-        f.write(str(i+nLE-1) + ' ')
-    f.write('\n')
-      
-    # Outflow end of the domain
-    f.write('spline r 1 b 5 ' + str(nb+1) + ' ' + str(nLE-1) + ' ')
-    for i in xrange(nb-1):
-        f.write(str(i + nLE + nWB - 1) + ' ')
-    f.write(str(nLE-1 + nWB-1) + '\n')
-    f.close()
-
-    return
 
 #-----------------------------------
 def Joukowski_xy(s,a):
@@ -626,8 +385,8 @@ def spaceqarc(se, a, Q):
 
 
 if __name__ == '__main__':
-    Q = 3
-    for ref in xrange(0,3):
+    Q = 1
+    for ref in xrange(0,1):
         make_airfoil(100, ref, Q, False, nchordwise=8, nxwake=8, nnormal=14,
                      rnormal=4, rnormalfar=4, rxwakecenter=3.65, reynolds=1.e6,
                      filename_base="Joukowski")
