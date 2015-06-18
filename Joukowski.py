@@ -8,6 +8,7 @@ from plot3d import writePlot2D, writePlot3D, writeOVERFLOW
 from grm import writeGRM
 from vtk import writeVTK
 from fec import writeFEC
+from gmsh import writeGMSH
 
 import pylab as pyl
 
@@ -89,7 +90,7 @@ def make_airfoil(Dfarfield, ref, Q, TriFlag, FileFormat, farang=0.0, nchordwise=
     #--------------------#
     # load/spline points #
     #--------------------#
-    X = Joukowski(nchordwise*2**ref,Q)
+    X, saf = Joukowski(nchordwise*2**ref,Q)
     # print X;
     
     c = max(X[:,0]) - min(X[:,0])          # chord length
@@ -110,9 +111,27 @@ def make_airfoil(Dfarfield, ref, Q, TriFlag, FileFormat, farang=0.0, nchordwise=
     x0     = tan(farang)*Hc
     radius = (x0**2 + Hc**2)**0.5
     t0     = s/max(s)*(pi-2*farang) + 3*pi/2 + farang
+    
+    #print t0
+    #t0 = npy.linspace( 3.*pi/2., 5.*pi/2., t0.shape[0])
+    #print t0
+    #dxds, dyds = Joukowski_dxy_ds(saf,0.1)
+    #t0 = npy.arccos(dyds/npy.sqrt(dxds**2+dyds**2))
+    
+    #print t0
+    #for i in xrange(t0.shape[0]):
+    #    t0[i] = min(t0[i], pi/2.)
+
+    #print t0
+    #t0 = npy.append(-t0, t0[-2::-1])
+    #print t0
+
     FLE    = npy.zeros([nLE,2])
     FLE[:,0] = x0 - radius*cos(t0)
     FLE[:,1] =      radius*sin(t0)
+
+    #pyl.plot(FLE[:,0],FLE[:,1],'o')
+    #pyl.show()
     
     #----------------------#
     # x-wake on centerline #
@@ -152,9 +171,14 @@ def make_airfoil(Dfarfield, ref, Q, TriFlag, FileFormat, farang=0.0, nchordwise=
     re = (npy.logspace(a,b,nr0+1) - 10**a)/(10**b-10**a)
     rbot = npy.flipud(spaceq(re, ref, Q)*(Hc+xte[0]))
     
-    FWK1 = npy.array([rbot,              XWK[:,1]  - Hc - rbot*x0/Hc]).transpose()
+    FWK1 = npy.array([rbot,              XWK[:,1] - Hc - rbot*x0/Hc]).transpose()
     FWK2 = npy.array([npy.flipud(rbot), XWK2[:,1] + Hc + npy.flipud(rbot)*x0/Hc]).transpose()
     
+    #pyl.plot(XWK[:,0],XWK[:,1],'o')
+    #pyl.plot(FWK1[:,0],FWK1[:,1],'o')
+    #pyl.plot(FWK2[:,0],FWK2[:,1],'o')
+    #pyl.show()
+
     #-------------------#
     # Wake and boundary #
     #-------------------#
@@ -264,6 +288,8 @@ def make_airfoil(Dfarfield, ref, Q, TriFlag, FileFormat, farang=0.0, nchordwise=
     if FileFormat == 'fec':
         writeVTK(filename_base, ref, Q, E, V);
         writeFEC(filename_base, ref, Q, E, V, nLE, NC, nWK, nWB, nr);
+    if FileFormat == 'msh':
+        writeGMSH(filename_base, ref, Q, E, V, nLE, NC, nWK, nWB, nr);
 
     return
     
@@ -337,11 +363,13 @@ def Joukowski(nn, Q):
     xU, yU = Joukowski_xy(sU,a)
     yL = -yL
     #print xL;
+
+    s = npy.append(sL,-sU[1:])
     
     X[:,0] = npy.append(xL,xU[1:-1])
     X[:,1] = npy.append(yL,yU[1:-1])
 
-    return X
+    return X, sL
 
 #===============================================================================
 def spaceq(re, ref, Q):
@@ -387,7 +415,7 @@ def spaceqarc(se, a, Q):
 if __name__ == '__main__':
     Q = 1
     for ref in xrange(0,1):
-        make_airfoil(100, ref, Q, False, nchordwise=8, nxwake=8, nnormal=14,
+        make_airfoil(100, ref, Q, False,'p2d', nchordwise=8, nxwake=8, nnormal=14,
                      rnormal=4, rnormalfar=4, rxwakecenter=3.65, reynolds=1.e6,
                      filename_base="Joukowski")
         print("Done with level " + str(ref));

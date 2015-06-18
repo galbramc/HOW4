@@ -50,6 +50,29 @@ def writePlot3D(fname, X, Y):
     f.close()
 
 #-----------------------------------------------------------
+# writes BC information for FUN3D
+def writeNMF(fname, X, nLE, NC, nWK, nWB, nr):
+
+    ni, nj = X.shape; nk = 2
+
+    f = open(fname, 'w')
+    f.write('# ===================================================================================\n')
+    f.write('# Block# IDIM JDIM KDIM\n')
+    f.write('# -----------------------------------------------------------------------------------\n')
+    f.write('1\n')
+    f.write(str(ni) + ' ' + str(nj) + ' ' + str(nk) + '\n')
+    f.write('# ===================================================================================\n')
+    f.write('# Type B1 F1 S1 E1 S2 E2 B2 F2 S1 E1 S2 E2 Swap\n')
+    f.write('# -----------------------------------------------------------------------------------\n')
+    f.write("'tangency' 1 1 1 " + str(ni) + " 1 " +str(nj) + "\n")
+    f.write("'tangency' 1 2 1 257 1 129\n")
+#'farfield_extr' 1 5 1 129 1 5
+#'farfield_extr' 1 6 1 129 1 5
+#'one-to-one' 1 1 1 5 1 41 1 1 1 5 257 217 false
+#'viscous_solid' 1 1 1 5 41 217
+#'farfield_riem' 1 2 1 5 1 257
+
+#-----------------------------------------------------------
 # writes a 3D ascii plot3d grid file
 def writeOVERFLOW(fname, X, Y):
     f = open(fname, 'w')
