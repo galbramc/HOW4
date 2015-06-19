@@ -293,7 +293,7 @@ def make_airfoil(Dfarfield, ref, Q, TriFlag, FileFormat, farang=0.0, nchordwise=
 
     return
     
-    #-----------------------------------
+#-----------------------------------
 def block_elem(N, Q):
     nx, ny = N.shape;
     #if (Q != 1) and ((mod(nx,Q) != 1) or (mod(ny,Q) != 1)): print('ERROR 2'); return;

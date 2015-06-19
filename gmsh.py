@@ -93,7 +93,7 @@ def writeGMSH(filename_base, ref, Q, E, V, nLE, NC, nWK, nWB, nr):
         f.write(str(NC[Q*i,nr-1]) + ' ' + str(NC[Q*(i+1),nr-1]) + ' ')
         #Write higher-order nodes
         for q in xrange(1,Q):
-            f.write(str(NC[Q*i+q,nr-1]+1) + ' ')
+            f.write(str(NC[Q*i+q,nr-1]) + ' ')
         f.write('\n')
 
     # Farfield Outflow
@@ -104,7 +104,7 @@ def writeGMSH(filename_base, ref, Q, E, V, nLE, NC, nWK, nWB, nr):
         f.write(str(NC[0,Q*i]) + ' ' + str(NC[0,Q*(i+1)]) + ' ')
         #Write higher-order nodes
         for q in xrange(1,Q):
-            f.write(str(NC[0,Q*i+q]+1) + ' ')
+            f.write(str(NC[0,Q*i+q]) + ' ')
         f.write('\n')
         
     for i in xrange(int((nr-1)/Q)):
@@ -113,7 +113,7 @@ def writeGMSH(filename_base, ref, Q, E, V, nLE, NC, nWK, nWB, nr):
         f.write(str(NC[nWB-1,Q*i]) + ' ' + str(NC[nWB-1,Q*(i+1)]) + ' ')
         #Write higher-order nodes
         for q in xrange(1,Q):
-            f.write(str(NC[nWB-1,Q*i+q]+1) + ' ')
+            f.write(str(NC[nWB-1,Q*i+q]) + ' ')
         f.write('\n')
 
     f.write('$EndElements\n')
