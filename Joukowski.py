@@ -1,7 +1,6 @@
 from __future__ import division
 import numpy as npy
 from numpy import pi, sin, cos, tan, log10
-from scipy.interpolate import interp1d
 from scipy import integrate
 from scipy import optimize
 from plot3d import writePlot2D, writePlot3D, writeOVERFLOW
@@ -11,6 +10,31 @@ from fec import writeFEC
 from gmsh import writeGMSH
 
 import pylab as pyl
+
+
+#-----------------------------------------------------------
+# writes BC information for FUN3D
+def writeNMF(fname, X, nLE, NC, nWK, nWB, nr):
+
+    ni, nj = X.shape; nk = 2
+
+    f = open(fname, 'w')
+    f.write('# ===================================================================================\n')
+    f.write('# Block# IDIM JDIM KDIM\n')
+    f.write('# -----------------------------------------------------------------------------------\n')
+    f.write('1\n')
+    f.write(str(ni) + ' ' + str(nj) + ' ' + str(nk) + '\n')
+    f.write('# ===================================================================================\n')
+    f.write('# Type      B1 F1 S1 E1 S2 E2 B2 F2 S1 E1 S2 E2 Swap\n')
+    f.write('# -----------------------------------------------------------------------------------\n')
+    f.write("'tangency'   1 1   1 " + str(ni) + " 1 " +str(nj) + "\n")
+    f.write("'tangency'   1 2   1 " + str(ni) + " 1 " +str(nj) + "\n")
+    f.write("'one-to-one' 1 5   1 " + str(nk) + " 1 " +str(nWB) + "\n")
+    f.write("'Viscous'    1 5   1 " + str(nk) + " " + str(nWB+1) + " " + str(nWB+1+nLE) + "\n")
+    f.write("'Freestream' 1 6   1 " + str(nk) + " 1 " +str(ni) + "\n");
+    f.write("'Freestream' 1 3   1 " + str(nj) + " 1 " +str(nk) + "\n");
+    f.write("'Freestream' 1 4   1 " + str(nj) + " 1 " +str(nk) + "\n");
+
 
 def Distance(i, dx_te, ratio):
     return dx_te*(ratio**i - 1) / (ratio-1)
@@ -413,7 +437,7 @@ def spaceqarc(se, a, Q):
 
 
 if __name__ == '__main__':
-    Q = 1
+    Q = 4
     for ref in xrange(0,1):
         make_airfoil(100, ref, Q, False,'p2d', nchordwise=8, nxwake=8, nnormal=14,
                      rnormal=4, rnormalfar=4, rxwakecenter=3.65, reynolds=1.e6,

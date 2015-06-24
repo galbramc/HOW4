@@ -1,4 +1,5 @@
 import numpy as npy
+from plot3d import writeOVERFLOW, writePlot3D
 
 #===============================================================================
 def writeGMSH(filename_base, ref, Q, E, V, NC, ni, nj):
@@ -10,7 +11,7 @@ def writeGMSH(filename_base, ref, Q, E, V, NC, ni, nj):
     
     nInflow = int((nj-1)/Q)
     nOutflow = nInflow
-    nWalls = 2*int((ni-1)/Q)
+    nWall = int((ni-1)/Q)
 
     floatformat = "{:3.16e}"
     
@@ -23,7 +24,73 @@ def writeGMSH(filename_base, ref, Q, E, V, NC, ni, nj):
     for i in xrange(nnode):
         f.write("{:2d}".format(i+1) + ' ' + floatformat.format(V[i,0]) + ' ' + floatformat.format(V[i,1]) + ' 0.0\n')
     f.write('$EndNodes\n')
+
+    f.write('$Elements\n')
+    f.write(str(4 + nelem+nInflow+nOutflow+2*nWall)+'\n')
+
+    #----------------#
+    # Corners        #
+    #----------------#
+
+    f.write('1 15 2 0 6 ' + str(NC[ 0, 0]) + '\n')
+    f.write('2 15 2 0 6 ' + str(NC[-1, 0]) + '\n')
+    f.write('3 15 2 0 6 ' + str(NC[-1,-1]) + '\n')
+    f.write('4 15 2 0 6 ' + str(NC[ 0,-1]) + '\n')
+
+    if Q == 1: GmshLineType = 1 #2-node line
+    if Q == 2: GmshLineType = 8 #3-node line
+    if Q == 3: GmshLineType = 26 #4-node line
+    if Q == 4: GmshLineType = 27 #5-node line
     
+    #----------------#
+    # Boundary faces #
+    #----------------#
+
+    # Inflow
+    BC = 1
+    for j in xrange(nInflow):
+        f.write(str(j+5) + ' ' + str(GmshLineType) + ' 2 0 ' + str(BC) + ' ')
+        #Write end points
+        f.write(str(NC[0,Q*j]) + ' ' + str(NC[0,Q*(j+1)]) + ' ')
+        #Write higher-order nodes
+        for q in xrange(1,Q):
+            f.write(str(NC[0,Q*j+q]) + ' ')
+        f.write('\n')
+      
+    # Outflow
+    BC = 2
+    for j in xrange(nOutflow):
+        f.write(str(nInflow+j+5) + ' ' + str(GmshLineType) + ' 2 0 ' + str(BC) + ' ')
+        #Write end points
+        f.write(str(NC[ni-1,Q*j]) + ' ' + str(NC[ni-1,Q*(j+1)]) + ' ')
+        #Write higher-order nodes
+        for q in xrange(1,Q):
+            f.write(str(NC[ni-1,Q*j+q]) + ' ')
+        f.write('\n')
+
+    # Walls
+    BC = 3
+    for i in xrange(nWall):
+        f.write(str(nInflow+nOutflow+i+5) + ' ' + str(GmshLineType) + ' 2 0 ' + str(BC) + ' ')
+        #Write end points
+        f.write(str(NC[Q*i,0]) + ' ' + str(NC[Q*(i+1),0]) + ' ')
+        #Write higher-order nodes
+        for q in xrange(1,Q):
+            f.write(str(NC[Q*i+q,0]) + ' ')
+        f.write('\n')
+        
+    BC = 4
+    for i in xrange(nWall):
+        f.write(str(nInflow+nOutflow+nWall+i+5) + ' ' + str(GmshLineType) + ' 2 0 ' + str(BC) + ' ')
+        #Write end points
+        f.write(str(NC[Q*i,nj-1]) + ' ' + str(NC[Q*(i+1),nj-1]) + ' ')
+        #Write higher-order nodes
+        for q in xrange(1,Q):
+            f.write(str(NC[Q*i+q,nj-1]) + ' ')
+        f.write('\n')
+
+        
+        
     if Q == 1: #4-node quadrangle
         GmshElemType = 3 
         nodemap = (0, 1, 
@@ -54,76 +121,23 @@ def writeGMSH(filename_base, ref, Q, E, V, NC, ni, nj):
         while nodemap[j] != k: j += 1
         nodemapinv.append(j)
 
-    f.write('$Elements\n')
-    f.write(str(nelem+nInflow+nOutflow+nWalls)+'\n')
     
     for e in xrange(nelem):
-        f.write(str(e+1) + ' ' + str(GmshElemType) + ' 2 0 0 ')
+        f.write(str(nInflow+nOutflow+2*nWall+e+5) + ' ' + str(GmshElemType) + ' 2 0 5 ')
         
         #Write nodes
         for k in xrange((Q+1)*(Q+1)):
             f.write(str(E[e,nodemapinv[k]])+' ')
         f.write('\n')
 
-    
-    if Q == 1: GmshLineType = 1 #2-node line
-    if Q == 2: GmshLineType = 8 #3-node line
-    if Q == 3: GmshLineType = 26 #4-node line
-    if Q == 4: GmshLineType = 27 #5-node line
-    
-    #----------------#
-    # Boundary faces #
-    #----------------#
-
-    # Inflow
-    BC = 1
-    for j in xrange(nInflow):
-        f.write(str(nelem+j+1) + ' ' + str(GmshLineType) + ' 2 ' + str(BC) + ' 0 ')
-        #Write end points
-        f.write(str(NC[0,Q*j]) + ' ' + str(NC[0,Q*(j+1)]) + ' ')
-        #Write higher-order nodes
-        for q in xrange(1,Q):
-            f.write(str(NC[0,Q*j+q]) + ' ')
-        f.write('\n')
-      
-    # Outflow
-    BC = 2
-    for j in xrange(nOutflow):
-        f.write(str(nelem+nInflow+j+1) + ' ' + str(GmshLineType) + ' 1 ' + str(BC) + '  ')
-        #Write end points
-        f.write(str(NC[ni-1,Q*j]) + ' ' + str(NC[ni-1,Q*(j+1)]) + ' ')
-        #Write higher-order nodes
-        for q in xrange(1,Q):
-            f.write(str(NC[ni-1,Q*j+q]) + ' ')
-        f.write('\n')
-
-    # Walls
-    BC = 3
-    for i in xrange(nWalls/2):
-        f.write(str(nelem+nInflow+nOutflow+i+1) + ' ' + str(GmshLineType) + ' 1 ' + str(BC) + '  ')
-        #Write end points
-        f.write(str(NC[Q*i,0]) + ' ' + str(NC[Q*(i+1),0]) + ' ')
-        #Write higher-order nodes
-        for q in xrange(1,Q):
-            f.write(str(NC[Q*i+q,0]) + ' ')
-        f.write('\n')
-        
-    for i in xrange(nWalls/2):
-        f.write(str(nelem+nInflow+nOutflow+nWalls/2+i+1) + ' ' + str(GmshLineType) + ' 1 ' + str(BC) + '  ')
-        #Write end points
-        f.write(str(NC[Q*i,nj-1]) + ' ' + str(NC[Q*(i+1),nj-1]) + ' ')
-        #Write higher-order nodes
-        for q in xrange(1,Q):
-            f.write(str(NC[Q*i+q,nj-1]) + ' ')
-        f.write('\n')
-
     f.write('$EndElements\n')
     f.write('$PhysicalNames\n')
-    f.write('4\n')
+    f.write('5\n')
     f.write('2 0 \"MeshInterior\"\n')
     f.write('1 1 \"Inflow\"\n')
     f.write('1 2 \"Outflow\"\n')
-    f.write('1 3 \"Walls\"\n')
+    f.write('1 3 \"Lower Wall\"\n')
+    f.write('1 4 \"Upper Wall\"\n')
     f.write('$EndPhysicalNames\n')
     
     
@@ -152,6 +166,28 @@ def block_elem(N, Q):
       
     return E
 
+#-----------------------------------------------------------
+# writes BC information for FUN3D
+def writeNMF(fname, ni, nj):
+
+    nk = 2
+
+    f = open(fname, 'w')
+    f.write('# ===================================================================================\n')
+    f.write('# Block# IDIM JDIM KDIM\n')
+    f.write('# -----------------------------------------------------------------------------------\n')
+    f.write('1\n')
+    f.write(str(ni) + ' ' + str(nj) + ' ' + str(nk) + '\n')
+    f.write('# ===================================================================================\n')
+    f.write('# Type            B1 F1   S1 E1   S2 E2   B2 F2   S1 E1   S2 E2   Swap\n')
+    f.write('# -----------------------------------------------------------------------------------\n')
+    f.write("'tangency'        1 1   1 " + str(ni) + "   1 " +str(nj) + "\n")
+    f.write("'tangency'        1 2   1 " + str(ni) + "   1 " +str(nj) + "\n")
+    f.write("'Subsonic inflow' 1 3   1 " + str(nj) + "   1 " +str(nk) + "\n")
+    f.write("'Back pressure'   1 4   1 " + str(nj) + "   1 " +str(nk) + "\n")
+    f.write("'tangency'        1 5   1 " + str(nk) + "   1 " +str(ni) + "\n")
+    f.write("'tangency'        1 6   1 " + str(nk) + "   1 " +str(ni) + "\n")
+
 #===============================================================================
 def SmoothBump(ni, nj, Q, ref):
     
@@ -172,6 +208,10 @@ def SmoothBump(ni, nj, Q, ref):
         V[i,:,0] = x
         V[i,:,1] = y
 
+    writeOVERFLOW('grid.in.'+str(ref), V[:,:,0], V[:,:,1])
+    writeNMF('SmoothBump_ref'+str(ref)+'.nmf', ni, nj)
+    writePlot3D('SmoothBump_ref'+str(ref)+'.p3d', V[:,:,0], V[:,:,1])
+    
     V = V.reshape( (ni*nj,2) )
     
     #---------------------------------------------#
