@@ -23,6 +23,63 @@ def writeGMSH(filename_base, ref, Q, E, V, nLE, NC, nWK, nWB, nr):
         f.write("{:2d}".format(i+1) + ' ' + floatformat.format(V[i,0]) + ' ' + floatformat.format(V[i,1]) + ' 0.0\n')
     f.write('$EndNodes\n')
     
+    f.write('$Elements\n')
+    f.write(str(nelem+nbAirfoil+nbInflow+nbOutflow)+'\n')
+
+    
+    if Q == 1: GmshLineType = 1 #2-node line
+    if Q == 2: GmshLineType = 8 #3-node line
+    if Q == 3: GmshLineType = 26 #4-node line
+    if Q == 4: GmshLineType = 27 #5-node line
+    
+    #----------------#
+    # Boundary faces #
+    #----------------#
+
+    # Airfoil
+    BC = 1
+    for i in xrange(int((nLE-1)/Q)):
+        f.write(str(i+1) + ' ' + str(GmshLineType) + ' 2 0 ' + str(BC) + ' ')
+        #Write end points
+        f.write(str(NC[nWK-1+Q*i,0]) + ' ' + str(NC[nWK-1+Q*(i+1),0]) + ' ')
+        #Write higher-order nodes
+        for q in xrange(1,Q):
+            f.write(str(NC[nWK-1+Q*i+q,0]) + ' ')
+        f.write('\n')
+      
+    # Farfield inflow
+    BC = 2
+    for i in xrange(int((nWB-1)/Q)):
+        f.write(str(nbAirfoil+i+1) + ' ' + str(GmshLineType) + ' 2 0 ' + str(BC) + ' ')
+        #Write end points
+        f.write(str(NC[Q*i,nr-1]) + ' ' + str(NC[Q*(i+1),nr-1]) + ' ')
+        #Write higher-order nodes
+        for q in xrange(1,Q):
+            f.write(str(NC[Q*i+q,nr-1]) + ' ')
+        f.write('\n')
+
+    # Farfield Outflow
+    BC = 3
+    for i in xrange(int((nr-1)/Q)):
+        f.write(str(nbAirfoil+nbInflow+i+1) + ' ' + str(GmshLineType) + ' 2 0 ' + str(BC) + ' ')
+        #Write end points
+        f.write(str(NC[0,Q*i]) + ' ' + str(NC[0,Q*(i+1)]) + ' ')
+        #Write higher-order nodes
+        for q in xrange(1,Q):
+            f.write(str(NC[0,Q*i+q]) + ' ')
+        f.write('\n')
+        
+    for i in xrange(int((nr-1)/Q)):
+        f.write(str(nbAirfoil+nbInflow+int(nbOutflow/2)+i+1) + ' ' + str(GmshLineType) + ' 2 0 ' + str(BC) + ' ')
+        #Write end points
+        f.write(str(NC[nWB-1,Q*i]) + ' ' + str(NC[nWB-1,Q*(i+1)]) + ' ')
+        #Write higher-order nodes
+        for q in xrange(1,Q):
+            f.write(str(NC[nWB-1,Q*i+q]) + ' ')
+        f.write('\n')
+
+    nBCelem = nbAirfoil+nbInflow+nbOutflow
+    
     if Q == 1: #4-node quadrangle
         GmshElemType = 3 
         nodemap = (0, 1, 
@@ -52,69 +109,15 @@ def writeGMSH(filename_base, ref, Q, E, V, nLE, NC, nWK, nWB, nr):
         j = 0
         while nodemap[j] != k: j += 1
         nodemapinv.append(j)
-
-    f.write('$Elements\n')
-    f.write(str(nelem+nbAirfoil+nbInflow+nbOutflow)+'\n')
     
     for e in xrange(nelem):
-        f.write(str(e+1) + ' ' + str(GmshElemType) + ' 2 0 0 ')
+        f.write(str(nBCelem+e+1) + ' ' + str(GmshElemType) + ' 2 0 4 ')
         
         #Write nodes
         for k in xrange((Q+1)*(Q+1)):
             f.write(str(E[e,nodemapinv[k]])+' ')
         f.write('\n')
 
-    
-    if Q == 1: GmshLineType = 1 #2-node line
-    if Q == 2: GmshLineType = 8 #3-node line
-    if Q == 3: GmshLineType = 26 #4-node line
-    if Q == 4: GmshLineType = 27 #5-node line
-    
-    #----------------#
-    # Boundary faces #
-    #----------------#
-
-    # Airfoil
-    BC = 1
-    for i in xrange(int((nLE-1)/Q)):
-        f.write(str(nelem+i+1) + ' ' + str(GmshLineType) + ' 2 ' + str(BC) + ' 0 ')
-        #Write end points
-        f.write(str(NC[nWK-1+Q*i,0]) + ' ' + str(NC[nWK-1+Q*(i+1),0]) + ' ')
-        #Write higher-order nodes
-        for q in xrange(1,Q):
-            f.write(str(NC[nWK-1+Q*i+q,0]+1) + ' ')
-        f.write('\n')
-      
-    # Farfield inflow
-    BC = 2
-    for i in xrange(int((nWB-1)/Q)):
-        f.write(str(nelem+nbAirfoil+i+1) + ' ' + str(GmshLineType) + ' 2 ' + str(BC) + ' 0 ')
-        #Write end points
-        f.write(str(NC[Q*i,nr-1]) + ' ' + str(NC[Q*(i+1),nr-1]) + ' ')
-        #Write higher-order nodes
-        for q in xrange(1,Q):
-            f.write(str(NC[Q*i+q,nr-1]) + ' ')
-        f.write('\n')
-
-    # Farfield Outflow
-    BC = 3
-    for i in xrange(int((nr-1)/Q)):
-        f.write(str(nelem+nbAirfoil+nbInflow+i+1) + ' ' + str(GmshLineType) + ' 2 ' + str(BC) + ' 0 ')
-        #Write end points
-        f.write(str(NC[0,Q*i]) + ' ' + str(NC[0,Q*(i+1)]) + ' ')
-        #Write higher-order nodes
-        for q in xrange(1,Q):
-            f.write(str(NC[0,Q*i+q]) + ' ')
-        f.write('\n')
-        
-    for i in xrange(int((nr-1)/Q)):
-        f.write(str(nelem+nbAirfoil+nbInflow+int(nbOutflow/2)+i+1) + ' ' + str(GmshLineType) + ' 2 ' + str(BC) + ' 0 ')
-        #Write end points
-        f.write(str(NC[nWB-1,Q*i]) + ' ' + str(NC[nWB-1,Q*(i+1)]) + ' ')
-        #Write higher-order nodes
-        for q in xrange(1,Q):
-            f.write(str(NC[nWB-1,Q*i+q]) + ' ')
-        f.write('\n')
 
     f.write('$EndElements\n')
     f.write('$PhysicalNames\n')
