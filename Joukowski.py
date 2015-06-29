@@ -271,7 +271,9 @@ def make_airfoil(Dfarfield, ref, Q, TriFlag, FileFormat, farang=0.0, nchordwise=
     
     #pyl.plot(XC,YC,'o')
     #pyl.show()
-   
+    assert(XC.shape[0] == nWB)
+    assert(XC.shape[1] == nr)
+
     if FileFormat == 'p2d':
         writePlot2D(filename_base + '_ref'+str(ref)+ '_Q'+str(Q)+'.p2d', XC, YC)
     if FileFormat == 'p3d':
@@ -312,12 +314,12 @@ def make_airfoil(Dfarfield, ref, Q, TriFlag, FileFormat, farang=0.0, nchordwise=
     #---------------#
 
     if FileFormat == 'grm':
-        writeGRM(filename_base, ref, Q, E, V, nLE, NC, nWK, nWB, nr);
+        writeGRM(filename_base, ref, Q, TriFlag, E, V, nLE, NC, nWK, nWB, nr);
     if FileFormat == 'fec':
         writeVTK(filename_base, ref, Q, E, V);
         writeFEC(filename_base, ref, Q, E, V, nLE, NC, nWK, nWB, nr);
     if FileFormat == 'msh':
-        writeGMSH(filename_base, ref, Q, E, V, nLE, NC, nWK, nWB, nr);
+        writeGMSH(filename_base, ref, Q, TriFlag, E, V, nLE, NC, nWK, nWB, nr);
 
     return
     
@@ -441,7 +443,7 @@ def spaceqarc(se, a, Q):
 
 
 if __name__ == '__main__':
-    Q = 4
+    Q = 1
     for ref in xrange(0,1):
         make_airfoil(100, ref, Q, False,'p2d', nchordwise=8, nxwake=8, nnormal=14,
                      rnormal=4, rnormalfar=4, rxwakecenter=3.65, reynolds=1.e6,

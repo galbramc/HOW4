@@ -1,5 +1,6 @@
 from __future__ import division
 import numpy as npy
+import pylab as pyl
 
 #-----------------------------------------------------------
 # writes a 2D ascii plot3d grid file
@@ -87,13 +88,13 @@ def readPlot2D(fname):
     data = f.read()
     f.close()
     data = data.strip()
-    data = npy.array(data.split())
+    data = npy.array(data.split()).astype(npy.float)
     ngrid = int(data[0])
     assert(ngrid == 1)
     ni = int(data[1]); nj = int(data[2]); nk = int(data[3])
     assert(nj == 1)
         
-    X = data[4:4+ni*nk].astype(npy.float).reshape( (ni,nk) )
-    Y = data[4+ni*nk:4+2*ni*nk].astype(npy.float).reshape( (ni,nk) )
+    X = data[4+0*ni*nk:4+1*ni*nk].reshape( (nk,ni) ).T
+    Y = data[4+2*ni*nk:4+3*ni*nk].reshape( (nk,ni) ).T
     
     return X, Y

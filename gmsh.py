@@ -1,7 +1,8 @@
 from __future__ import division
+import numpy as npy
 
 #===============================================================================
-def writeGMSH(filename_base, ref, Q, E, V, nLE, NC, nWK, nWB, nr):
+def writeGMSH(filename_base, ref, Q, TriFlag, E, V, nLE, NC, nWK, nWB, nr):
 
     f = open(filename_base + '_ref'+str(ref)+ '_Q'+str(Q)+'.msh', 'w')
 
@@ -23,8 +24,10 @@ def writeGMSH(filename_base, ref, Q, E, V, nLE, NC, nWK, nWB, nr):
         f.write("{:2d}".format(i+1) + ' ' + floatformat.format(V[i,0]) + ' ' + floatformat.format(V[i,1]) + ' 0.0\n')
     f.write('$EndNodes\n')
     
+    fac = 2 if TriFlag else 1
+    
     f.write('$Elements\n')
-    f.write(str(nelem+nbAirfoil+nbInflow+nbOutflow)+'\n')
+    f.write(str(fac*nelem+nbAirfoil+nbInflow+nbOutflow)+'\n')
 
     
     if Q == 1: GmshLineType = 1 #2-node line
@@ -80,6 +83,26 @@ def writeGMSH(filename_base, ref, Q, E, V, nLE, NC, nWK, nWB, nr):
 
     nBCelem = nbAirfoil+nbInflow+nbOutflow
     
+    if TriFlag:
+        writeGMSH_Tri(f, nelem, nBCelem, Q, E, NC)
+    else:
+        writeGMSH_Quad(f, nelem, nBCelem, Q, E)
+
+    f.write('$EndElements\n')
+    f.write('$PhysicalNames\n')
+    f.write('4\n')
+    f.write('2 0 \"MeshInterior\"\n')
+    f.write('1 1 \"Wall\"\n')
+    f.write('1 2 \"Farfield Inflow\"\n')
+    f.write('1 3 \"Farfield Outflow\"\n')
+    f.write('$EndPhysicalNames\n')
+    
+    
+    f.close()
+    
+#===============================================================================
+def writeGMSH_Quad(f, nelem, nBCelem, Q, E):
+    
     if Q == 1: #4-node quadrangle
         GmshElemType = 3 
         nodemap = (0, 1, 
@@ -118,16 +141,92 @@ def writeGMSH(filename_base, ref, Q, E, V, nLE, NC, nWK, nWB, nr):
             f.write(str(E[e,nodemapinv[k]])+' ')
         f.write('\n')
 
+#===============================================================================
+def writeGMSH_Tri(f, nelem, nBCelem, Q, E, NC):
+    
+    ni = int((NC.shape[0]-1)/Q)
+    nj = int((NC.shape[1]-1)/Q)
+    
+    if Q == 1: #3-node triangle
+        GmshElemType = 2 
+        nodemap = (0,  1, 
+                   2, -1)
+        nodemap2= (0, 1, 
+                  -1, 2)
+    if Q == 2:  #6-node second order triangle
+        GmshElemType = 9
+        nodemap = (0,  3,  1, 
+                   5,  4, -1,   
+                   2, -1, -1)
+        
+        nodemap2= ( 0,  3,  1, 
+                   -1,  5,  4,   
+                   -1, -1,  2)
 
-    f.write('$EndElements\n')
-    f.write('$PhysicalNames\n')
-    f.write('4\n')
-    f.write('2 0 \"MeshInterior\"\n')
-    f.write('1 1 \"Wall\"\n')
-    f.write('1 2 \"Farfield Inflow\"\n')
-    f.write('1 3 \"Farfield Outflow\"\n')
-    f.write('$EndPhysicalNames\n')
+    if Q == 3:  #10-node third order triangle
+        GmshElemType = 21
+        nodemap = ( 0,  3,  4,  1, 
+                    8,  9,  5, -1, 
+                    7,  6, -1, -1, 
+                    2, -1, -1, -1)
+        nodemap2= ( 0,  3,  4,  1, 
+                   -1,  8,  9,  5, 
+                   -1, -1,  7,  6, 
+                   -1, -1, -1,  2)
+    if Q == 4: #15-node fourth order triangle
+        GmshElemType = 23 
+        nodemap = ( 0,  3,  4,  5,  1, 
+                   11, 12, 13,  6, -1, 
+                   10, 14,  7, -1, -1, 
+                    9,  8, -1, -1, -1, 
+                    2, -1, -1, -1, -1, )
+        nodemap2= ( 0,  3,  4,  5,  1, 
+                   -1, 11, 12, 13,  6, 
+                   -1, -1, 10, 14,  7, 
+                   -1, -1, -1,  9,  8, 
+                   -1, -1, -1, -1,  2, )
+    #Invert the map
+    nodemapinv  = []
+    for k in xrange(int((Q+1)*(Q+2)/2)):
+        j = 0
+        while nodemap[j] != k: j += 1
+        nodemapinv.append(j)
+
+    nodemapinv2  = []
+    for k in xrange(int((Q+1)*(Q+2)/2)):
+        j = 0
+        while nodemap2[j] != k: j += 1
+        nodemapinv2.append(j)
     
+    for j in xrange(nj):
+        for i in xrange(int(ni/2)):
+            e = i + ni*j
+            f.write(str(nBCelem+2*e+1) + ' ' + str(GmshElemType) + ' 2 0 4 ')
+            
+            #Write nodes
+            for k in xrange(int((Q+1)*(Q+2)/2)):
+                f.write(str(E[e,nodemapinv[k]])+' ')
+            f.write('\n')
     
-    f.close()
+            f.write(str(nBCelem+2*e+2) + ' ' + str(GmshElemType) + ' 2 0 4 ')
+            
+            #Write nodes
+            for k in xrange(int((Q+1)*(Q+2)/2)):
+                f.write(str(E[e,(Q+1)*(Q+1)-1-nodemapinv[k]])+' ')
+            f.write('\n')
+            
+        for i in xrange(int(ni/2),ni):
+            e = i + ni*j
+            f.write(str(nBCelem+2*e+1) + ' ' + str(GmshElemType) + ' 2 0 4 ')
+            
+            #Write nodes
+            for k in xrange(int((Q+1)*(Q+2)/2)):
+                f.write(str(E[e,nodemapinv2[k]])+' ')
+            f.write('\n')
     
+            f.write(str(nBCelem+2*e+2) + ' ' + str(GmshElemType) + ' 2 0 4 ')
+            
+            #Write nodes
+            for k in xrange(int((Q+1)*(Q+2)/2)):
+                f.write(str(E[e,(Q+1)*(Q+1)-1-nodemapinv2[k]])+' ')
+            f.write('\n')

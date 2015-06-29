@@ -1,6 +1,6 @@
 from __future__ import division
 
-def writeGRM(filename_base, ref, Q, E, V, nLE, NC, nWK, nWB, nr):
+def writeGRM(filename_base, ref, Q, TriFlag, E, V, nLE, NC, nWK, nWB, nr):
     #=========================#
     # Write out the grid file #
     #=========================#
@@ -8,8 +8,11 @@ def writeGRM(filename_base, ref, Q, E, V, nLE, NC, nWK, nWB, nr):
     f = open(filename_base + '_ref'+str(ref)+ '_Q'+str(Q)+'.grm', 'w')
      
     nelem = E.shape[0];
+    
+    fac = 2 if TriFlag else 1
+    
     #if (TriFlag): nelem = nelem*2;
-    print 'Elements : ', nelem
+    print 'Elements : ', fac*nelem
     nnode = V.shape[0];
     f.write('2 ' + str(nnode) + ' 1 3\n') #dim nNodes negrp nbfgrp
      
@@ -55,33 +58,101 @@ def writeGRM(filename_base, ref, Q, E, V, nLE, NC, nWK, nWB, nr):
     # Elements #
     #----------#
       
-#     if (TriFlag)
-#       fprintf(fid, '%d %d TriLagrange\n', nelem, Q);
-#       j=1; for ic=(Q+1):-1:1, for ir=1:ic,N1a(j)=(ir-1)*(Q+1)+ic; j=j+1; end; end;
-#       j=1; for ic=1:(Q+1), for ir=(Q+1):-1:ic,N2a(j)=(ir-1)*(Q+1)+ic; j=j+1; end; end;
-#       j=1; for ir=1:(Q+1), for ic=1:(Q+2-ir),N1b(j)=(ir-1)*(Q+1)+ic; j=j+1; end; end;
-#       j=1; for ic=(Q+1):-1:1, for ir=(Q+2-ic):Q+1,N2b(j)=(ir-1)*(Q+1)+ic; j=j+1; end; end;
-#       for k=1:nelem/2,
-#         xy = V(E(k,6), :); % a node inside the elem
-#         if (xy(2) > 0.)
-#           N1 = N1a; 
-#           N2 = N2a; 
-#         else
-#           N1 = N1b;
-#           N2 = N2b;
-#         end
-#         fprintf(fid, '%d %d %d %d %d %d %d %d %d %d\n', E(k,N1));
-#         fprintf(fid, '%d %d %d %d %d %d %d %d %d %d\n', E(k,N2));
-#       end
-#     else
-    f.write(str(nelem)+'\n')
-    f.write(str(Q)+'\n')
-    f.write('PXE_Shape_Quad\n')
-    f.write('UniformNodeDistribution\n')
-    for e in xrange(nelem):
-        for k in xrange((Q+1)*(Q+1)):
-            f.write(str(E[e,k])+' ')
-        f.write('\n')
+    if TriFlag:
+        f.write(str(nelem)+'\n')
+        f.write(str(Q)+'\n')
+        f.write('PXE_Shape_Tri\n')
+        f.write('UniformNodeDistribution\n')
+
+        ni = int((NC.shape[0]-1)/Q)
+        nj = int((NC.shape[1]-1)/Q)
+        
+        if Q == 1:
+            nodemap = (0,  1, 
+                       2, -1)
+            nodemap2= (0, 1, 
+                      -1, 2)
+        if Q == 2:
+            nodemap = (0,  1,  2, 
+                       3,  4, -1,   
+                       5, -1, -1)
+            
+            nodemap2= ( 0,  1,  2, 
+                       -1,  3,  4,   
+                       -1, -1,  5)
+    
+        if Q == 3:
+            nodemap = ( 0,  1,  2,  3, 
+                        4,  5,  6, -1, 
+                        7,  8, -1, -1, 
+                        9, -1, -1, -1)
+            nodemap2= ( 0,  1,  2,  3, 
+                       -1,  4,  5,  6, 
+                       -1, -1,  7,  8, 
+                       -1, -1, -1,  9)
+        if Q == 4:
+            nodemap = ( 0,  1,  2,  3,  4, 
+                        5,  6,  7,  8, -1, 
+                        9, 10, 11, -1, -1, 
+                       12, 13, -1, -1, -1, 
+                       14, -1, -1, -1, -1, )
+            nodemap2= ( 0,  1,  2,  3,  4, 
+                       -1,  5,  6,  7,  8, 
+                       -1, -1,  9, 10, 11, 
+                       -1, -1, -1, 12, 13, 
+                       -1, -1, -1, -1, 14, )
+        
+        #Invert the map
+        nodemapinv  = []
+        for k in xrange(int((Q+1)*(Q+2)/2)):
+            j = 0
+            while nodemap[j] != k: j += 1
+            nodemapinv.append(j)
+    
+        nodemapinv2  = []
+        for k in xrange(int((Q+1)*(Q+2)/2)):
+            j = 0
+            while nodemap2[j] != k: j += 1
+            nodemapinv2.append(j)
+
+        for j in xrange(nj):
+            for i in xrange(int(ni/2)):
+                e = i + ni*j
+                
+                #Write nodes
+                for k in xrange(int((Q+1)*(Q+2)/2)):
+                    f.write(str(E[e,nodemapinv[k]])+' ')
+                f.write('\n')
+        
+                
+                #Write nodes
+                for k in xrange(int((Q+1)*(Q+2)/2)):
+                    f.write(str(E[e,(Q+1)*(Q+1)-1-nodemapinv[k]])+' ')
+                f.write('\n')
+                
+            for i in xrange(int(ni/2),ni):
+                e = i + ni*j
+                
+                #Write nodes
+                for k in xrange(int((Q+1)*(Q+2)/2)):
+                    f.write(str(E[e,nodemapinv2[k]])+' ')
+                f.write('\n')
+                        
+                #Write nodes
+                for k in xrange(int((Q+1)*(Q+2)/2)):
+                    f.write(str(E[e,(Q+1)*(Q+1)-1-nodemapinv2[k]])+' ')
+                f.write('\n')
+
+    else:
+        f.write(str(nelem)+'\n')
+        f.write(str(Q)+'\n')
+        f.write('PXE_Shape_Quad\n')
+        f.write('UniformNodeDistribution\n')
+        #Write nodes
+        for e in xrange(nelem):
+            for k in xrange((Q+1)*(Q+1)):
+                f.write(str(E[e,k])+' ')
+            f.write('\n')
       
     f.close()
     return
