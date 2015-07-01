@@ -5,7 +5,9 @@ def writeGRM(filename_base, ref, Q, TriFlag, E, V, nLE, NC, nWK, nWB, nr):
     # Write out the grid file #
     #=========================#
 
-    f = open(filename_base + '_ref'+str(ref)+ '_Q'+str(Q)+'.grm', 'w')
+    filename = filename_base + ('_tri' if TriFlag else '_quad') + '_ref'+str(ref)+ '_Q'+str(Q)+'.grm'
+    print 'Writing ', filename
+    f = open(filename, 'w')
      
     nelem = E.shape[0];
     
@@ -29,7 +31,7 @@ def writeGRM(filename_base, ref, Q, TriFlag, E, V, nLE, NC, nWK, nWB, nr):
     #----------------#
         
     # Airfoil
-    nb = int((nLE-1)/Q) #(nLE-1)/2+(nTE-1)/2;
+    nb = int((nLE-1)/Q)
     f.write(str(nb) + '\n');
     f.write('PXE_Shape_Edge\n')
     for i in xrange(int((nLE-1)/Q)):
@@ -59,9 +61,9 @@ def writeGRM(filename_base, ref, Q, TriFlag, E, V, nLE, NC, nWK, nWB, nr):
     #----------#
       
     if TriFlag:
-        f.write(str(nelem)+'\n')
+        f.write(str(2*nelem)+'\n')
         f.write(str(Q)+'\n')
-        f.write('PXE_Shape_Tri\n')
+        f.write('PXE_Shape_Triangle\n')
         f.write('UniformNodeDistribution\n')
 
         ni = int((NC.shape[0]-1)/Q)
@@ -73,34 +75,34 @@ def writeGRM(filename_base, ref, Q, TriFlag, E, V, nLE, NC, nWK, nWB, nr):
             nodemap2= (0, 1, 
                       -1, 2)
         if Q == 2:
-            nodemap = (0,  1,  2, 
-                       3,  4, -1,   
-                       5, -1, -1)
+            nodemap = (0,  5,  1, 
+                       4,  3, -1,   
+                       2, -1, -1)
             
-            nodemap2= ( 0,  1,  2, 
-                       -1,  3,  4,   
-                       -1, -1,  5)
+            nodemap2= ( 0,  5,  1, 
+                       -1,  4,  3,   
+                       -1, -1,  2)
     
         if Q == 3:
-            nodemap = ( 0,  1,  2,  3, 
-                        4,  5,  6, -1, 
-                        7,  8, -1, -1, 
-                        9, -1, -1, -1)
-            nodemap2= ( 0,  1,  2,  3, 
-                       -1,  4,  5,  6, 
-                       -1, -1,  7,  8, 
-                       -1, -1, -1,  9)
+            nodemap = ( 0,  7,  8,  1, 
+                        6,  9,  3, -1, 
+                        5,  4, -1, -1, 
+                        2, -1, -1, -1)
+            nodemap2= ( 0,  7,  8,  1, 
+                       -1,  6,  9,  3, 
+                       -1, -1,  5,  4, 
+                       -1, -1, -1,  2)
         if Q == 4:
-            nodemap = ( 0,  1,  2,  3,  4, 
-                        5,  6,  7,  8, -1, 
-                        9, 10, 11, -1, -1, 
-                       12, 13, -1, -1, -1, 
-                       14, -1, -1, -1, -1, )
-            nodemap2= ( 0,  1,  2,  3,  4, 
-                       -1,  5,  6,  7,  8, 
-                       -1, -1,  9, 10, 11, 
-                       -1, -1, -1, 12, 13, 
-                       -1, -1, -1, -1, 14, )
+            nodemap = ( 0,  9, 10, 11,  1, 
+                        8, 12, 13,  3, -1, 
+                        7, 14,  4, -1, -1, 
+                        6,  5, -1, -1, -1, 
+                        2, -1, -1, -1, -1, )
+            nodemap2= ( 0,  9, 10, 11,  1, 
+                       -1,  8, 12, 13,  3, 
+                       -1, -1,  7, 14,  4,
+                       -1, -1, -1,  6,  5, 
+                       -1, -1, -1, -1,  2,)
         
         #Invert the map
         nodemapinv  = []

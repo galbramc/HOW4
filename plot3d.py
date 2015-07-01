@@ -4,8 +4,9 @@ import pylab as pyl
 
 #-----------------------------------------------------------
 # writes a 2D ascii plot3d grid file
-def writePlot2D(fname, X, Y):
-    f = open(fname, 'w')
+def writePlot2D(filename, X, Y):
+    f = open(filename, 'w')
+    print 'Writing ', filename
     ni, nj = X.shape
     
     npy.set_printoptions( precision=16, threshold = ni )
@@ -31,8 +32,9 @@ def Write3DArray(f,X):
 
 #-----------------------------------------------------------
 # writes a 3D ascii plot3d grid file
-def writePlot3D(fname, X, Y):
-    f = open(fname, 'w')
+def writePlot3D(filename, X, Y):
+    f = open(filename, 'w')
+    print 'Writing ', filename
     ni, nj = X.shape; nk = 2
     
     npy.set_printoptions( precision=16, threshold = ni )
@@ -52,8 +54,9 @@ def writePlot3D(fname, X, Y):
 
 #-----------------------------------------------------------
 # writes a 3D ascii plot3d grid file
-def writeOVERFLOW(fname, X, Y):
-    f = open(fname, 'w')
+def writeOVERFLOW(filename, X, Y):
+    f = open(filename, 'w')
+    print 'Writing ', filename
    
     # Overflow requires 3 spanwise ndoes
 
@@ -82,8 +85,9 @@ def writeOVERFLOW(fname, X, Y):
 
 #-----------------------------------------------------------
 # reads a 2D ascii plot3d grid file assuming an X-Z plane (i.e. OVERFLOW)
-def readPlot2D(fname):
-    f = open(fname, 'r')
+def readPlot2D(filename):
+    f = open(filename, 'r')
+    print 'Reading ', filename
     
     data = f.read()
     f.close()

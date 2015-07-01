@@ -14,7 +14,9 @@ def writeFEC(filename_base, ref, Q, E, V, nLE, NC, nWK, nWB, nr):
         print("Error: can't write cubic FE data with Q = " + str(Q) + '\n');
         return;
     
-    f = open(filename_base + '_ref'+str(ref)+'.fec', 'w')
+    filename = filename_base + '_ref'+str(ref)+'.fec'
+    print 'Writing ', filename
+    f = open(filename, 'w')
 
     nelem = E.shape[0];
     nnode = V.shape[0];

@@ -5,7 +5,9 @@ def writeVTK(filename_base, ref, Q, E, V):
     # Write out the grid file #
     #=========================#
 
-    f = open(filename_base + '_ref'+str(ref)+ '_Q'+str(Q)+'.vtk', 'w')
+    filename = filename_base + '_ref'+str(ref)+ '_Q'+str(Q)+'.vtk'
+    print 'Writing ', filename
+    f = open(filename, 'w')
 
     f.write('# vtk DataFile Version 2\n');
     f.write(filename_base + ', level ' + str(ref) + ' order ' + str(Q) + '\n');

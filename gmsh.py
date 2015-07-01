@@ -1,10 +1,11 @@
 from __future__ import division
-import numpy as npy
 
 #===============================================================================
 def writeGMSH(filename_base, ref, Q, TriFlag, E, V, nLE, NC, nWK, nWB, nr):
 
-    f = open(filename_base + '_ref'+str(ref)+ '_Q'+str(Q)+'.msh', 'w')
+    filename = filename_base + ('_tri' if TriFlag else '_quad') + '_ref'+str(ref)+ '_Q'+str(Q)+'.msh'
+    print 'Writing ', filename
+    f = open(filename, 'w')
 
     nelem = E.shape[0];
     nnode = V.shape[0];
