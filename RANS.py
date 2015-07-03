@@ -6,7 +6,7 @@ Q = 1
 
 #The range of refinement levels to generate
 refmin = 0
-refmax = 4
+refmax = 5
 
 for ref in xrange(refmin,refmax+1):
     make_airfoil(100, ref, Q, TriFlag=True, FileFormat="msh", nchordwise=8, nxwake=8, nnormal=16,
