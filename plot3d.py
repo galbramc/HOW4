@@ -65,16 +65,16 @@ def writeOVERFLOW(filename, X, Y):
     npy.set_printoptions( precision=16, threshold = ni )
     
     f.write('1'+'\n')
-    f.write(str(ni) + ' ' + str(nk) + ' ' + str(nj) + '\n')
+    f.write(str(ni) + ' ' + str(nj) + ' ' + str(nk) + '\n')
     Write3DArray(f,X)
     Write3DArray(f,X)
     Write3DArray(f,X)
 
     Z = npy.ones(X.shape)*0
     Write3DArray(f,Z)
-    Z = npy.ones(X.shape)*0.5
+    Z = npy.ones(X.shape)*-0.5
     Write3DArray(f,Z)
-    Z = npy.ones(X.shape)*1
+    Z = npy.ones(X.shape)*-1
     Write3DArray(f,Z)
 
     Write3DArray(f,Y)
