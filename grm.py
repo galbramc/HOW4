@@ -13,8 +13,6 @@ def writeGRM(filename_base, ref, Q, TriFlag, E, V, nLE, NC, nWK, nWB, nr):
     
     fac = 2 if TriFlag else 1
     
-    #if (TriFlag): nelem = nelem*2;
-    print 'Elements : ', fac*nelem
     nnode = V.shape[0];
     f.write('2 ' + str(nnode) + ' 1 3\n') #dim nNodes negrp nbfgrp
      

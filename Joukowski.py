@@ -261,8 +261,8 @@ def make_airfoil(Dfarfield, ref, Q, TriFlag, FileFormat, farang=0.0, nchordwise=
 
     # The new spacing; exponential
     if (reynolds > 5e5):
-        # Turbulent.  y+=5 for the first cell at the TE on the coarse mesh
-        coarse_yplus = 5
+        # Turbulent.  y+=1 for the first cell at the TE on the coarse mesh
+        coarse_yplus = 1
         dy_te = 5.82 * (coarse_yplus / reynolds**0.9) / 2**maxref
         wake_power = 0.8
     else:
@@ -313,7 +313,8 @@ def make_airfoil(Dfarfield, ref, Q, TriFlag, FileFormat, farang=0.0, nchordwise=
     assert(XC.shape[0] == nWB)
     assert(XC.shape[1] == nr)
 
-    print 'Size ' + str( int((nWB-1)/Q) ) + 'x' + str( int((nr-1)/Q) ) + ' with '  + str( int((nWB-1)/Q)*int((nr-1)/Q) ) + ' Elements'
+    fac = 2 if TriFlag else 1
+    print 'Size ' + str( int((nWB-1)/Q) ) + 'x' + str( int((nr-1)/Q) ) + ' with '  + str( fac*int((nWB-1)/Q)*int((nr-1)/Q) ) + ' Elements'
     
     if FileFormat == 'p2d':
         writePlot2D(filename_base + '_ref'+str(ref)+ '_Q'+str(Q)+'.p2d.x', XC, YC)
