@@ -64,6 +64,28 @@ def FindStretching(n, h_min, Hc):
     return guess;
     
 
+def coarsen(re, ref, maxref):
+    i = maxref
+    while i > ref:
+        re = npy.delete(re, npy.s_[1::2], 0 )
+        i = i-1
+    return re
+
+#-----------------------------------
+def Joukowski_wake_x(nn):
+    a = 0.1
+    s = 0.125*(1-npy.cos(pi*npy.linspace(0,1,nn+1)))
+    den  = 1 + 2*a*(1 + a)*(1 + cos(pi*s)) ;
+    xnum = (1 + a*(1 + 2*a)*(1 + cos(pi*s)))*(sin(0.5*pi*s))**2 ;
+    x = xnum/den;
+    x = x/x[-1]
+    for i in xrange(7,nn+1):
+        x[i] = (i-6)*x[i]
+    
+    x = x/x[-1]
+    
+    return x
+
 def make_airfoil(Dfarfield, ref, Q, TriFlag, FileFormat, farang=0.0, nchordwise=20,
                  nxwake=9, rxwakecenter=3.0, rxwakefary=0.35, nnormal=14,
                  rnormal=2.8, rnormalfar=3.0, TEfac=1.0, Ufac=1.0,
@@ -114,33 +136,38 @@ def make_airfoil(Dfarfield, ref, Q, TriFlag, FileFormat, farang=0.0, nchordwise=
     # Ufac  = 1.0        # factor controlling uniformity of chordwise spacing (high = uniform)
     # wakeangle=0.0      # angle of wake leaving the airfoil
     
+    maxref = 6
+    assert( ref <= maxref )
+    
     #--------------------#
     # load/spline points #
     #--------------------#
-    X, saf = Joukowski(nchordwise*2**ref,Q)
+    X, saf = Joukowski(nchordwise*2**maxref,Q)
     # print X;
     
     c = max(X[:,0]) - min(X[:,0])          # chord length
     Hc = Dfarfield*c                       # farfield distance
     
     xte = X[0,:];                          # TE point
+    dx_te = X[0,0] - X[Q,0];
+    X = coarsen(X, ref, maxref)
     XLE = X[npy.append(range(len(X)),0),:] # rest of airfoil
     nLE = len(XLE)
-    
+
     #-------------------------------------#
     # put points down along farfield, FLE #
     #-------------------------------------#
-    dx = XLE[1:,:]-XLE[:-1,:]
-    ds = (dx[:,0]**2 + dx[:,1]**2)**0.5+0.1
-    s  = npy.zeros(nLE)
-    for i in xrange(1,nLE):
-        s[i] = s[i-1]+ds[i-1]
+    #dx = XLE[1:,:]-XLE[:-1,:]
+    #ds = (dx[:,0]**2 + dx[:,1]**2)**0.5+0.1
+    #s  = npy.zeros(nLE)
+    #for i in xrange(1,nLE):
+    #    s[i] = s[i-1]+ds[i-1]
     x0     = tan(farang)*Hc
     radius = (x0**2 + Hc**2)**0.5
-    t0     = s/max(s)*(pi-2*farang) + 3*pi/2 + farang
+    #t0     = s/max(s)*(pi-2*farang) + 3*pi/2 + farang
     
     #print t0
-    #t0 = npy.linspace( 3.*pi/2., 5.*pi/2., t0.shape[0])
+    t0 = npy.linspace( 3.*pi/2., 5.*pi/2., nLE)
     #print t0
     #dxds, dyds = Joukowski_dxy_ds(saf,0.1)
     #t0 = npy.arccos(dyds/npy.sqrt(dxds**2+dyds**2))
@@ -163,22 +190,26 @@ def make_airfoil(Dfarfield, ref, Q, TriFlag, FileFormat, farang=0.0, nchordwise=
     #----------------------#
     # x-wake on centerline #
     #----------------------#
-    nr0 = nxwake*2**ref # 9=inviscid, 11=viscous
-    a   = 0.1
-    b   = rxwakecenter  # 2.9 for NACA, inviscid
-    dx_te = X[0,0] - X[Q,0];
+    nr0 = nxwake*2**maxref 
+    #a   = 0.01
+    #b   = rxwakecenter  # 2.9 for NACA, inviscid
+    
     #print "TE locations\n"
     #print dx_te, X[0,0], X[Q,0]
     #print "TE locations done\n"
-    re  = (npy.logspace(a,b,nr0+1) - 10**a)/(10**b-10**a)
+    #re  = (npy.logspace(a,b,nr0+1) - 10**a)/(10**b-10**a)
     #print re;
 
-    ratio = FindStretching(nr0, dx_te, Hc)
-    for i in xrange(0, nr0+1):
-        re[i] = Distance(i, dx_te, ratio)/Hc
+    #re = npy.zeros(nr0+1)
+    #ratio = FindStretching(nr0, dx_te, Hc)
+    #for i in xrange(0, nr0+1):
+    #    re[i] = Distance(i, dx_te, ratio)/Hc
     #print re;
 
-    rw  = spaceq(re, ref, Q)
+    re = Joukowski_wake_x(nr0)
+
+    re = coarsen(re, ref, maxref)
+    rw = spaceq(re, Q)
     
     #----------------------------------#
     # C-grid: put points on wake first #
@@ -196,7 +227,8 @@ def make_airfoil(Dfarfield, ref, Q, TriFlag, FileFormat, farang=0.0, nchordwise=
     a  = 0.1
     b  = rxwakefary
     re = (npy.logspace(a,b,nr0+1) - 10**a)/(10**b-10**a)
-    rbot = npy.flipud(spaceq(re, ref, Q)*(Hc+xte[0]))
+    re = coarsen(re, ref, maxref)
+    rbot = npy.flipud(spaceq(re, Q)*(Hc+xte[0]))
     
     FWK1 = npy.array([rbot,              XWK[:,1] - Hc - rbot*x0/Hc]).transpose()
     FWK2 = npy.array([npy.flipud(rbot), XWK2[:,1] + Hc + npy.flipud(rbot)*x0/Hc]).transpose()
@@ -222,44 +254,48 @@ def make_airfoil(Dfarfield, ref, Q, TriFlag, FileFormat, farang=0.0, nchordwise=
     nr0 = nnormal*2**ref
 
     # The old spacing; log-linear
-    a  = 0.1
-    b  = rnormal
-    re = (npy.logspace(a,b,nr0+1) - 10**a)/(10**b-10**a)
+    #a  = 0.1
+    #b  = rnormal
+    #re = (npy.logspace(a,b,nr0+1) - 10**a)/(10**b-10**a)
     # print re
 
     # The new spacing; exponential
     if (reynolds > 5e5):
         # Turbulent.  y+=5 for the first cell at the TE on the coarse mesh
         coarse_yplus = 5
-        dy_te = 5.82 * (coarse_yplus / reynolds**0.9) / 2**ref
+        dy_te = 5.82 * (coarse_yplus / reynolds**0.9) / 2**maxref
         wake_power = 0.8
     else:
         # Laminar.  Put two cells across the BL at the TE on the coarse mesh
-        dy_te = 1. / reynolds**0.5 / 2**ref
+        dy_te = 1. / reynolds**0.5 / 2**maxref
         wake_power = 0.5
 
-    nr = 1 + (len(re)-1)*Q
+    nr = 1 + nr0*Q
     XC = npy.zeros([nWB, nr])
     YC = npy.array(XC)
-    a  = 0.1
-    b  = rnormalfar
-    re = (npy.logspace(a,b,nr0+1) - 10**a)/(10**b-10**a)
-    r1 = spaceq(re, ref, Q)
+    #a  = 0.1
+    #b  = rnormalfar
+    #re = (npy.logspace(a,b,nr0+1) - 10**a)/(10**b-10**a)
+    #r1 = spaceq(re, Q)
     #print re
+    
+    nr0 = nnormal*2**maxref
     
     for i in xrange(nWB):
         iplus = min(nWB-1, i+1)
         iminus = max(0, i-1)
         ds = ((XWB[iplus,0] - XWB[iminus,0])**2 +
               (XWB[iplus,1] - XWB[iminus,1])**2)**0.5/ (iplus - iminus)
-        dy = min(dy_te, ds*5*Q)
+        #dy = min(dy_te, ds*5*Q)
         dy = dy_te * max(XWB[i,0],1)**wake_power
         # print XWB[iplus,0], XWB[iminus,0], ds, dy, iplus, iminus
+        re = npy.zeros(nr0+1)
         ratio = FindStretching(nr0, dy, Hc)
         for i2 in xrange(0, nr0+1):
             #print i2, Distance(i2, dy, ratio)/Hc
             re[i2] = Distance(i2, dy, ratio)/Hc
-        r0 = spaceq(re, ref, Q)
+        re = coarsen(re, ref, maxref)
+        r0 = spaceq(re, Q)
         #print re
     
         r = r0
@@ -269,13 +305,18 @@ def make_airfoil(Dfarfield, ref, Q, TriFlag, FileFormat, farang=0.0, nchordwise=
         XC[i,:] = XWB[i,0] + r*(FWB[i,0]-XWB[i,0])
         YC[i,:] = XWB[i,1] + r*(FWB[i,1]-XWB[i,1])
     
+    #dx = XC[1:,0]-XC[:-1,0]
+    #pyl.plot( (XC[1:,0]+XC[:-1,0])/2 ,dx,'o')
+    
     #pyl.plot(XC,YC,'o')
     #pyl.show()
     assert(XC.shape[0] == nWB)
     assert(XC.shape[1] == nr)
 
+    print 'Size ' + str( int((nWB-1)/Q) ) + 'x' + str( int((nr-1)/Q) ) + ' with '  + str( int((nWB-1)/Q)*int((nr-1)/Q) ) + ' Elements'
+    
     if FileFormat == 'p2d':
-        writePlot2D(filename_base + '_ref'+str(ref)+ '_Q'+str(Q)+'.p2d', XC, YC)
+        writePlot2D(filename_base + '_ref'+str(ref)+ '_Q'+str(Q)+'.p2d.x', XC, YC)
     if FileFormat == 'p3d':
         writeNMF(filename_base + '_ref'+str(ref)+ '_Q'+str(Q)+'.nmf', XC, nLE, nWK, nWB, nr)
         writePlot3D(filename_base + '_ref'+str(ref)+ '_Q'+str(Q)+'.p3d', XC, YC)
@@ -321,7 +362,7 @@ def make_airfoil(Dfarfield, ref, Q, TriFlag, FileFormat, farang=0.0, nchordwise=
     if FileFormat == 'msh':
         writeGMSH(filename_base, ref, Q, TriFlag, E, V, nLE, NC, nWK, nWB, nr);
 
-    return
+    print("Done with refinement " + str(ref))
     
 #-----------------------------------
 def block_elem(N, Q):
@@ -402,7 +443,7 @@ def Joukowski(nn, Q):
     return X, sL
 
 #===============================================================================
-def spaceq(re, ref, Q):
+def spaceq(re, Q):
     nsub = Q
     nre = len(re) - 1
     nr  = nsub*nre

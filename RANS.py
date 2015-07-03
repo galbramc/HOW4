@@ -1,9 +1,14 @@
 from Joukowski import make_airfoil
 
-Q = 4
+# Q is the degree of the polynomial used to represent elements. For Finite Volume/Difference codes, this should be Q=1 for linear elements.
+# Finite Element codes are encouraged to use super-parametric elements with Q=4, or the highest available
+Q = 1
 
-for ref in xrange(0,5):
-    make_airfoil(100, ref, Q, TriFlag=True, FileFormat="msh", nchordwise=8, nxwake=8, nnormal=14,
+#The range of refinement levels to generate
+refmin = 0
+refmax = 4
+
+for ref in xrange(refmin,refmax+1):
+    make_airfoil(100, ref, Q, TriFlag=True, FileFormat="msh", nchordwise=8, nxwake=8, nnormal=16,
                  rnormal=4, rnormalfar=4, rxwakecenter=3.65, reynolds=1.e6,
                  filename_base="Joukowski_RANS")
-    print("Done with level " + str(ref));
