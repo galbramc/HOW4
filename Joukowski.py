@@ -314,7 +314,7 @@ def make_airfoil(Dfarfield, ref, Q, TriFlag, FileFormat, farang=0.0, nchordwise=
     assert(XC.shape[1] == nr)
 
     fac = 2 if TriFlag else 1
-    print 'Size ' + str( int((nWB-1)/Q) ) + 'x' + str( int((nr-1)/Q) ) + ' with '  + str( fac*int((nWB-1)/Q)*int((nr-1)/Q) ) + ' Elements'
+    print 'Cell size ' + str( int((nWB-1)/Q) ) + 'x' + str( int((nr-1)/Q) ) + ' with '  + str( fac*int((nWB-1)/Q)*int((nr-1)/Q) ) + ' Elements'
     
     if FileFormat == 'p2d':
         writePlot2D(filename_base + '_ref'+str(ref)+ '_Q'+str(Q)+'.p2d.x', XC, YC)
