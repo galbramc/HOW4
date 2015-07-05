@@ -72,19 +72,31 @@ def coarsen(re, ref, maxref):
     return re
 
 #-----------------------------------
-def Joukowski_wake_x(nn):
+def Joukowski_wake_x(nchordwise, nn, Hc):
+    
+    frac = 2
+    nAf = int(nchordwise/frac)
     a = 0.1
-    s = 0.125*(1-npy.cos(pi*npy.linspace(0,1,nn+1)))
+    s = 1-0.5*(1-npy.cos(pi*npy.linspace(0,1/frac,nAf+1)))
     den  = 1 + 2*a*(1 + a)*(1 + cos(pi*s)) ;
     xnum = (1 + a*(1 + 2*a)*(1 + cos(pi*s)))*(sin(0.5*pi*s))**2 ;
-    x = xnum/den;
-    x = x/x[-1]
-    for i in xrange(7,nn+1):
-        x[i] = (i-6)*x[i]
+    x = 1-xnum/den;
+ 
+    #for i in xrange(7,nn+1):
+    #    x[i] = (i-6)*x[i]
     
-    x = x/x[-1]
+    #x = x/x[-1]
     
-    return x
+    nWake = nn-nAf
+    dx = x[-1] - x[-2]
+    
+    re = npy.zeros(nn+1)
+    re[0:nAf+1] = x
+    ratio = FindStretching(nWake, dx, Hc-x[-1])
+    for i in xrange(nWake+1):
+        re[nAf+i] = x[-1] + Distance(i, dx, ratio)
+    
+    return re/Hc
 
 def make_airfoil(Dfarfield, ref, Q, TriFlag, FileFormat, farang=0.0, nchordwise=20,
                  nxwake=9, rxwakecenter=3.0, rxwakefary=0.35, nnormal=14,
@@ -206,7 +218,7 @@ def make_airfoil(Dfarfield, ref, Q, TriFlag, FileFormat, farang=0.0, nchordwise=
     #    re[i] = Distance(i, dx_te, ratio)/Hc
     #print re;
 
-    re = Joukowski_wake_x(nr0)
+    re = Joukowski_wake_x(nchordwise*2**maxref, nr0, Hc)
 
     re = coarsen(re, ref, maxref)
     rw = spaceq(re, Q)
@@ -262,7 +274,7 @@ def make_airfoil(Dfarfield, ref, Q, TriFlag, FileFormat, farang=0.0, nchordwise=
     # The new spacing; exponential
     if (reynolds > 5e5):
         # Turbulent.  y+=1 for the first cell at the TE on the coarse mesh
-        coarse_yplus = 1
+        coarse_yplus = 0.1
         dy_te = 5.82 * (coarse_yplus / reynolds**0.9) / 2**maxref
         wake_power = 0.8
     else:
