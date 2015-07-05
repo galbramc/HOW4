@@ -428,7 +428,7 @@ def block_elem(N, Q):
                     E[i,k] = N[ix+kx,iy+ky]
                     k = k+1;
 
-        i = i + 1;
+            i = i + 1;
       
     return E
 
