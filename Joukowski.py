@@ -39,6 +39,7 @@ def writeNMF(fname, X, nLE, nWK, nWB, nr):
     f.write("'farfield_riem' 1 4   1 " + str(nj) + " 1 " +str(nk) + "\n");
 
 
+#-----------------------------------
 def Distance(i, dx_te, ratio):
     return dx_te*(ratio**i - 1) / (ratio-1)
 
@@ -63,6 +64,33 @@ def FindStretching(n, h_min, Hc):
 
     return guess;
     
+
+#-----------------------------------
+def tanh(i, nn, delta):
+    return 1 + npy.tanh(delta*(i/nn - 1))/npy.tanh(delta)
+
+def dtanhddelta(i, nn, delta):
+    return (-1 + i/nn)/(npy.tanh(delta) * npy.cosh(delta* (-1 + i/nn))**2) - npy.tanh(delta* (-1 + i/nn))/(npy.sinh(delta)**2)
+
+def find_tanh_delta( ds, nn ):
+    
+    guess = 2
+    itmax = 1000
+    it = 0
+    finished = False
+    while not finished and it < itmax:
+        func = tanh(1, nn, guess) - ds
+        grad = dtanhddelta(1, nn, guess)
+        delta = - func / grad
+        guess += delta
+        it = it + 1
+        #print guess, ' ', delta
+        if (abs(delta) < 1e-12):
+            finished = True
+    
+    #if it == itmax:
+    #    assert(it < itmax)
+    return guess
 
 def coarsen(re, ref, maxref):
     i = maxref
@@ -273,8 +301,8 @@ def make_airfoil(Dfarfield, ref, Q, TriFlag, FileFormat, farang=0.0, nchordwise=
 
     # The new spacing; exponential
     if (reynolds > 5e5):
-        # Turbulent.  y+=1 for the first cell at the TE on the coarse mesh
-        coarse_yplus = 0.1
+        # Turbulent.  y+=4 for the first cell at the TE on the coarse mesh
+        coarse_yplus = 3
         dy_te = 5.82 * (coarse_yplus / reynolds**0.9) / 2**maxref
         wake_power = 0.8
     else:
@@ -294,18 +322,23 @@ def make_airfoil(Dfarfield, ref, Q, TriFlag, FileFormat, farang=0.0, nchordwise=
     nr0 = nnormal*2**maxref
     
     for i in xrange(nWB):
-        iplus = min(nWB-1, i+1)
-        iminus = max(0, i-1)
-        ds = ((XWB[iplus,0] - XWB[iminus,0])**2 +
-              (XWB[iplus,1] - XWB[iminus,1])**2)**0.5/ (iplus - iminus)
-        #dy = min(dy_te, ds*5*Q)
+        #iplus = min(nWB-1, i+1)
+        #iminus = max(0, i-1)
+        #ds = ((XWB[iplus,0] - XWB[iminus,0])**2 +
+        #      (XWB[iplus,1] - XWB[iminus,1])**2)**0.5/ (iplus - iminus)
+              
         dy = dy_te * max(XWB[i,0],1)**wake_power
         # print XWB[iplus,0], XWB[iminus,0], ds, dy, iplus, iminus
         re = npy.zeros(nr0+1)
-        ratio = FindStretching(nr0, dy, Hc)
-        for i2 in xrange(0, nr0+1):
+        #ratio = FindStretching(nr0, dy, Hc)
+        #for i2 in xrange(0, nr0+1):
             #print i2, Distance(i2, dy, ratio)/Hc
-            re[i2] = Distance(i2, dy, ratio)/Hc
+        #    re[i2] = Distance(i2, dy, ratio)/Hc
+            
+        delta = find_tanh_delta( dy/Hc, nr0 )
+        for i2 in xrange(0, nr0+1):
+            re[i2] = tanh(i2, nr0, delta)
+
         re = coarsen(re, ref, maxref)
         r0 = spaceq(re, Q)
         #print re
@@ -384,17 +417,16 @@ def block_elem(N, Q):
     mx = int((nx-1)/Q);
     my = int((ny-1)/Q);
     E = npy.zeros( (mx*my,(Q+1)*(Q+1)),int);
-    dy = ny;
     i = 0;
     for imy in xrange(my):
-      for imx in xrange(mx):
-        ix = Q*(imx+1)-(Q-1)-1;
-        iy = Q*(imy+1)-(Q-1)-1;
-        k = 0;
-        for ky in xrange(Q+1):
-          for kx in xrange(Q+1):
-            E[i,k] = N[ix+kx,iy+ky]
-            k = k+1;
+        for imx in xrange(mx):
+            ix = Q*(imx+1)-(Q-1)-1;
+            iy = Q*(imy+1)-(Q-1)-1;
+            k = 0;
+            for ky in xrange(Q+1):
+                for kx in xrange(Q+1):
+                    E[i,k] = N[ix+kx,iy+ky]
+                    k = k+1;
 
         i = i + 1;
       
