@@ -122,8 +122,8 @@ def Joukowski_wake_x(nchordwise, nn, Hc):
     frac = 2
     nAf = int(nchordwise/frac)
     a = 0.1
-    #s = Cos(nAf,1/frac)
-    s = Bezier(nAf,1/frac)
+    s = Cos(nAf,1/frac)
+    #s = Bezier(nAf,1/frac)
     den  = 1 + 2*a*(1 + a)*(1 + cos(pi*s)) ;
     xnum = (1 + a*(1 + 2*a)*(1 + cos(pi*s)))*(sin(0.5*pi*s))**2 ;
     x = 1-xnum/den;
@@ -200,7 +200,7 @@ def make_airfoil(Dfarfield, ref, Q, TriFlag, FileFormat, farang=0.0, nchordwise=
     #--------------------#
     # load/spline points #
     #--------------------#
-    X, saf = Joukowski(nchordwise*2**maxref,Q)
+    X, saf = Joukowski(nchordwise*2**ref,Q) #Don't use the max refinement to make sure the high-order nodes are distributted well
     # print X;
     
     c = max(X[:,0]) - min(X[:,0])          # chord length
@@ -208,7 +208,6 @@ def make_airfoil(Dfarfield, ref, Q, TriFlag, FileFormat, farang=0.0, nchordwise=
     
     xte = X[0,:];                          # TE point
     dx_te = X[0,0] - X[Q,0];
-    X = coarsen(X, ref, maxref)
     XLE = X[npy.append(range(len(X)),0),:] # rest of airfoil
     nLE = len(XLE)
 
@@ -319,8 +318,8 @@ def make_airfoil(Dfarfield, ref, Q, TriFlag, FileFormat, farang=0.0, nchordwise=
 
     # The new spacing; exponential
     if (reynolds > 5e5):
-        # Turbulent.  y+=4 for the first cell at the TE on the coarse mesh
-        coarse_yplus = 3
+        # Turbulent.  y+=25 for the first cell at the TE on the coarse mesh
+        coarse_yplus = 25
         dy_te = 5.82 * (coarse_yplus / reynolds**0.9) / 2**maxref
         wake_power = 0.8
     else:
@@ -490,10 +489,10 @@ def Joukowski(nn, Q):
     #s = 1-0.5*(1-npy.cos(pi*npy.linspace(0,1,nn+1)))
     
     #Use a cos curve to cluster at LE and TE. Joukowski_wake_x must use the same function.
-    #s = Cos(nn)
+    s = Cos(nn)
     
     #Use a Bezier curve to cluster at LE and TE. Joukowski_wake_x must use the same function.
-    s = Bezier(nn)
+    #s = Bezier(nn)
     
     #print nn, s
     sL = spaceqarc(s, a, Q)
