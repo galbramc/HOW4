@@ -106,7 +106,7 @@ def Bezier(nn, smax=1):
     
     #Use a Bezier curve to cluster at LE and TE: ds = -1 gives a linear distribution. Clustering is added as ds->0 from -1
     ds0 = -0.2
-    ds1 = -0.5
+    ds1 = -0.2
     P0 = 1
     P1 = (3 + ds1)/3
     P2 = -(ds0/3)
