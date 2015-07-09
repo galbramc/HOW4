@@ -3,7 +3,7 @@ import numpy as npy
 from numpy import pi, sin, cos, tan, log10
 from scipy import integrate
 from scipy import optimize
-from plot3d import writePlot2D, writePlot3D, writeOVERFLOW
+from plot3d import writePlot2D, writePlot3D, writeFUN3D, writeOVERFLOW
 from grm import writeGRM
 from vtk import writeVTK
 from fec import writeFEC
@@ -28,12 +28,12 @@ def writeNMF(fname, X, nLE, nWK, nWB, nr):
     f.write('1\n\n')
     f.write('1 ' + str(ni) + ' ' + str(nj) + ' ' + str(nk) + '\n\n')
     f.write('# =================================================\n')
-    f.write('# Type      B1 F1 S1 E1 S2 E2 B2 F2 S1 E1 S2 E2 Swap\n')
+    f.write('# Type         B1 F1 S1 E1 S2 E2 B2 F2 S1 E1 S2 E2 Swap\n')
     f.write('# ---------------------------------------------------\n')
-    f.write("'symmetry_y'   1 1   1 " + str(ni) + " 1 " +str(nj) + "\n")
-    f.write("'symmetry_y'   1 2   1 " + str(ni) + " 1 " +str(nj) + "\n")
-    f.write("'one-to-one' 1 5   1 " + str(nk) + " 1 " +str(nWK) + "  1 5  1 " + str(nk) + " " + str(ni) + " " + str(nWK+nLE-1) +" False\n")
-    f.write("'viscous_solid'    1 5   1 " + str(nk) + " " + str(nWK) + " " + str(nWK+nLE-1) + "\n")
+    f.write("'symmetry_y'    1 1   1 " + str(ni) + " 1 " +str(nj) + "\n")
+    f.write("'symmetry_y'    1 2   1 " + str(ni) + " 1 " +str(nj) + "\n")
+    f.write("'one-to-one'    1 5   1 " + str(nk) + " 1 " +str(nWK) + "  1 5  1 " + str(nk) + " " + str(ni) + " " + str(nWK+nLE-1) +" False\n")
+    f.write("'viscous_solid' 1 5   1 " + str(nk) + " " + str(nWK) + " " + str(nWK+nLE-1) + "\n")
     f.write("'farfield_riem' 1 6   1 " + str(nk) + " 1 " +str(ni) + "\n");
     f.write("'farfield_riem' 1 3   1 " + str(nj) + " 1 " +str(nk) + "\n");
     f.write("'farfield_riem' 1 4   1 " + str(nj) + " 1 " +str(nk) + "\n");
@@ -384,8 +384,10 @@ def make_airfoil(Dfarfield, ref, Q, TriFlag, FileFormat, farang=0.0, nchordwise=
     if FileFormat == 'p2d':
         writePlot2D(filename_base + '_ref'+str(ref)+ '_Q'+str(Q)+'.p2d.x', XC, YC)
     if FileFormat == 'p3d':
-        writeNMF(filename_base + '_ref'+str(ref)+ '_Q'+str(Q)+'.nmf', XC, nLE, nWK, nWB, nr)
         writePlot3D(filename_base + '_ref'+str(ref)+ '_Q'+str(Q)+'.p3d', XC, YC)
+    if FileFormat == 'fun3d':
+        writeNMF(filename_base + '_ref'+str(ref)+ '_Q'+str(Q)+'.nmf', XC, nLE, nWK, nWB, nr)
+        writeFUN3D(filename_base + '_ref'+str(ref)+ '_Q'+str(Q)+'.p3d', XC, YC)
     if FileFormat == 'in':
         writeOVERFLOW('grid.in.'+str(ref), XC, YC)
     
@@ -557,7 +559,7 @@ def spaceqarc(se, a, Q):
 if __name__ == '__main__':
     Q = 1
     for ref in xrange(0,1):
-        make_airfoil(100, ref, Q, False,'p2d', nchordwise=8, nxwake=8, nnormal=16,
+        make_airfoil(100, ref, Q, False,'fun3d', nchordwise=8, nxwake=8, nnormal=16,
                      rnormal=4, rnormalfar=4, rxwakecenter=3.65, reynolds=1.e6,
                      filename_base="Joukowski")
         print("Done with level " + str(ref));

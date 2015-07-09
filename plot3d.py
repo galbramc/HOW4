@@ -84,6 +84,33 @@ def writeOVERFLOW(filename, X, Y):
     f.close()
 
 #-----------------------------------------------------------
+# writes a 3D ascii plot3d grid file
+def writeFUN3D(filename, X, Y):
+    f = open(filename, 'w')
+    print 'Writing ', filename
+   
+    # Overflow requires 3 spanwise ndoes
+
+    ni, nj = X.shape; nk = 2
+    
+    npy.set_printoptions( precision=16, threshold = ni )
+    
+    f.write('1'+'\n')
+    f.write(str(ni) + ' ' + str(nj) + ' ' + str(nk) + '\n')
+    Write3DArray(f,X)
+    Write3DArray(f,X)
+
+    Z = npy.ones(X.shape)*0
+    Write3DArray(f,Z)
+    Z = npy.ones(X.shape)*-1
+    Write3DArray(f,Z)
+
+    Write3DArray(f,Y)
+    Write3DArray(f,Y)
+               
+    f.close()
+
+#-----------------------------------------------------------
 # reads a 2D ascii plot3d grid file assuming an X-Z plane (i.e. OVERFLOW)
 def readPlot2D(filename):
     f = open(filename, 'r')
