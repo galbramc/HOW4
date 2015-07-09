@@ -122,7 +122,8 @@ def Joukowski_wake_x(nchordwise, nn, Hc):
     frac = 2
     nAf = int(nchordwise/frac)
     a = 0.1
-    s = Cos(nAf,1/frac)
+    s = 1-npy.linspace(0,1/frac,nAf+1)
+    #s = Cos(nAf,1/frac)
     #s = Bezier(nAf,1/frac)
     den  = 1 + 2*a*(1 + a)*(1 + cos(pi*s)) ;
     xnum = (1 + a*(1 + 2*a)*(1 + cos(pi*s)))*(sin(0.5*pi*s))**2 ;
@@ -318,13 +319,13 @@ def make_airfoil(Dfarfield, ref, Q, TriFlag, FileFormat, farang=0.0, nchordwise=
 
     # The new spacing; exponential
     if (reynolds > 5e5):
-        # Turbulent.  y+=25 for the first cell at the TE on the coarse mesh
-        coarse_yplus = 25
+        # Turbulent.  y+=1 for the first cell at the TE on the coarse mesh
+        coarse_yplus = 1
         dy_te = 5.82 * (coarse_yplus / reynolds**0.9) / 2**maxref
         wake_power = 0.8
     else:
         # Laminar.  Put two cells across the BL at the TE on the coarse mesh
-        dy_te = 1. / reynolds**0.5 / 2**maxref
+        dy_te = 0.1 / reynolds**0.5 / 2**maxref
         wake_power = 0.5
 
     nr = 1 + nr0*Q
@@ -485,11 +486,11 @@ def Joukowski(nn, Q):
 
     # The Joukowski airfoil is already defined in a cosine parametric space,
     # so linspace is correct here, not cos(linspace).
-    #s = 1-npy.linspace(0,1,nn+1)
+    s = 1-npy.linspace(0,1,nn+1)
     #s = 1-0.5*(1-npy.cos(pi*npy.linspace(0,1,nn+1)))
     
     #Use a cos curve to cluster at LE and TE. Joukowski_wake_x must use the same function.
-    s = Cos(nn)
+    #s = Cos(nn)
     
     #Use a Bezier curve to cluster at LE and TE. Joukowski_wake_x must use the same function.
     #s = Bezier(nn)
