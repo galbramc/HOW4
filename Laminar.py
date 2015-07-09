@@ -9,10 +9,10 @@ refmin = 0
 refmax = 5
 
 #Set to True for triangle grids, and False for qauds
-TriFlag=False
+TriFlag=True
 
 for ref in xrange(refmin,refmax+1):
-    make_airfoil(100, ref, Q, TriFlag, FileFormat="grm", nchordwise=8, nxwake=8, nnormal=16,
+    make_airfoil(100, ref, Q, TriFlag, FileFormat="msh", nchordwise=8, nxwake=8, nnormal=16,
                  rnormal=4, rnormalfar=4, rxwakecenter=3.65, reynolds=1000,
                  filename_base="Joukowski_Laminar")
     

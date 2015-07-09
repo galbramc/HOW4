@@ -105,11 +105,13 @@ def Bezier(nn, smax=1):
     s0 = npy.linspace(0,smax,nn+1)
     
     #Use a Bezier curve to cluster at LE and TE: ds = -1 gives a linear distribution. Clustering is added as ds->0 from -1
-    ds = -0.25
+    ds0 = -0.2
+    ds1 = -0.5
     P0 = 1
-    P1 = (3 + ds)/3
-    P2 = -(ds/3)
-    return P0*(1 - s0)**3 + P1*3*s0*(1 - s0)**2 + P2*3*s0**2*(1 - s0)
+    P1 = (3 + ds1)/3
+    P2 = -(ds0/3)
+    s1 = P0*(1 - s0)**3 + P1*3*s0*(1 - s0)**2 + P2*3*s0**2*(1 - s0)
+    return s1
 
 #-----------------------------------
 def Cos(nn, smax=1):
@@ -122,9 +124,9 @@ def Joukowski_wake_x(nchordwise, nn, Hc):
     frac = 2
     nAf = int(nchordwise/frac)
     a = 0.1
-    s = 1-npy.linspace(0,1/frac,nAf+1)
+    #s = 1-npy.linspace(0,1/frac,nAf+1)
     #s = Cos(nAf,1/frac)
-    #s = Bezier(nAf,1/frac)
+    s = Bezier(nAf,1/frac)
     den  = 1 + 2*a*(1 + a)*(1 + cos(pi*s)) ;
     xnum = (1 + a*(1 + 2*a)*(1 + cos(pi*s)))*(sin(0.5*pi*s))**2 ;
     x = 1-xnum/den;
@@ -486,14 +488,13 @@ def Joukowski(nn, Q):
 
     # The Joukowski airfoil is already defined in a cosine parametric space,
     # so linspace is correct here, not cos(linspace).
-    s = 1-npy.linspace(0,1,nn+1)
-    #s = 1-0.5*(1-npy.cos(pi*npy.linspace(0,1,nn+1)))
+    #s = 1-npy.linspace(0,1,nn+1)
     
-    #Use a cos curve to cluster at LE and TE. Joukowski_wake_x must use the same function.
+    #Use a cos curve to cluster at LE and TE. def Joukowski_wake_x must use the same function.
     #s = Cos(nn)
     
-    #Use a Bezier curve to cluster at LE and TE. Joukowski_wake_x must use the same function.
-    #s = Bezier(nn)
+    #Use a Bezier curve to cluster at LE and TE. def Joukowski_wake_x must use the same function.
+    s = Bezier(nn)
     
     #print nn, s
     sL = spaceqarc(s, a, Q)
@@ -556,7 +557,7 @@ def spaceqarc(se, a, Q):
 if __name__ == '__main__':
     Q = 1
     for ref in xrange(0,1):
-        make_airfoil(100, ref, Q, False,'p2d', nchordwise=8, nxwake=8, nnormal=14,
+        make_airfoil(100, ref, Q, False,'p2d', nchordwise=8, nxwake=8, nnormal=16,
                      rnormal=4, rnormalfar=4, rxwakecenter=3.65, reynolds=1.e6,
                      filename_base="Joukowski")
         print("Done with level " + str(ref));
