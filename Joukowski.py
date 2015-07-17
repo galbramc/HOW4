@@ -491,7 +491,8 @@ def Joukowski(nn, Q):
     # The Joukowski airfoil is already defined in a cosine parametric space,
     # so linspace is correct here, not cos(linspace).
     #s = 1-npy.linspace(0,1,nn+1)
-    
+    #print nn, s
+
     #Use a cos curve to cluster at LE and TE. def Joukowski_wake_x must use the same function.
     #s = Cos(nn)
     
@@ -557,6 +558,12 @@ def spaceqarc(se, a, Q):
 
 
 if __name__ == '__main__':
+    #nnormal = 16
+    #reynolds = 1e3
+    #maxref = 6
+    #dy_te = 0.1 / reynolds**0.5 / 2**maxref
+    #print nnormal*2**maxref, dy_te
+    
     Q = 1
     for ref in xrange(0,1):
         make_airfoil(100, ref, Q, False,'fun3d', nchordwise=8, nxwake=8, nnormal=16,
