@@ -3,7 +3,7 @@ import numpy as npy
 from numpy import pi, sin, cos, tan, log10
 from scipy import integrate
 from scipy import optimize
-from plot3d import writePlot2D, writePlot3D, writeFUN3D, writeOVERFLOW
+from plot3d import writePlot2D, writePlot3D, writePlot3Dxz, writeOVERFLOW
 from grm import writeGRM
 from vtk import writeVTK
 from fec import writeFEC
@@ -388,7 +388,7 @@ def make_airfoil(Dfarfield, ref, Q, TriFlag, FileFormat, farang=0.0, nchordwise=
         writePlot3D(filename_base + '_ref'+str(ref)+ '_Q'+str(Q)+'.p3d', XC, YC)
     if FileFormat == 'p3dxz':
         writeNMF(filename_base + '_ref'+str(ref)+ '_Q'+str(Q)+'.nmf', XC, nLE, nWK, nWB, nr, 'y')
-        writeFUN3D(filename_base + '_ref'+str(ref)+ '_Q'+str(Q)+'.p3d', XC, YC)
+        writePlot3Dxz(filename_base + '_ref'+str(ref)+ '_Q'+str(Q)+'.p3d', XC, YC)
     if FileFormat == 'in':
         writeOVERFLOW('grid.in.'+str(ref), XC, YC)
     
