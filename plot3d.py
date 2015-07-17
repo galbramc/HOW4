@@ -85,7 +85,7 @@ def writeOVERFLOW(filename, X, Y):
 
 #-----------------------------------------------------------
 # writes a 3D ascii plot3d grid file
-def writeFUN3D(filename, X, Y):
+def writePlot3Dxz(filename, X, Y):
     f = open(filename, 'w')
     print 'Writing ', filename
    

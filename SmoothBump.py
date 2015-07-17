@@ -1,5 +1,5 @@
 import numpy as npy
-from plot3d import writeOVERFLOW, writePlot2D, writePlot3D, writeFUN3D
+from plot3d import writeOVERFLOW, writePlot2D, writePlot3D, writePlot3Dxz
 
 #===============================================================================
 def writeGMSH(filename_base, ref, Q, E, V, NC, ni, nj):
@@ -211,11 +211,12 @@ def SmoothBump(ni, nj, Q, ref, FileFormat):
 
     if FileFormat == 'p2d':
         writePlot2D('SmoothBump_ref'+str(ref)+ '_Q'+str(Q)+'.p2d.x', V[:,:,0], V[:,:,1])
-    if FileFormat == 'p3d':
-        writePlot3D('SmoothBump_ref'+str(ref)+ '_Q'+str(Q)+'.p3d', V[:,:,0], V[:,:,1])
-    if FileFormat == 'fun3d':
+    if FileFormat == 'p3dxy':
         writeNMF('SmoothBump_ref'+str(ref)+'.nmf', ni, nj)
-        writeFUN3D('SmoothBump_ref'+str(ref)+'.p3d', V[:,:,0], V[:,:,1])
+        writePlot3D('SmoothBump_ref'+str(ref)+ '_Q'+str(Q)+'.p3d', V[:,:,0], V[:,:,1])
+    if FileFormat == 'p3dxz':
+        writeNMF('SmoothBump_ref'+str(ref)+'.nmf', ni, nj)
+        writePlot3Dxz('SmoothBump_ref'+str(ref)+'.p3d', V[:,:,0], V[:,:,1])
     if FileFormat == 'in':
         writeOVERFLOW('grid.in.'+str(ref), V[:,:,0], V[:,:,1])
 
