@@ -14,7 +14,7 @@ import pylab as pyl
 
 #-----------------------------------------------------------
 # writes BC information for FUN3D
-def writeNMF(fname, X, nLE, nWK, nWB, nr):
+def writeNMF(fname, X, nLE, nWK, nWB, nr, sym):
 
     ni, nj = X.shape; nk = 2
 
@@ -30,8 +30,8 @@ def writeNMF(fname, X, nLE, nWK, nWB, nr):
     f.write('# =================================================\n')
     f.write('# Type         B1 F1 S1 E1 S2 E2 B2 F2 S1 E1 S2 E2 Swap\n')
     f.write('# ---------------------------------------------------\n')
-    f.write("'symmetry_y'    1 1   1 " + str(ni) + " 1 " +str(nj) + "\n")
-    f.write("'symmetry_y'    1 2   1 " + str(ni) + " 1 " +str(nj) + "\n")
+    f.write("'symmetry_" + sym + "'    1 1   1 " + str(ni) + " 1 " +str(nj) + "\n")
+    f.write("'symmetry_" + sym + "'    1 2   1 " + str(ni) + " 1 " +str(nj) + "\n")
     f.write("'one-to-one'    1 5   1 " + str(nk) + " 1 " +str(nWK) + "  1 5  1 " + str(nk) + " " + str(ni) + " " + str(nWK+nLE-1) +" False\n")
     f.write("'viscous_solid' 1 5   1 " + str(nk) + " " + str(nWK) + " " + str(nWK+nLE-1) + "\n")
     f.write("'farfield_riem' 1 6   1 " + str(nk) + " 1 " +str(ni) + "\n");
@@ -383,10 +383,11 @@ def make_airfoil(Dfarfield, ref, Q, TriFlag, FileFormat, farang=0.0, nchordwise=
     
     if FileFormat == 'p2d':
         writePlot2D(filename_base + '_ref'+str(ref)+ '_Q'+str(Q)+'.p2d.x', XC, YC)
-    if FileFormat == 'p3d':
+    if FileFormat == 'p3dxy':
+        writeNMF(filename_base + '_ref'+str(ref)+ '_Q'+str(Q)+'.nmf', XC, nLE, nWK, nWB, nr, 'z')
         writePlot3D(filename_base + '_ref'+str(ref)+ '_Q'+str(Q)+'.p3d', XC, YC)
-    if FileFormat == 'fun3d':
-        writeNMF(filename_base + '_ref'+str(ref)+ '_Q'+str(Q)+'.nmf', XC, nLE, nWK, nWB, nr)
+    if FileFormat == 'p3dxz':
+        writeNMF(filename_base + '_ref'+str(ref)+ '_Q'+str(Q)+'.nmf', XC, nLE, nWK, nWB, nr, 'y')
         writeFUN3D(filename_base + '_ref'+str(ref)+ '_Q'+str(Q)+'.p3d', XC, YC)
     if FileFormat == 'in':
         writeOVERFLOW('grid.in.'+str(ref), XC, YC)
@@ -559,7 +560,7 @@ def spaceqarc(se, a, Q):
 if __name__ == '__main__':
     Q = 1
     for ref in xrange(0,1):
-        make_airfoil(100, ref, Q, False,'fun3d', nchordwise=8, nxwake=8, nnormal=16,
+        make_airfoil(100, ref, Q, False,'p3dxy', nchordwise=8, nxwake=8, nnormal=16,
                      rnormal=4, rnormalfar=4, rxwakecenter=3.65, reynolds=1.e6,
                      filename_base="Joukowski")
         print("Done with level " + str(ref));
