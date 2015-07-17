@@ -1,5 +1,5 @@
 import numpy as npy
-from plot3d import writeOVERFLOW, writePlot3D
+from plot3d import writeOVERFLOW, writePlot2D, writePlot3D, writeFUN3D
 
 #===============================================================================
 def writeGMSH(filename_base, ref, Q, E, V, NC, ni, nj):
@@ -190,7 +190,7 @@ def writeNMF(fname, ni, nj):
     f.write("'tangency'        1 6   1 " + str(nk) + "   1 " +str(ni) + "\n")
 
 #===============================================================================
-def SmoothBump(ni, nj, Q, ref):
+def SmoothBump(ni, nj, Q, ref, FileFormat):
     
     ni = ni*Q*2**ref+1
     nj = nj*Q*2**ref+1
@@ -209,9 +209,16 @@ def SmoothBump(ni, nj, Q, ref):
         V[i,:,0] = x
         V[i,:,1] = y
 
-    writeOVERFLOW('grid.in.'+str(ref), V[:,:,0], V[:,:,1])
-    writeNMF('SmoothBump_ref'+str(ref)+'.nmf', ni, nj)
-    writePlot3D('SmoothBump_ref'+str(ref)+'.p3d', V[:,:,0], V[:,:,1])
+    if FileFormat == 'p2d':
+        writePlot2D('SmoothBump_ref'+str(ref)+ '_Q'+str(Q)+'.p2d.x', V[:,:,0], V[:,:,1])
+    if FileFormat == 'p3d':
+        writePlot3D('SmoothBump_ref'+str(ref)+ '_Q'+str(Q)+'.p3d', V[:,:,0], V[:,:,1])
+    if FileFormat == 'fun3d':
+        writeNMF('SmoothBump_ref'+str(ref)+'.nmf', ni, nj)
+        writeFUN3D('SmoothBump_ref'+str(ref)+'.p3d', V[:,:,0], V[:,:,1])
+    if FileFormat == 'in':
+        writeOVERFLOW('grid.in.'+str(ref), V[:,:,0], V[:,:,1])
+
     
     V = V.reshape( (ni*nj,2) )
     
@@ -226,12 +233,22 @@ def SmoothBump(ni, nj, Q, ref):
     #---------------#
     E = block_elem(NC, Q);
 
-    writeGMSH('SmoothBump', ref, Q, E, V, NC, ni, nj)
+    if FileFormat == 'msh':
+        writeGMSH('SmoothBump', ref, Q, E, V, NC, ni, nj)
 
 
-Q = 2
-ref = 0
-ni = 6
-nj = 2
-SmoothBump(ni, nj, Q, ref)
+# Q is the degree of the polynomial used to represent elements. For Finite Volume/Difference codes, this should be Q=1 for linear elements.
+# Finite Element codes are encouraged to use super-parametric elements with Q=4, or the highest available
+Q = 1
 
+#The range of refinement levels to generate
+refmin = 0
+refmax = 5
+
+#Set to True for triangle grids, and False for qauds
+TriFlag=False
+
+for ref in xrange(refmin,refmax+1):
+    SmoothBump(ni=6, nj=2, Q=Q, ref=ref, FileFormat="fun3d")
+
+    
