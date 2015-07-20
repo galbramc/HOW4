@@ -9,10 +9,13 @@ refmin = 0
 refmax = 5
 
 #Set to True for triangle grids, and False for qauds
-TriFlag=False
+TriFlag=True
+
+#Used to specify the file format to dump
+FileFormat="msh"
 
 for ref in xrange(refmin,refmax+1):
-    make_airfoil(100, ref, Q, TriFlag, FileFormat="p2d", nchordwise=8, nxwake=8, nnormal=16,
+    make_airfoil(100, ref, Q, TriFlag, FileFormat, nchordwise=8, nxwake=8, nnormal=16,
                  rnormal=4, rnormalfar=4, rxwakecenter=3.65, reynolds=1000,
                  filename_base="Joukowski_Laminar")
     
