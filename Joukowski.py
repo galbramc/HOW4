@@ -3,7 +3,7 @@ import numpy as npy
 from numpy import pi, sin, cos, tan, log10
 from scipy import integrate
 from scipy import optimize
-from plot3d import writePlot2D, writePlot3D, writePlot3Dxz, writeOVERFLOW
+from plot3d import writePlot2D, writeLaballiur, writePlot3D, writePlot3Dxz, writeOVERFLOW
 from grm import writeGRM
 from vtk import writeVTK
 from fec import writeFEC
@@ -153,7 +153,7 @@ def make_airfoil(Dfarfield, ref, Q, TriFlag, FileFormat, farang=0.0, nchordwise=
                  wakeangle=0.0, reynolds=1.e6, filename_base="Joukowski"):
     # function make_airfoil(xyfile, UseExact, Dfarfield, ref, Q, TriFlag, farang, varargin)
     #
-    # Makes a quad or tri .gri mesh for an airfoil using the points 
+    # Makes a quad or tri .gri pg2d for an airfoil using the points 
     # supplied in the file xyfile.  This file must have two numbers
     # per line, each representing an (x,y) coordinate of a point.
     # The points should start at the trailing edge and loop clockwise.  
@@ -164,8 +164,8 @@ def make_airfoil(Dfarfield, ref, Q, TriFlag, FileFormat, farang=0.0, nchordwise=
     # An optional hard-coded analytical geometry function can be used to
     # nudge points to the true geometry (if using the spline is not enough).
     # The spacing of points on the geometry is done via a quasi-curvature
-    # based method -- the optional mesh size input controls this.
-    # The generated mesh is of the "C" type (see graphic make_airfoil.png).
+    # based method -- the optional pg2d size input controls this.
+    # The generated pg2d is of the "C" type (see graphic make_airfoil.png).
     #
     # INPUTS:
     #   Dfarfield : approximate distance to the farfield, in chords (e.g. 50)
@@ -174,7 +174,7 @@ def make_airfoil(Dfarfield, ref, Q, TriFlag, FileFormat, farang=0.0, nchordwise=
     #   TriFlag   : 0 = quad, 1 = tri
     #   farang    : angle from horizontal of farfield inflow at min/max y
     #               (useful to keep inflow a true inflow for nonzero alpha)
-    #   varargin  : mesh size/spacing structure (optional, else default one
+    #   varargin  : pg2d size/spacing structure (optional, else default one
     #               defined below will be used).
     #
     # OUTPUTS:
@@ -321,12 +321,12 @@ def make_airfoil(Dfarfield, ref, Q, TriFlag, FileFormat, farang=0.0, nchordwise=
 
     # The new spacing; exponential
     if (reynolds > 5e5):
-        # Turbulent.  y+=1 for the first cell at the TE on the coarse mesh
+        # Turbulent.  y+=1 for the first cell at the TE on the coarse pg2d
         coarse_yplus = 1
         dy_te = 5.82 * (coarse_yplus / reynolds**0.9) / 2**maxref
         wake_power = 0.8
     else:
-        # Laminar.  Put two cells across the BL at the TE on the coarse mesh
+        # Laminar.  Put two cells across the BL at the TE on the coarse pg2d
         dy_te = 0.1 / reynolds**0.5 / 2**maxref
         wake_power = 0.5
 
@@ -383,6 +383,9 @@ def make_airfoil(Dfarfield, ref, Q, TriFlag, FileFormat, farang=0.0, nchordwise=
     
     if FileFormat == 'p2d':
         writePlot2D(filename_base + '_ref'+str(ref)+ '_Q'+str(Q)+'.p2d.x', XC, YC)
+    if FileFormat == 'labl':
+        assert Q == 1
+        writeLaballiur(filename_base + '_ref'+str(ref)+ '_Q'+str(Q)+'.labl', XC, YC, nWK)
     if FileFormat == 'p3dxy':
         writeNMF(filename_base + '_ref'+str(ref)+ '_Q'+str(Q)+'.nmf', XC, nLE, nWK, nWB, nr, 'z')
         writePlot3D(filename_base + '_ref'+str(ref)+ '_Q'+str(Q)+'.p3d', XC, YC)
@@ -567,7 +570,7 @@ if __name__ == '__main__':
     
     Q = 1
     for ref in xrange(0,1):
-        make_airfoil(100, ref, Q, False,'p3dxy', nchordwise=8, nxwake=8, nnormal=16,
+        make_airfoil(100, ref, Q, False,'labl', nchordwise=8, nxwake=8, nnormal=16,
                      rnormal=4, rnormalfar=4, rxwakecenter=3.65, reynolds=1.e6,
                      filename_base="Joukowski")
         print("Done with level " + str(ref));

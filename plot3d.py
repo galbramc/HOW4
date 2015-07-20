@@ -22,6 +22,23 @@ def writePlot2D(filename, X, Y):
                
     f.close()
 
+#-----------------------------------------------------------
+# writes a 2D ascii Laballiur grid file
+def writeLaballiur(filename, X, Y, nWK):
+    f = open(filename, 'w')
+    print 'Writing ', filename
+    ni, nj = X.shape
+    
+    npy.set_printoptions( precision=16, threshold = ni )
+    
+    f.write(str(ni) + ' ' + str(nj) + ' ' + str(nWK) + ' ' + str(ni-nWK+1) + '\n')
+    for j in xrange(nj):
+        f.write(npy.array_str(X[:,j])[1:-1]+'\n')
+    for j in xrange(nj):
+        f.write(npy.array_str(Y[:,j])[1:-1]+'\n')
+
+
+    f.close()
 
 #-----------------------------------------------------------
 def Write3DArray(f,X):	
