@@ -326,13 +326,8 @@ def make_airfoil(Dfarfield, ref, Q, TriFlag, FileFormat, farang=0.0, nchordwise=
         dy_te = 5.82 * (coarse_yplus / reynolds**0.9) / 2**maxref
         wake_power = 0.8
     else:
-<<<<<<< HEAD
-        # Laminar.  Put two cells across the BL at the TE on the coarse pg2d
-        dy_te = 0.1 / reynolds**0.5 / 2**maxref
-=======
         # Laminar.  Put two cells across the BL at the TE on the coarse mesh
         dy_te = 0.001 / reynolds**0.5 / 2**maxref
->>>>>>> 733f99b85409def24037ee0f57247ad5c5ebd30d
         wake_power = 0.5
 
     nr = 1 + nr0*Q
@@ -579,7 +574,7 @@ if __name__ == '__main__':
     
     Q = 1
     for ref in xrange(0,1):
-        make_airfoil(100, ref, Q, False,'labl', nchordwise=8, nxwake=8, nnormal=16,
+        make_airfoil(100, ref, Q, False,'p2dxz', nchordwise=8, nxwake=8, nnormal=16,
                      rnormal=4, rnormalfar=4, rxwakecenter=3.65, reynolds=1.e6,
                      filename_base="Joukowski")
         print("Done with level " + str(ref));
