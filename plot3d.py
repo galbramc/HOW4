@@ -93,7 +93,7 @@ def writePlot3Dxz(filename, X, Y):
 
     ni = 2; nj, nk = X.shape; 
     
-    npy.set_printoptions( precision=16, threshold = ni )
+    npy.set_printoptions( precision=16, threshold = ni*nj )
     
     f.write('1'+'\n')
     f.write(str(ni) + ' ' + str(nj) + ' ' + str(nk) + '\n')
@@ -103,23 +103,26 @@ def writePlot3Dxz(filename, X, Y):
     xx[1::2,:,:] = X
     
     for k in xrange(nk):
-        Write3DArray(f,xx[:,:,k])
-    npy.delete(xx)
+        #Write3DArray(f,xx[:,:,k])
+        f.write(npy.array_str(xx[:,:,k].flatten('F'))[1:-1]+'\n')
+    del xx
     
     yy = npy.ones((ni,nj,nk))
     yy[1,:,:] = 0
 
     for k in xrange(nk):
-        Write3DArray(f,yy[:,:,k])
-    npy.delete(yy)
+        #Write3DArray(f,yy[:,:,k])
+        f.write(npy.array_str(yy[:,:,k].flatten('F'))[1:-1]+'\n')
+    del yy
     
     zz = npy.zeros((ni,nj,nk))
     zz[::2,:,:] = Y
     zz[1::2,:,:] = Y
 
     for k in xrange(nk):
-        Write3DArray(f,zz[:,:,k])
-    npy.delete(zz)
+        #Write3DArray(f,zz[:,:,k])
+        f.write(npy.array_str(zz[:,:,k].flatten('F'))[1:-1]+'\n')
+    del zz
     
     f.close()
 
