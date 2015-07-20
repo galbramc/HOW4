@@ -326,8 +326,13 @@ def make_airfoil(Dfarfield, ref, Q, TriFlag, FileFormat, farang=0.0, nchordwise=
         dy_te = 5.82 * (coarse_yplus / reynolds**0.9) / 2**maxref
         wake_power = 0.8
     else:
+<<<<<<< HEAD
         # Laminar.  Put two cells across the BL at the TE on the coarse pg2d
         dy_te = 0.1 / reynolds**0.5 / 2**maxref
+=======
+        # Laminar.  Put two cells across the BL at the TE on the coarse mesh
+        dy_te = 0.001 / reynolds**0.5 / 2**maxref
+>>>>>>> 733f99b85409def24037ee0f57247ad5c5ebd30d
         wake_power = 0.5
 
     nr = 1 + nr0*Q
@@ -340,7 +345,11 @@ def make_airfoil(Dfarfield, ref, Q, TriFlag, FileFormat, farang=0.0, nchordwise=
     #print re
     
     nr0 = nnormal*2**maxref
-    
+    re = Joukowski_wake_x(nchordwise*2**maxref, nr0, Hc)
+
+    re = coarsen(re, ref, maxref)
+    r0 = spaceq(re, Q)
+
     for i in xrange(nWB):
         #iplus = min(nWB-1, i+1)
         #iminus = max(0, i-1)
@@ -355,12 +364,12 @@ def make_airfoil(Dfarfield, ref, Q, TriFlag, FileFormat, farang=0.0, nchordwise=
             #print i2, Distance(i2, dy, ratio)/Hc
         #    re[i2] = Distance(i2, dy, ratio)/Hc
             
-        delta = find_tanh_delta( dy/Hc, nr0 )
-        for i2 in xrange(0, nr0+1):
-            re[i2] = tanh(i2, nr0, delta)
+        #delta = find_tanh_delta( dy/Hc, nr0 )
+        #for i2 in xrange(0, nr0+1):
+        #    re[i2] = tanh(i2, nr0, delta)
 
-        re = coarsen(re, ref, maxref)
-        r0 = spaceq(re, Q)
+        #re = coarsen(re, ref, maxref)
+        #r0 = spaceq(re, Q)
         #print re
     
         r = r0
@@ -382,7 +391,7 @@ def make_airfoil(Dfarfield, ref, Q, TriFlag, FileFormat, farang=0.0, nchordwise=
     print 'Cell size ' + str( int((nWB-1)/Q) ) + 'x' + str( int((nr-1)/Q) ) + ' with '  + str( fac*int((nWB-1)/Q)*int((nr-1)/Q) ) + ' Elements'
     
     if FileFormat == 'p2d':
-        writePlot2D(filename_base + '_ref'+str(ref)+ '_Q'+str(Q)+'.p2d.x', XC, YC)
+        writePlot2D(filename_base + '_ref'+str(ref)+ '_Q'+str(Q)+'.p2d', XC, YC)
     if FileFormat == 'labl':
         assert Q == 1
         writeLaballiur(filename_base + '_ref'+str(ref)+ '_Q'+str(Q)+'.labl', XC, YC, nWK)
@@ -391,7 +400,7 @@ def make_airfoil(Dfarfield, ref, Q, TriFlag, FileFormat, farang=0.0, nchordwise=
         writePlot3D(filename_base + '_ref'+str(ref)+ '_Q'+str(Q)+'.p3d', XC, YC)
     if FileFormat == 'p3dxz':
         writeNMF(filename_base + '_ref'+str(ref)+ '_Q'+str(Q)+'.nmf', XC, nLE, nWK, nWB, nr, 'y')
-        writePlot3Dxz(filename_base + '_ref'+str(ref)+ '_Q'+str(Q)+'.p3d', XC, YC)
+        writePlot3Dxz(filename_base + '_ref'+str(ref)+ '_Q'+str(Q)+'.p3d.x', XC, YC)
     if FileFormat == 'in':
         writeOVERFLOW('grid.in.'+str(ref), XC, YC)
     
@@ -570,7 +579,11 @@ if __name__ == '__main__':
     
     Q = 1
     for ref in xrange(0,1):
+<<<<<<< HEAD
         make_airfoil(100, ref, Q, False,'labl', nchordwise=8, nxwake=8, nnormal=16,
+=======
+        make_airfoil(100, ref, Q, False,'p3dxz', nchordwise=8, nxwake=8, nnormal=16,
+>>>>>>> 733f99b85409def24037ee0f57247ad5c5ebd30d
                      rnormal=4, rnormalfar=4, rxwakecenter=3.65, reynolds=1.e6,
                      filename_base="Joukowski")
         print("Done with level " + str(ref));

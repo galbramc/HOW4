@@ -108,23 +108,39 @@ def writePlot3Dxz(filename, X, Y):
    
     # Overflow requires 3 spanwise ndoes
 
-    ni, nj = X.shape; nk = 2
+    ni = 2; nj, nk = X.shape; 
     
-    npy.set_printoptions( precision=16, threshold = ni )
+    npy.set_printoptions( precision=16, threshold = ni*nj )
     
     f.write('1'+'\n')
     f.write(str(ni) + ' ' + str(nj) + ' ' + str(nk) + '\n')
-    Write3DArray(f,X)
-    Write3DArray(f,X)
+    
+    xx = npy.zeros((ni,nj,nk))
+    xx[::2,:,:] = X
+    xx[1::2,:,:] = X
+    
+    for k in xrange(nk):
+        #Write3DArray(f,xx[:,:,k])
+        f.write(npy.array_str(xx[:,:,k].flatten('F'))[1:-1]+'\n')
+    del xx
+    
+    yy = npy.ones((ni,nj,nk))
+    yy[1,:,:] = 0
 
-    Z = npy.ones(X.shape)*0
-    Write3DArray(f,Z)
-    Z = npy.ones(X.shape)*-1
-    Write3DArray(f,Z)
+    for k in xrange(nk):
+        #Write3DArray(f,yy[:,:,k])
+        f.write(npy.array_str(yy[:,:,k].flatten('F'))[1:-1]+'\n')
+    del yy
+    
+    zz = npy.zeros((ni,nj,nk))
+    zz[::2,:,:] = Y
+    zz[1::2,:,:] = Y
 
-    Write3DArray(f,Y)
-    Write3DArray(f,Y)
-               
+    for k in xrange(nk):
+        #Write3DArray(f,zz[:,:,k])
+        f.write(npy.array_str(zz[:,:,k].flatten('F'))[1:-1]+'\n')
+    del zz
+    
     f.close()
 
 #-----------------------------------------------------------
