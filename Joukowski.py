@@ -100,13 +100,13 @@ def coarsen(re, ref, maxref):
     return re
 
 #-----------------------------------
-def Bezier(nn, smax=1):
+def Bezier(nn, smax=1, ds1=-0.2):
 
     s0 = npy.linspace(0,smax,nn+1)
     
     #Use a Bezier curve to cluster at LE and TE: ds = -1 gives a linear distribution. Clustering is added as ds->0 from -1
     ds0 = -0.2
-    ds1 = -0.2
+    #ds1 = -0.2
     P0 = 1
     P1 = (3 + ds1)/3
     P2 = -(ds0/3)
@@ -119,14 +119,14 @@ def Cos(nn, smax=1):
     return 1-0.5*(1-npy.cos(pi*s0))
 
 #-----------------------------------
-def Joukowski_wake_x(nchordwise, nn, Hc):
+def Joukowski_wake_x(nchordwise, nn, Hc, ds1 = -0.2):
     
     frac = 2
     nAf = int(nchordwise/frac)
     a = 0.1
     #s = 1-npy.linspace(0,1/frac,nAf+1)
     #s = Cos(nAf,1/frac)
-    s = Bezier(nAf,1/frac)
+    s = Bezier(nAf,1/frac,ds1)
     den  = 1 + 2*a*(1 + a)*(1 + cos(pi*s)) ;
     xnum = (1 + a*(1 + 2*a)*(1 + cos(pi*s)))*(sin(0.5*pi*s))**2 ;
     x = 1-xnum/den;
@@ -325,10 +325,12 @@ def make_airfoil(Dfarfield, ref, Q, TriFlag, FileFormat, farang=0.0, nchordwise=
         coarse_yplus = 1
         dy_te = 5.82 * (coarse_yplus / reynolds**0.9) / 2**maxref
         wake_power = 0.8
+        ds1 = -0.2
     else:
         # Laminar.  Put two cells across the BL at the TE on the coarse mesh
-        dy_te = 0.001 / reynolds**0.5 / 2**maxref
+        dy_te = 0.1 / reynolds**0.5 / 2**maxref
         wake_power = 0.5
+        ds1 = -0.05
 
     nr = 1 + nr0*Q
     XC = npy.zeros([nWB, nr])
@@ -340,7 +342,7 @@ def make_airfoil(Dfarfield, ref, Q, TriFlag, FileFormat, farang=0.0, nchordwise=
     #print re
     
     nr0 = nnormal*2**maxref
-    re = Joukowski_wake_x(nchordwise*2**maxref, nr0, Hc)
+    re = Joukowski_wake_x(nchordwise*2**maxref, nr0, Hc, ds1)
 
     re = coarsen(re, ref, maxref)
     r0 = spaceq(re, Q)
@@ -575,7 +577,7 @@ if __name__ == '__main__':
     #dy_te = 0.1 / reynolds**0.5 / 2**maxref
     #print nnormal*2**maxref, dy_te
     
-    Q = 1
+    Q = 4
     for ref in xrange(0,1):
         make_airfoil(100, ref, Q, False,'hypgen', nchordwise=8, nxwake=8, nnormal=16,
                      rnormal=4, rnormalfar=4, rxwakecenter=3.65, reynolds=1.e6,
