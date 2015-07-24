@@ -330,7 +330,7 @@ def make_airfoil(Dfarfield, ref, Q, TriFlag, FileFormat, farang=0.0, nchordwise=
         # Laminar.  Put two cells across the BL at the TE on the coarse mesh
         dy_te = 0.1 / reynolds**0.5 / 2**maxref
         wake_power = 0.5
-        ds1 = -0.05
+        ds1 = -0.2
 
     nr = 1 + nr0*Q
     XC = npy.zeros([nWB, nr])
