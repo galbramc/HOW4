@@ -398,7 +398,10 @@ def make_airfoil(Dfarfield, ref, Q, TriFlag, FileFormat, farang=0.0, nchordwise=
         writePlot3Dxz(filename_base + '_ref'+str(ref)+ '_Q'+str(Q)+'.p3d.x', XC, YC)
     if FileFormat == 'in':
         writeOVERFLOW('grid.in.'+str(ref), XC, YC)
-    
+    if FileFormat == 'hypgen':
+        print "Normal spacing: ", "{:3.16e}".format(dx_te)
+        writePlot2D('joukowski_c.crv', XC[:,0:1], YC[:,0:1])
+
     #--------------------#
     # Vertices, unrolled #
     #--------------------#
@@ -574,7 +577,7 @@ if __name__ == '__main__':
     
     Q = 1
     for ref in xrange(0,1):
-        make_airfoil(100, ref, Q, False,'p2dxz', nchordwise=8, nxwake=8, nnormal=16,
+        make_airfoil(100, ref, Q, False,'hypgen', nchordwise=8, nxwake=8, nnormal=16,
                      rnormal=4, rnormalfar=4, rxwakecenter=3.65, reynolds=1.e6,
                      filename_base="Joukowski")
         print("Done with level " + str(ref));
