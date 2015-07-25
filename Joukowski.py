@@ -8,6 +8,7 @@ from grm import writeGRM
 from vtk import writeVTK
 from fec import writeFEC
 from gmsh import writeGMSH
+from ebg import writeEBG
 
 import pylab as pyl
 
@@ -403,7 +404,10 @@ def make_airfoil(Dfarfield, ref, Q, TriFlag, FileFormat, farang=0.0, nchordwise=
     if FileFormat == 'hypgen':
         print "Normal spacing: ", "{:3.16e}".format(dx_te)
         writePlot2D('joukowski_c.crv', XC[:,0:1], YC[:,0:1])
-
+    if FileFormat == 'ebg':
+         writeEBG('joukowski.ebg', XC, YC, nWK)
+         
+    
     #--------------------#
     # Vertices, unrolled #
     #--------------------#
@@ -577,9 +581,9 @@ if __name__ == '__main__':
     #dy_te = 0.1 / reynolds**0.5 / 2**maxref
     #print nnormal*2**maxref, dy_te
     
-    Q = 4
+    Q = 1
     for ref in xrange(0,1):
-        make_airfoil(100, ref, Q, False,'hypgen', nchordwise=8, nxwake=8, nnormal=16,
+        make_airfoil(100, ref, Q, False,'ebg', nchordwise=8, nxwake=8, nnormal=16,
                      rnormal=4, rnormalfar=4, rxwakecenter=3.65, reynolds=1.e6,
                      filename_base="Joukowski")
         print("Done with level " + str(ref));
