@@ -54,10 +54,9 @@ def writeEBG(filename, X, Y, nWK):
     for i in xrange(nAf, nIn-1):
         f.write(str(i+1) + ' ' + str(i+2) + '\n')
 
-    f.write(str(nOut-nIn) + '\n')
-    f.write(str(nAf+1) + ' ' + str(nIn) + '\n') 
-    for i in xrange(nIn, nOut-1):
+    f.write(str(nOut-nIn+1) + '\n')
+    for i in xrange(nIn-1, nOut-1):
         f.write(str(i+1) + ' ' + str(i+2) + '\n')
-    f.write(str(nOut) + ' ' + str(nIn) + '\n') 
+    f.write(str(nOut) + ' ' + str(nAf+1) + '\n') 
 
     f.close()
