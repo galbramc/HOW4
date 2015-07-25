@@ -8,7 +8,7 @@ def writeEBG(filename, X, Y, nWK):
     print 'Writing ', filename
     
     f.write('nEmbeddedBoundaryFaceGroups\n')
-    f.write('2\n')
+    f.write('3\n')
 
     # Airfoil
     Vx = X[nWK+1:-nWK,0]
@@ -20,13 +20,13 @@ def writeEBG(filename, X, Y, nWK):
     Vy = npy.append(Vy, Y[:,-1])
     nIn = len(Vx)
 
-    # Outflow Lower
-    Vx = npy.append(Vx, X[0,-2::-1] )
-    Vy = npy.append(Vy, Y[0,-2::-1])
-
     # Outflow Upper
-    Vx = npy.append(Vx, X[-1,1:-1])
-    Vy = npy.append(Vy, Y[-1,1:-1])
+    Vx = npy.append(Vx, X[-1,-1:0:-1])
+    Vy = npy.append(Vy, Y[-1,-1:0:-1])
+
+    # Outflow Lower
+    Vx = npy.append(Vx, X[0,:-1] )
+    Vy = npy.append(Vy, Y[0,:-1])
     nOut = len(Vx)
 
     nnode = len(Vx)
