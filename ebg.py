@@ -21,8 +21,8 @@ def writeEBG(filename, X, Y, nWK):
     nIn = len(Vx)
 
     # Outflow Upper
-    Vx = npy.append(Vx, X[-1,-1:0:-1])
-    Vy = npy.append(Vy, Y[-1,-1:0:-1])
+    Vx = npy.append(Vx, X[-1,-2:0:-1])
+    Vy = npy.append(Vy, Y[-1,-2:0:-1])
 
     # Outflow Lower
     Vx = npy.append(Vx, X[0,:-1] )
