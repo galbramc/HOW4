@@ -148,10 +148,7 @@ def Joukowski_wake_x(nchordwise, nn, Hc, ds1 = -0.2):
     
     return re/Hc
 
-def make_airfoil(Dfarfield, ref, Q, TriFlag, FileFormat, farang=0.0, nchordwise=20,
-                 nxwake=9, rxwakecenter=3.0, rxwakefary=0.35, nnormal=14,
-                 rnormal=2.8, rnormalfar=3.0, TEfac=1.0, Ufac=1.0,
-                 wakeangle=0.0, reynolds=1.e6, filename_base="Joukowski"):
+def make_airfoil(Dfarfield, ref, Q, TriFlag, FileFormat, reynolds=1.e6, filename_base="Joukowski"):
     # function make_airfoil(xyfile, UseExact, Dfarfield, ref, Q, TriFlag, farang, varargin)
     #
     # Makes a quad or tri .gri pg2d for an airfoil using the points 
@@ -194,12 +191,17 @@ def make_airfoil(Dfarfield, ref, Q, TriFlag, FileFormat, farang=0.0, nchordwise=
     # rnormal = 2.8      # normal-direction stretching, x close to airfoil
     # rnormalfar = 3.0   # normal-direction stretching, x far from airfoil
     
-    # TEfac = 1.0        # factor controlling bunching at TE (high = bunched)
-    # Ufac  = 1.0        # factor controlling uniformity of chordwise spacing (high = uniform)
     # wakeangle=0.0      # angle of wake leaving the airfoil
     
     maxref = 6
     assert( ref <= maxref )
+    farang=0.0
+    nchordwise=8
+    nxwake=8
+    nnormal=16
+    wakeangle=0.0
+    rxwakefary = 0.35
+    
     
     #--------------------#
     # load/spline points #
@@ -326,13 +328,13 @@ def make_airfoil(Dfarfield, ref, Q, TriFlag, FileFormat, farang=0.0, nchordwise=
         coarse_yplus = 1
         dy_te = 5.82 * (coarse_yplus / reynolds**0.9) / 2**maxref
         wake_power = 0.8
-        ds1 = -0.2
+        ds1 = -0.05
     else:
         # Laminar.  Put two cells across the BL at the TE on the coarse mesh
         dy_te = 0.1 / reynolds**0.5 / 2**maxref
         wake_power = 0.5
         ds1 = -0.2
-
+    
     nr = 1 + nr0*Q
     XC = npy.zeros([nWB, nr])
     YC = npy.array(XC)
@@ -344,6 +346,8 @@ def make_airfoil(Dfarfield, ref, Q, TriFlag, FileFormat, farang=0.0, nchordwise=
     
     nr0 = nnormal*2**maxref
     re = Joukowski_wake_x(nchordwise*2**maxref, nr0, Hc, ds1)
+    
+    #print "dy_te = ", dy_te, re[1]*Hc
 
     re = coarsen(re, ref, maxref)
     r0 = spaceq(re, Q)
@@ -389,7 +393,7 @@ def make_airfoil(Dfarfield, ref, Q, TriFlag, FileFormat, farang=0.0, nchordwise=
     print 'Cell size ' + str( int((nWB-1)/Q) ) + 'x' + str( int((nr-1)/Q) ) + ' with '  + str( fac*int((nWB-1)/Q)*int((nr-1)/Q) ) + ' Elements'
     
     if FileFormat == 'p2d':
-        writePlot2D(filename_base + '_ref'+str(ref)+ '_Q'+str(Q)+'.p2d', XC, YC)
+        writePlot2D(filename_base + '_ref'+str(ref)+ '_Q'+str(Q)+'.p2d.x', XC, YC)
     if FileFormat == 'labl':
         assert Q == 1
         writeLaballiur(filename_base + '_ref'+str(ref)+ '_Q'+str(Q)+'.labl', XC, YC, nWK)
@@ -398,7 +402,7 @@ def make_airfoil(Dfarfield, ref, Q, TriFlag, FileFormat, farang=0.0, nchordwise=
         writePlot3D(filename_base + '_ref'+str(ref)+ '_Q'+str(Q)+'.p3d', XC, YC)
     if FileFormat == 'p3dxz':
         writeNMF(filename_base + '_ref'+str(ref)+ '_Q'+str(Q)+'.nmf', XC, nLE, nWK, nWB, nr, 'y')
-        writePlot3Dxz(filename_base + '_ref'+str(ref)+ '_Q'+str(Q)+'.p3d.x', XC, YC)
+        writePlot3Dxz(filename_base + '_ref'+str(ref)+ '_Q'+str(Q)+'.p3d', XC, YC)
     if FileFormat == 'in':
         writeOVERFLOW('grid.in.'+str(ref), XC, YC)
     if FileFormat == 'hypgen':
@@ -582,9 +586,8 @@ if __name__ == '__main__':
     #print nnormal*2**maxref, dy_te
     
     Q = 1
-    for ref in xrange(0,1):
-        make_airfoil(100, ref, Q, False,'ebg', nchordwise=8, nxwake=8, nnormal=16,
-                     rnormal=4, rnormalfar=4, rxwakecenter=3.65, reynolds=1.e6,
+    for ref in xrange(6,7):
+        make_airfoil(100, ref, Q, False,'p2d', reynolds=1.e6,
                      filename_base="Joukowski")
         print("Done with level " + str(ref));
     #import pylab as pyl
