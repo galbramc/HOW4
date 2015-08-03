@@ -122,9 +122,9 @@ def writeGMSH_Quad(f, nelem, nBCelem, Q, E):
     if Q == 4: #25-node fourth order quadrangle
         GmshElemType = 37 
         nodemap = ( 0,  4,  5,  6, 1, 
-                   15, 16, 17, 18, 7,
-                   14, 23, 24, 19, 8,
-                   13, 22, 21, 20, 9,
+                   15, 16, 20, 17, 7,
+                   14, 23, 24, 21, 8,
+                   13, 19, 22, 18, 9,
                     3, 12, 11, 10, 2)
 
     #Invert the map
