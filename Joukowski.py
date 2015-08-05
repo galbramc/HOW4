@@ -10,7 +10,7 @@ from fec import writeFEC
 from gmsh import writeGMSH
 from ebg import writeEBG
 
-import pylab as pyl
+#import pylab as pyl
 
 
 #-----------------------------------------------------------
@@ -149,10 +149,8 @@ def Joukowski_wake_x(nchordwise, nn, Hc, ds1 = -0.2):
     return re/Hc
 
 def make_airfoil(Dfarfield, ref, Q, TriFlag, FileFormat, reynolds=1.e6, filename_base="Joukowski"):
-    # function make_airfoil(xyfile, UseExact, Dfarfield, ref, Q, TriFlag, farang, varargin)
     #
-    # Makes a quad or tri .gri pg2d for an airfoil using the points 
-    # supplied in the file xyfile.  This file must have two numbers
+    # Makes a quad or tri grid for an airfoil. This file must have two numbers
     # per line, each representing an (x,y) coordinate of a point.
     # The points should start at the trailing edge and loop clockwise.  
     # The trailing-edge is assumed closed (no gap), and the trailing-
@@ -166,55 +164,36 @@ def make_airfoil(Dfarfield, ref, Q, TriFlag, FileFormat, reynolds=1.e6, filename
     # The generated pg2d is of the "C" type (see graphic make_airfoil.png).
     #
     # INPUTS:
-    #   Dfarfield : approximate distance to the farfield, in chords (e.g. 50)
-    #   ref       : refinement number (useful for convergence studies)
-    #   Q         : geometry order (e.g. 1,2,3,4,...)
-    #   TriFlag   : 0 = quad, 1 = tri
-    #   farang    : angle from horizontal of farfield inflow at min/max y
-    #               (useful to keep inflow a true inflow for nonzero alpha)
-    #   varargin  : pg2d size/spacing structure (optional, else default one
-    #               defined below will be used).
+    #   ref        : refinement number (useful for convergence studies)
+    #   Q          : geometry order (e.g. 1,2,3,4,...)
+    #   TriFlag    : False = quad, True = tri
+    #   FileFormat : String file format switch
+    #   reynolds   : Switch for choosing grid spacings
+    #   filename_base : File name base for dump
     #
-    # OUTPUTS:
-    #   A file named: airfoil.gri
-    
-    #--------------------------------------------#
-    # pull off meshsize structure from variable  # 
-    # input argument; or define it here          #
-    #--------------------------------------------#
-    
-    # nchordwise = 20    # number of elements along one side of the airfoil geometry
-    # nxwake = 9         # x-wake on centerline
-    # rxwakecenter = 3.0 # x-wake stretching on centerline
-    # rxwakefary = 0.35  # x-wake stretching far from airfoil (+/-y)
-    # nnormal = 14       # points normal to airfoil surface, 14=viscous, 12=inviscid
-    # rnormal = 2.8      # normal-direction stretching, x close to airfoil
-    # rnormalfar = 3.0   # normal-direction stretching, x far from airfoil
-    
-    # wakeangle=0.0      # angle of wake leaving the airfoil
     
     maxref = 6
     assert( ref <= maxref )
+    Dfarfield = 100    # farfield distance from the airfoil
     farang=0.0
-    nchordwise=8
-    nxwake=8
-    nnormal=16
-    wakeangle=0.0
-    rxwakefary = 0.35
+    nchordwise=8       # number of elements along one side of the airfoil geometry
+    nxwake=8           # x-wake on centerline
+    nnormal=16         # points normal to airfoil surface
+    wakeangle=0.0      # angle of wake leaving the airfoil
+    rxwakefary = 0.35  # x-wake stretching far from airfoil (+/-y)
     
-    # The new spacing; exponential
+    # Trailing edge spacing
     if (reynolds > 5e5):
-        # Turbulent.  y+=1 for the first cell at the TE on the coarse pg2d
+        # Turbulent. 
         ds1 = -0.05
     else:
-        # Laminar.  Put two cells across the BL at the TE on the coarse mesh
+        # Laminar.  
         ds1 = -0.2
     
     #--------------------#
     # load/spline points #
     #--------------------#
     X, saf = Joukowski(nchordwise*2**ref,Q,ds1) #Don't use the max refinement to make sure the high-order nodes are distributted well
-    # print X;
     
     c = max(X[:,0]) - min(X[:,0])          # chord length
     Hc = Dfarfield*c                       # farfield distance
@@ -227,28 +206,9 @@ def make_airfoil(Dfarfield, ref, Q, TriFlag, FileFormat, reynolds=1.e6, filename
     #-------------------------------------#
     # put points down along farfield, FLE #
     #-------------------------------------#
-    #dx = XLE[1:,:]-XLE[:-1,:]
-    #ds = (dx[:,0]**2 + dx[:,1]**2)**0.5+0.1
-    #s  = npy.zeros(nLE)
-    #for i in xrange(1,nLE):
-    #    s[i] = s[i-1]+ds[i-1]
     x0     = tan(farang)*Hc
     radius = (x0**2 + Hc**2)**0.5
-    #t0     = s/max(s)*(pi-2*farang) + 3*pi/2 + farang
-    
-    #print t0
     t0 = npy.linspace( 3.*pi/2., 5.*pi/2., nLE)
-    #print t0
-    #dxds, dyds = Joukowski_dxy_ds(saf,0.1)
-    #t0 = npy.arccos(dyds/npy.sqrt(dxds**2+dyds**2))
-    
-    #print t0
-    #for i in xrange(t0.shape[0]):
-    #    t0[i] = min(t0[i], pi/2.)
-
-    #print t0
-    #t0 = npy.append(-t0, t0[-2::-1])
-    #print t0
 
     FLE    = npy.zeros([nLE,2])
     FLE[:,0] = x0 - radius*cos(t0)
@@ -261,20 +221,6 @@ def make_airfoil(Dfarfield, ref, Q, TriFlag, FileFormat, reynolds=1.e6, filename
     # x-wake on centerline #
     #----------------------#
     nr0 = nxwake*2**maxref 
-    #a   = 0.01
-    #b   = rxwakecenter  # 2.9 for NACA, inviscid
-    
-    #print "TE locations\n"
-    #print dx_te, X[0,0], X[Q,0]
-    #print "TE locations done\n"
-    #re  = (npy.logspace(a,b,nr0+1) - 10**a)/(10**b-10**a)
-    #print re;
-
-    #re = npy.zeros(nr0+1)
-    #ratio = FindStretching(nr0, dx_te, Hc)
-    #for i in xrange(0, nr0+1):
-    #    re[i] = Distance(i, dx_te, ratio)/Hc
-    #print re;
 
     re = Joukowski_wake_x(nchordwise*2**maxref, nr0, Hc)
 
@@ -303,11 +249,6 @@ def make_airfoil(Dfarfield, ref, Q, TriFlag, FileFormat, reynolds=1.e6, filename
     FWK1 = npy.array([rbot,              XWK[:,1] - Hc - rbot*x0/Hc]).transpose()
     FWK2 = npy.array([npy.flipud(rbot), XWK2[:,1] + Hc + npy.flipud(rbot)*x0/Hc]).transpose()
     
-    #pyl.plot(XWK[:,0],XWK[:,1],'o')
-    #pyl.plot(FWK1[:,0],FWK1[:,1],'o')
-    #pyl.plot(FWK2[:,0],FWK2[:,1],'o')
-    #pyl.show()
-
     #-------------------#
     # Wake and boundary #
     #-------------------#
@@ -323,13 +264,8 @@ def make_airfoil(Dfarfield, ref, Q, TriFlag, FileFormat, reynolds=1.e6, filename
     #------------------#
     nr0 = nnormal*2**ref
 
-    # The old spacing; log-linear
-    #a  = 0.1
-    #b  = rnormal
-    #re = (npy.logspace(a,b,nr0+1) - 10**a)/(10**b-10**a)
-    # print re
 
-    # The new spacing; exponential
+    # Spacing estations
     if (reynolds > 5e5):
         # Turbulent.  y+=1 for the first cell at the TE on the coarse pg2d
         coarse_yplus = 1
@@ -343,12 +279,7 @@ def make_airfoil(Dfarfield, ref, Q, TriFlag, FileFormat, reynolds=1.e6, filename
     nr = 1 + nr0*Q
     XC = npy.zeros([nWB, nr])
     YC = npy.array(XC)
-    #a  = 0.1
-    #b  = rnormalfar
-    #re = (npy.logspace(a,b,nr0+1) - 10**a)/(10**b-10**a)
-    #r1 = spaceq(re, Q)
-    #print re
-    
+
     nr0 = nnormal*2**maxref
     re = Joukowski_wake_x(nchordwise*2**maxref, nr0, Hc, ds1)
     
@@ -386,11 +317,6 @@ def make_airfoil(Dfarfield, ref, Q, TriFlag, FileFormat, reynolds=1.e6, filename
         XC[i,:] = XWB[i,0] + r*(FWB[i,0]-XWB[i,0])
         YC[i,:] = XWB[i,1] + r*(FWB[i,1]-XWB[i,1])
     
-    #dx = XC[1:,0]-XC[:-1,0]
-    #pyl.plot( (XC[1:,0]+XC[:-1,0])/2 ,dx,'o')
-    
-    #pyl.plot(XC,YC,'o')
-    #pyl.show()
     assert(XC.shape[0] == nWB)
     assert(XC.shape[1] == nr)
 
@@ -414,7 +340,7 @@ def make_airfoil(Dfarfield, ref, Q, TriFlag, FileFormat, reynolds=1.e6, filename
         print "Normal spacing: ", "{:3.16e}".format(dx_te)
         writePlot2D('joukowski_c.crv', XC[:,0:1], YC[:,0:1])
     if FileFormat == 'ebg':
-         writeEBG('joukowski.ebg', XC, YC, nWK)
+        writeEBG('joukowski.ebg', XC, YC, nWK)
          
     
     #--------------------#
@@ -591,8 +517,8 @@ if __name__ == '__main__':
     #print nnormal*2**maxref, dy_te
     
     Q = 1
-    for ref in xrange(6,7):
-        make_airfoil(100, ref, Q, False,'p2d', reynolds=1.e6,
+    for ref in xrange(0,1):
+        make_airfoil(ref, Q, False,'p2d', reynolds=1.e6,
                      filename_base="Joukowski")
         print("Done with level " + str(ref));
     #import pylab as pyl
