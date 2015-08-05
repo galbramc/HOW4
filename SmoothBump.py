@@ -204,10 +204,11 @@ def writeNMF(fname, ni, nj):
 def SmoothBump(ni, nj, Q, ref, TriFlag, FileFormat):
 
     fac = 2 if TriFlag else 1
-    print 'Cell size ' + str( ni ) + 'x' + str( nj ) + ' with '  + str( fac*ni*nj ) + ' Elements'
     
     ni = ni*Q*2**ref+1
     nj = nj*Q*2**ref+1
+
+    print 'Cell size ' + str( int((ni-1)/Q) ) + 'x' + str( int((nj-1)/2) ) + ' with '  + str( fac*int((ni-1)/Q)*int((nj-1)/2) ) + ' Elements'
     
     #Create all the vertexes
     V = npy.zeros((ni,nj,2),float)
