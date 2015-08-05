@@ -15,6 +15,6 @@ TriFlag=True
 FileFormat="msh"
 
 for ref in xrange(refmin,refmax+1):
-    make_airfoil(100, ref, Q, TriFlag, FileFormat, reynolds=1000,
+    make_airfoil(ref, Q, TriFlag, FileFormat, reynolds=1000,
                  filename_base="Joukowski_Laminar")
     
