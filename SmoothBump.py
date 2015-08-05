@@ -1,10 +1,15 @@
 import numpy as npy
 from plot3d import writeOVERFLOW, writePlot2D, writePlot3D, writePlot3Dxz
+from gmsh import writeGMSH_Quad, writeGMSH_Tri
 
 #===============================================================================
-def writeGMSH(filename_base, ref, Q, E, V, NC, ni, nj):
+def writeGMSH(filename_base, ref, Q, TriFlag, E, V, NC, ni, nj):
 
-    f = open(filename_base + '_ref'+str(ref)+ '_Q'+str(Q)+'.msh', 'w')
+    filename = filename_base + ('_tri' if TriFlag else '_quad') + '_ref'+str(ref)+ '_Q'+str(Q)+'.msh'
+    print 'Writing ', filename
+    f = open(filename, 'w')
+
+    fac = 2 if TriFlag else 1
 
     nelem = E.shape[0];
     nnode = V.shape[0];
@@ -26,7 +31,7 @@ def writeGMSH(filename_base, ref, Q, E, V, NC, ni, nj):
     f.write('$EndNodes\n')
 
     f.write('$Elements\n')
-    f.write(str(4 + nelem+nInflow+nOutflow+2*nWall)+'\n')
+    f.write(str(4 + fac*nelem+nInflow+nOutflow+2*nWall)+'\n')
 
     #----------------#
     # Corners        #
@@ -89,46 +94,52 @@ def writeGMSH(filename_base, ref, Q, E, V, NC, ni, nj):
             f.write(str(NC[Q*i+q,nj-1]) + ' ')
         f.write('\n')
 
-        
-        
-    if Q == 1: #4-node quadrangle
-        GmshElemType = 3 
-        nodemap = (0, 1, 
-                   3, 2)
-    if Q == 2:  #9-node second order quadrangle
-        GmshElemType = 10
-        nodemap = (0, 4, 1, 
-                   7, 8, 5, 
-                   3, 6, 2)
-    if Q == 3:  #16-node third order quadrangle
-        GmshElemType = 36
-        nodemap = ( 0,  4,  5, 1, 
-                   11, 12, 13, 6, 
-                   10, 14, 15, 7, 
-                    3,  9,  8, 2)
-    if Q == 4: #25-node fourth order quadrangle
-        GmshElemType = 37 
-        nodemap = ( 0,  4,  5,  6, 1, 
-                   15, 16, 17, 18, 7,
-                   14, 19, 20, 21, 8,
-                   13, 22, 23, 24, 9,
-                    3, 12, 11, 10, 2)
+    nBCelem = 2*nWall+nInflow+nOutflow
 
-    #Invert the map
-    nodemapinv = []
-    for k in xrange((Q+1)*(Q+1)):
-        j = 0
-        while nodemap[j] != k: j += 1
-        nodemapinv.append(j)
-
-    
-    for e in xrange(nelem):
-        f.write(str(nInflow+nOutflow+2*nWall+e+5) + ' ' + str(GmshElemType) + ' 2 0 5 ')
         
-        #Write nodes
-        for k in xrange((Q+1)*(Q+1)):
-            f.write(str(E[e,nodemapinv[k]])+' ')
-        f.write('\n')
+#     if Q == 1: #4-node quadrangle
+#         GmshElemType = 3 
+#         nodemap = (0, 1, 
+#                    3, 2)
+#     if Q == 2:  #9-node second order quadrangle
+#         GmshElemType = 10
+#         nodemap = (0, 4, 1, 
+#                    7, 8, 5, 
+#                    3, 6, 2)
+#     if Q == 3:  #16-node third order quadrangle
+#         GmshElemType = 36
+#         nodemap = ( 0,  4,  5, 1, 
+#                    11, 12, 13, 6, 
+#                    10, 15, 14, 7, 
+#                     3,  9,  8, 2)
+#     if Q == 4: #25-node fourth order quadrangle
+#         GmshElemType = 37 
+#         nodemap = ( 0,  4,  5,  6, 1, 
+#                    15, 16, 20, 17, 7,
+#                    14, 23, 24, 21, 8,
+#                    13, 19, 22, 18, 9,
+#                     3, 12, 11, 10, 2)
+# 
+#     #Invert the map
+#     nodemapinv = []
+#     for k in xrange((Q+1)*(Q+1)):
+#         j = 0
+#         while nodemap[j] != k: j += 1
+#         nodemapinv.append(j)
+# 
+#     
+#     for e in xrange(nelem):
+#         f.write(str(nInflow+nOutflow+2*nWall+e+5) + ' ' + str(GmshElemType) + ' 2 0 5 ')
+#         
+#         #Write nodes
+#         for k in xrange((Q+1)*(Q+1)):
+#             f.write(str(E[e,nodemapinv[k]])+' ')
+#         f.write('\n')
+
+    if TriFlag:
+        writeGMSH_Tri(f, nelem, nBCelem, Q, E, NC)
+    else:
+        writeGMSH_Quad(f, nelem, nBCelem, Q, E)
 
     f.write('$EndElements\n')
     f.write('$PhysicalNames\n')
@@ -190,7 +201,10 @@ def writeNMF(fname, ni, nj):
     f.write("'tangency'        1 6   1 " + str(nk) + "   1 " +str(ni) + "\n")
 
 #===============================================================================
-def SmoothBump(ni, nj, Q, ref, FileFormat):
+def SmoothBump(ni, nj, Q, ref, TriFlag, FileFormat):
+
+    fac = 2 if TriFlag else 1
+    print 'Cell size ' + str( ni ) + 'x' + str( nj ) + ' with '  + str( fac*ni*nj ) + ' Elements'
     
     ni = ni*Q*2**ref+1
     nj = nj*Q*2**ref+1
@@ -208,6 +222,7 @@ def SmoothBump(ni, nj, Q, ref, FileFormat):
         y = npy.linspace(y0, y1, nj)
         V[i,:,0] = x
         V[i,:,1] = y
+
 
     if FileFormat == 'p2d':
         writePlot2D('SmoothBump_ref'+str(ref)+ '_Q'+str(Q)+'.p2d.x', V[:,:,0], V[:,:,1])
@@ -235,21 +250,21 @@ def SmoothBump(ni, nj, Q, ref, FileFormat):
     E = block_elem(NC, Q);
 
     if FileFormat == 'msh':
-        writeGMSH('SmoothBump', ref, Q, E, V, NC, ni, nj)
+        writeGMSH('SmoothBump', ref, Q, TriFlag, E, V, NC, ni, nj)
 
 
 # Q is the degree of the polynomial used to represent elements. For Finite Volume/Difference codes, this should be Q=1 for linear elements.
 # Finite Element codes are encouraged to use super-parametric elements with Q=4, or the highest available
-Q = 1
+Q = 4
 
 #The range of refinement levels to generate
 refmin = 0
 refmax = 5
 
 #Set to True for triangle grids, and False for qauds
-TriFlag=False
+TriFlag=True
 
 for ref in xrange(refmin,refmax+1):
-    SmoothBump(ni=6, nj=2, Q=Q, ref=ref, FileFormat="fun3d")
+    SmoothBump(ni=6, nj=2, Q=Q, ref=ref, TriFlag=TriFlag, FileFormat="msh")
 
     
