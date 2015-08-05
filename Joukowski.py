@@ -202,11 +202,18 @@ def make_airfoil(Dfarfield, ref, Q, TriFlag, FileFormat, reynolds=1.e6, filename
     wakeangle=0.0
     rxwakefary = 0.35
     
+    # The new spacing; exponential
+    if (reynolds > 5e5):
+        # Turbulent.  y+=1 for the first cell at the TE on the coarse pg2d
+        ds1 = -0.05
+    else:
+        # Laminar.  Put two cells across the BL at the TE on the coarse mesh
+        ds1 = -0.2
     
     #--------------------#
     # load/spline points #
     #--------------------#
-    X, saf = Joukowski(nchordwise*2**ref,Q) #Don't use the max refinement to make sure the high-order nodes are distributted well
+    X, saf = Joukowski(nchordwise*2**ref,Q,ds1) #Don't use the max refinement to make sure the high-order nodes are distributted well
     # print X;
     
     c = max(X[:,0]) - min(X[:,0])          # chord length
@@ -328,12 +335,10 @@ def make_airfoil(Dfarfield, ref, Q, TriFlag, FileFormat, reynolds=1.e6, filename
         coarse_yplus = 1
         dy_te = 5.82 * (coarse_yplus / reynolds**0.9) / 2**maxref
         wake_power = 0.8
-        ds1 = -0.05
     else:
         # Laminar.  Put two cells across the BL at the TE on the coarse mesh
         dy_te = 0.1 / reynolds**0.5 / 2**maxref
         wake_power = 0.5
-        ds1 = -0.2
     
     nr = 1 + nr0*Q
     XC = npy.zeros([nWB, nr])
@@ -503,7 +508,7 @@ def Joukowski_dxy_ds(s,a):
     return dxds, dyds
 
 #-----------------------------------
-def Joukowski(nn, Q):
+def Joukowski(nn, Q, ds1 = -0.2):
     # hardcoded analytical function
     
     X = npy.zeros([2*nn*Q,2])
@@ -518,7 +523,7 @@ def Joukowski(nn, Q):
     #s = Cos(nn)
     
     #Use a Bezier curve to cluster at LE and TE. def Joukowski_wake_x must use the same function.
-    s = Bezier(nn)
+    s = Bezier(nn, ds1=ds1)
     
     #print nn, s
     sL = spaceqarc(s, a, Q)
