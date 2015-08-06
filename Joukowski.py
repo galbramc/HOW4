@@ -148,7 +148,7 @@ def Joukowski_wake_x(nchordwise, nn, Hc, ds1 = -0.2):
     
     return re/Hc
 
-def make_airfoil(Dfarfield, ref, Q, TriFlag, FileFormat, reynolds=1.e6, filename_base="Joukowski"):
+def make_airfoil(ref, Q, TriFlag, FileFormat, reynolds=1.e6, filename_base="Joukowski"):
     #
     # Makes a quad or tri grid for an airfoil. This file must have two numbers
     # per line, each representing an (x,y) coordinate of a point.
@@ -185,7 +185,7 @@ def make_airfoil(Dfarfield, ref, Q, TriFlag, FileFormat, reynolds=1.e6, filename
     # Trailing edge spacing
     if (reynolds > 5e5):
         # Turbulent. 
-        ds1 = -0.05
+        ds1 = -0.1
     else:
         # Laminar.  
         ds1 = -0.2
@@ -263,26 +263,35 @@ def make_airfoil(Dfarfield, ref, Q, TriFlag, FileFormat, reynolds=1.e6, filename
     # points on C grid #
     #------------------#
     nr0 = nnormal*2**ref
+    nr = 1 + nr0*Q
+    XC = npy.zeros([nWB, nr])
+    YC = npy.array(XC)
 
 
     # Spacing estations
     if (reynolds > 5e5):
         # Turbulent.  y+=1 for the first cell at the TE on the coarse pg2d
-        coarse_yplus = 1
+        coarse_yplus = 20
         dy_te = 5.82 * (coarse_yplus / reynolds**0.9) / 2**maxref
         wake_power = 0.8
+        
+        nr0 = nnormal*2**maxref
+        re = npy.zeros(nr0+1)
+        #delta = find_tanh_delta( dy_te/Hc, nr0 )
+        #for i2 in xrange(0, nr0+1):
+        #    re[i2] = tanh(i2, nr0, delta)
+        ratio = FindStretching(nr0, dy_te, Hc)
+        for i2 in xrange(0, nr0+1):
+            re[i2] = Distance(i2, dy_te, ratio)/Hc
+
     else:
         # Laminar.  Put two cells across the BL at the TE on the coarse mesh
         dy_te = 0.1 / reynolds**0.5 / 2**maxref
         wake_power = 0.5
-    
-    nr = 1 + nr0*Q
-    XC = npy.zeros([nWB, nr])
-    YC = npy.array(XC)
+        
+        nr0 = nnormal*2**maxref
+        re = Joukowski_wake_x(nchordwise*2**maxref, nr0, Hc, ds1)
 
-    nr0 = nnormal*2**maxref
-    re = Joukowski_wake_x(nchordwise*2**maxref, nr0, Hc, ds1)
-    
     #print "dy_te = ", dy_te, re[1]*Hc
 
     re = coarsen(re, ref, maxref)
@@ -294,9 +303,9 @@ def make_airfoil(Dfarfield, ref, Q, TriFlag, FileFormat, reynolds=1.e6, filename
         #ds = ((XWB[iplus,0] - XWB[iminus,0])**2 +
         #      (XWB[iplus,1] - XWB[iminus,1])**2)**0.5/ (iplus - iminus)
               
-        dy = dy_te * max(XWB[i,0],1)**wake_power
+        #dy = dy_te * max(XWB[i,0],1)**wake_power
         # print XWB[iplus,0], XWB[iminus,0], ds, dy, iplus, iminus
-        re = npy.zeros(nr0+1)
+        #re = npy.zeros(nr0+1)
         #ratio = FindStretching(nr0, dy, Hc)
         #for i2 in xrange(0, nr0+1):
             #print i2, Distance(i2, dy, ratio)/Hc
