@@ -9,6 +9,7 @@ from vtk import writeVTK
 from fec import writeFEC
 from gmsh import writeGMSH
 from ebg import writeEBG
+from geo import writeGEO
 
 #import pylab as pyl
 
@@ -46,6 +47,7 @@ def Distance(i, dx_te, ratio):
 
 def GradDist(i, dx_te, ratio):
     return dx_te*((i-1)*ratio**i - i*ratio**(i-1) + 1) / (ratio-1)**2
+
 
 def FindStretching(n, h_min, Hc):
     # Find the ratio of successive cell sizes to get a total length of Hc from
@@ -101,12 +103,12 @@ def coarsen(re, ref, maxref):
     return re
 
 #-----------------------------------
-def Bezier(nn, smax=1, ds1=-0.2):
+def Bezier(nn, smax=1, ds0=-0.2, ds1=-0.2):
 
     s0 = npy.linspace(0,smax,nn+1)
     
     #Use a Bezier curve to cluster at LE and TE: ds = -1 gives a linear distribution. Clustering is added as ds->0 from -1
-    ds0 = -0.2
+    #ds0 = -0.2
     #ds1 = -0.2
     P0 = 1
     P1 = (3 + ds1)/3
@@ -127,7 +129,7 @@ def Joukowski_wake_x(nchordwise, nn, Hc, ds1 = -0.2):
     a = 0.1
     #s = 1-npy.linspace(0,1/frac,nAf+1)
     #s = Cos(nAf,1/frac)
-    s = Bezier(nAf,1/frac,ds1)
+    s = Bezier(nAf,1/frac,ds1=ds1)
     den  = 1 + 2*a*(1 + a)*(1 + cos(pi*s)) ;
     xnum = (1 + a*(1 + 2*a)*(1 + cos(pi*s)))*(sin(0.5*pi*s))**2 ;
     x = 1-xnum/den;
@@ -271,7 +273,7 @@ def make_airfoil(ref, Q, TriFlag, FileFormat, reynolds=1.e6, filename_base="Jouk
     # Spacing estations
     if (reynolds > 5e5):
         # Turbulent.  y+=1 for the first cell at the TE on the coarse pg2d
-        coarse_yplus = 20
+        coarse_yplus = 80
         dy_te = 5.82 * (coarse_yplus / reynolds**0.9) / 2**maxref
         wake_power = 0.8
         
@@ -350,6 +352,8 @@ def make_airfoil(ref, Q, TriFlag, FileFormat, reynolds=1.e6, filename_base="Jouk
         writePlot2D('joukowski_c.crv', XC[:,0:1], YC[:,0:1])
     if FileFormat == 'ebg':
         writeEBG('joukowski.ebg', XC, YC, nWK)
+    if FileFormat == 'geo':
+        writeGEO('joukowski.geo', XC, YC, nWK)
          
     
     #--------------------#
@@ -527,7 +531,7 @@ if __name__ == '__main__':
     
     Q = 1
     for ref in xrange(0,1):
-        make_airfoil(ref, Q, False,'p2d', reynolds=1.e6,
+        make_airfoil(ref, Q, True,'msh', reynolds=1.e6,
                      filename_base="Joukowski")
         print("Done with level " + str(ref));
     #import pylab as pyl
