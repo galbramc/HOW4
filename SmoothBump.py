@@ -96,46 +96,6 @@ def writeGMSH(filename_base, ref, Q, TriFlag, E, V, NC, ni, nj):
 
     nBCelem = 2*nWall+nInflow+nOutflow
 
-        
-#     if Q == 1: #4-node quadrangle
-#         GmshElemType = 3 
-#         nodemap = (0, 1, 
-#                    3, 2)
-#     if Q == 2:  #9-node second order quadrangle
-#         GmshElemType = 10
-#         nodemap = (0, 4, 1, 
-#                    7, 8, 5, 
-#                    3, 6, 2)
-#     if Q == 3:  #16-node third order quadrangle
-#         GmshElemType = 36
-#         nodemap = ( 0,  4,  5, 1, 
-#                    11, 12, 13, 6, 
-#                    10, 15, 14, 7, 
-#                     3,  9,  8, 2)
-#     if Q == 4: #25-node fourth order quadrangle
-#         GmshElemType = 37 
-#         nodemap = ( 0,  4,  5,  6, 1, 
-#                    15, 16, 20, 17, 7,
-#                    14, 23, 24, 21, 8,
-#                    13, 19, 22, 18, 9,
-#                     3, 12, 11, 10, 2)
-# 
-#     #Invert the map
-#     nodemapinv = []
-#     for k in xrange((Q+1)*(Q+1)):
-#         j = 0
-#         while nodemap[j] != k: j += 1
-#         nodemapinv.append(j)
-# 
-#     
-#     for e in xrange(nelem):
-#         f.write(str(nInflow+nOutflow+2*nWall+e+5) + ' ' + str(GmshElemType) + ' 2 0 5 ')
-#         
-#         #Write nodes
-#         for k in xrange((Q+1)*(Q+1)):
-#             f.write(str(E[e,nodemapinv[k]])+' ')
-#         f.write('\n')
-
     if TriFlag:
         writeGMSH_Tri(f, nelem, nBCelem, Q, E, NC)
     else:
