@@ -45,6 +45,13 @@ def spaceq(re, Q):
     
     return r
 
+def coarsen(re, ref, maxref):
+    i = maxref
+    while i > ref:
+        re = np.delete(re, np.s_[1::2], 0 )
+        i = i-1
+    return re
+
 #-----------------------------------
 def Bezier(nn, smax=1, ds0=-0.2, ds1=-0.2):
 
@@ -87,13 +94,13 @@ def joukowski_conformal(S, T, joux=0.1):
     c.ravel()[zero_ix] = -1.0
 
     # Map to Joukowski
-    cs = c - complex(joux, 0.0)
-    l = 1.0 - joux
-    g = cs + l**2 / cs
+    r = joux + 1
+    cs = c*r - complex(joux, 0.0)
+    g = cs + 1.0 / cs
 
     # Scale airfoil to x = [0,1]
-    endpnts = np.array([-1, 1])
-    left_right = endpnts - joux + l**2 / (endpnts - joux)
+    endpnts = np.array([-1, 1]) * r - joux
+    left_right = endpnts + 1.0 / endpnts
     g = (g - left_right[0]) / np.diff(left_right)
 
     # Return physical and parameter meshes
@@ -108,19 +115,25 @@ def joukowski_inverse(X, Y, joux=0.1):
     zz = X + 1j * Y
     t1 = (joux ** 2)
     t2 = 2 * t1
-    t3 = t1 * zz
-    t4 = 3 * t3
-    t5 = zz ** 2
-    t7 = 2 * joux * t5
-    t8 = t1 ** 2
-    t15 = t5 ** 2
-    t17 = t5 * zz
-    t22 = np.sqrt((t8 - 3 * zz * t8 - t3 + 3 * t8 * t5 + 3 * t1 * t5 + t1 * t15 - t8 * t17 - 3 * t1 * t17))
-    t23 = 0.2e1 * t22
-    t31 = 1 / (-3 * t1 + 4 * t3 + 1 + 4 * zz * joux - 2 * joux)
-    t33 = np.sqrt(t31 * (-t2 + t4 + t7 + zz + t23))
-    t36 = np.sqrt(-t31 * (t2 - t4 - t7 - zz + t23))
-    out = np.array([t33, -t33, t36, -t36])
+    t3 = (zz ** 2)
+    t4 = t1 * t3
+    t5 = 2 * t4
+    t7 = 2 * joux * t3
+    t8 = t1 * zz
+    t9 = 4 * t8
+    t10 = zz * joux
+    t11 = 2 * t10
+    t12 = t1 * joux
+    t15 = t1 ** 2
+    t20 = t3 ** 2
+    t24 = t3 * zz
+    t35 = -2 * t12 * zz - t8 + t15 + 6 * t3 * t15 - 4 * zz * t15 + t15 * t20 + 2 * t12 * t20 - 4 * t15 * t24 + t1 * t20 + 6 * t12 * t3 - 6 * t12 * t24 - 3 * t1 * t24 + 3 * t4
+    t36 = np.sqrt(t35)
+    t37 = 0.2e1 * t36
+    t43 = 1 / (-4 * t1 + 8 * t8 + 4 * t10 + 1)
+    t45 = np.sqrt(t43 * (-t2 + t5 + t7 + t9 + t11 + zz + t37))
+    t48 = np.sqrt(-t43 * (t2 - t5 - t7 - t9 - t11 - zz + t37))
+    out = np.array([t45,-t45,t48,-t48])
 
     # Test closest match between positive roots
     map1 = joukowski_conformal(np.real(out[0]), np.imag(out[0]), joux)
@@ -143,9 +156,11 @@ def joukowski_parameter(ref, Q, reynolds, growth=1.3, R=100, joux=0.1):
     R:      Farfield distance (at least)
     """
     
-    nchord=8*2**ref           # number of elements along one side of the airfoil geometry
-    nxwake=8*2**ref           # x-wake on centerline
-    nnormal=16*2**ref         # points normal to airfoil surface
+    refmax = 6
+    
+    nchord=8*2**refmax           # number of elements along one side of the airfoil geometry
+    nxwake=8*2**refmax           # x-wake on centerline
+    nnormal=16*2**refmax         # points normal to airfoil surface
     
     # Trailing edge spacing
     if (reynolds > 5e5):
@@ -173,6 +188,7 @@ def joukowski_parameter(ref, Q, reynolds, growth=1.3, R=100, joux=0.1):
     for i in xrange(1,nWake+1):
         sx[nchord+len(sAf_half)+i-1] = 1.5 + Distance(i, ds, ratio)
 
+    sx = coarsen(sx, ref, refmax)
     sx = spaceq(sx, Q)
 
     # Wake distribution
@@ -189,6 +205,7 @@ def joukowski_parameter(ref, Q, reynolds, growth=1.3, R=100, joux=0.1):
     for i in xrange(nNormal+1):
         sy[len(sAf_half)+i-1] = 0.5 + Distance(i, ds, ratio)
 
+    sy = coarsen(sy, ref, refmax)
     sy = spaceq(sy, Q)
     
     # Normal distribution

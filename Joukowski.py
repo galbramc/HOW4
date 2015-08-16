@@ -13,9 +13,14 @@ from Joukowski_Classic import make_joukowski_classic
 
 import matplotlib.pyplot as plt
 
-def make_joukowski(ref, Q, TriFlag, FileFormat, reynolds, filename_base):
+def make_joukowski(ref, Q, TriFlag, Distribution, FileFormat, reynolds, filename_base):
 
-    XC, YC = make_joukowski_classic(ref, Q, reynolds)
+    if Distribution == "Classic":
+        XC, YC = make_joukowski_classic(ref, Q, reynolds)
+    elif Distribution == "Challenge":
+        XC, YC = make_joukowski_challenge(ref, Q, reynolds)
+    else:
+        raise ValueError("Distribution should be Classic or Challenge")
 
     nLE = 16*2**ref+1
     nWK = 8*2**ref+1
