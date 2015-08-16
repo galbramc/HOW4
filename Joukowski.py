@@ -15,8 +15,7 @@ import matplotlib.pyplot as plt
 
 def make_joukowski(ref, Q, TriFlag, FileFormat, reynolds, filename_base):
 
-
-    return
+    XC, YC = make_joukowski_classic(ref, Q, reynolds)
 
     nLE = 16*2**ref+1
     nWK = 8*2**ref+1
