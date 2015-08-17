@@ -53,18 +53,21 @@ def coarsen(re, ref, maxref):
     return re
 
 #-----------------------------------
-def Bezier(nn, smax=1, ds0=-0.2, ds1=-0.2):
+def Bezier(nn, smax=1, ds0=0.2, dds0=0, ds1=0.2, dds1=0):
 
-    s0 = np.linspace(0,smax,nn+1)
+    s = np.linspace(0,smax,nn+1)
     
-    #Use a Bezier curve to cluster at LE and TE: ds = -1 gives a linear distribution. Clustering is added as ds->0 from -1
+    #Use a Bezier curve to cluster at LE and TE: ds = 1 gives a linear distribution. Clustering is added as ds->0 from 1
     #ds0 = -0.2
     #ds1 = -0.2
-    P0 = 1
-    P1 = (3 + ds1)/3
-    P2 = -(ds0/3)
-    s1 = P0*(1 - s0)**3 + P1*3*s0*(1 - s0)**2 + P2*3*s0**2*(1 - s0)
-    return s1
+    P0 = 0
+    P1 = ds0/3
+    P2 = (dds1 + 8*ds0)/20.
+    P3 = (20 + dds0 - 8*ds1)/20.
+    P4 = (5 - ds1)/5.
+    P5 = 1
+    t = P0*(1 - s)**5 + P1*5*s*(1-s)**4 + P2*10*s**2*(1-s)**4 + P3*10*s**3*(1-s)**2+P4*5*s**4*(1-s) + P5*s**5
+    return t
 
 #-----------------------------------
 def meshplot(X, Y, edgecolor='k'):
@@ -157,6 +160,7 @@ def joukowski_parameter(ref, Q, reynolds, growth=1.3, R=100, joux=0.1):
     """
     
     refmax = 6
+    assert(ref <= refmax)
     
     nchord=8*2**refmax           # number of elements along one side of the airfoil geometry
     nxwake=8*2**refmax           # x-wake on centerline
@@ -165,16 +169,19 @@ def joukowski_parameter(ref, Q, reynolds, growth=1.3, R=100, joux=0.1):
     # Trailing edge spacing
     if (reynolds > 5e5):
         # Turbulent. 
-        ds0 = -0.1
+        ds0 = 0.1
     else:
         # Laminar.  
-        ds0 = -0.0
-        ds1 = -0.05
+        AR = 1
+        ds0 = 0.2
+        dds0 = 0.0
+        ds1 = 0.0
+        dds1 = 10.0
 
     # Chord distribution
     #phi = np.linspace(np.pi, 0.0, nchord+1)
     #sAf = (np.cos(phi) + 1) / 2
-    sAf = 1-Bezier(nchord,ds0=ds0,ds1=ds1)
+    sAf = Bezier(nchord,ds0=ds0,dds0=dds0,ds1=ds1,dds1=dds1)
 
     sAf_half = 1-sAf[:nchord/2-1:-1]
     
@@ -184,9 +191,9 @@ def joukowski_parameter(ref, Q, reynolds, growth=1.3, R=100, joux=0.1):
     sx[0:nchord+1] = sAf
     sx[nchord:nchord+len(sAf_half)] = 1+sAf_half
     nWake = nxwake+1-len(sAf_half)
-    ratio = FindStretching(nWake, ds, np.sqrt((R + 1.5)/1.05)-1.5)
+    ratio = FindStretching(nWake, ds, np.sqrt((R + 1+sAf_half[-1]))-(1+sAf_half[-1]))
     for i in xrange(1,nWake+1):
-        sx[nchord+len(sAf_half)+i-1] = 1.5 + Distance(i, ds, ratio)
+        sx[nchord+len(sAf_half)+i-1] = 1+sAf_half[-1] + Distance(i, ds, ratio)
 
     sx = coarsen(sx, ref, refmax)
     sx = spaceq(sx, Q)
@@ -199,11 +206,12 @@ def joukowski_parameter(ref, Q, reynolds, growth=1.3, R=100, joux=0.1):
     
     
     sy = np.zeros(nnormal+1)
-    sy[0:len(sAf_half)] = sAf_half
+    sy[0:len(sAf_half)] = sAf_half/AR
+    sy_Af = sy[len(sAf_half)-1]
     nNormal = nnormal+1-len(sAf_half)
-    ratio = FindStretching(nNormal, ds, np.sqrt(R/1.05)-0.5)
+    ratio = FindStretching(nNormal, ds, np.sqrt(R)-sy_Af)
     for i in xrange(nNormal+1):
-        sy[len(sAf_half)+i-1] = 0.5 + Distance(i, ds, ratio)
+        sy[len(sAf_half)+i-1] = sy_Af + Distance(i, ds, ratio)
 
     sy = coarsen(sy, ref, refmax)
     sy = spaceq(sy, Q)
@@ -223,6 +231,18 @@ def joukowski_parameter(ref, Q, reynolds, growth=1.3, R=100, joux=0.1):
     # Bottom and left
     bottom = [sx, 0*sx]
     left = [0*sy, sy]
+    
+    #left[1] = np.zeros(nnormal+1)
+    #left[1][0:len(sAf_half)] = sAf_half
+    #nNormal = nnormal+1-len(sAf_half)
+    #ratio = FindStretching(nNormal, ds, R-sAf_half[-1])
+    #for i in xrange(nNormal+1):
+    #    left[1][len(sAf_half)+i-1] = sAf_half[-1] + Distance(i, ds, ratio)
+
+    #left[1] = coarsen(left[1], ref, refmax)
+    #sy2 = left[1] = spaceq(left[1], Q)
+    
+    #left[1] = joukowski_inverse(left[1], left[0], joux)[0]
 
     # Find parameters for straight vertical outflow boundary
     xright = joukowski_conformal(sx[-1], 0.0, joux)[0]
@@ -258,6 +278,7 @@ def joukowski_parameter(ref, Q, reynolds, growth=1.3, R=100, joux=0.1):
         plt.plot(right[0], right[1], '.-')
         plt.axis('equal')
         plt.draw()
+        plt.show()
 
     # TFI mapping
     X1 = np.outer(1-lx, left[0]) + np.outer(lx, right[0])
@@ -266,10 +287,10 @@ def joukowski_parameter(ref, Q, reynolds, growth=1.3, R=100, joux=0.1):
     X2 = np.outer(bottom[0], 1-ly) + np.outer(top[0], ly)
     Y2 = np.outer(bottom[1], 1-ly) + np.outer(top[1], ly)
 
-    X12 = np.outer(1-lx, 1-ly) * X1[0,0] + np.outer(lx, 1-ly) * X1[-1,0] + \
-          np.outer(1-lx, ly) * X1[0,-1] + np.outer(lx, ly) * X1[-1,-1]
-    Y12 = np.outer(1-lx, 1-ly) * Y1[0,0] + np.outer(lx, 1-ly) * Y1[-1,0] + \
-          np.outer(1-lx, ly) * Y1[0,-1] + np.outer(lx, ly) * Y1[-1,-1]
+    X12 = np.outer(1-lx, 1-ly) * X1[0, 0] + np.outer(lx, 1-ly) * X1[-1, 0] + \
+          np.outer(1-lx,   ly) * X1[0,-1] + np.outer(lx,   ly) * X1[-1,-1]
+    Y12 = np.outer(1-lx, 1-ly) * Y1[0, 0] + np.outer(lx, 1-ly) * Y1[-1, 0] + \
+          np.outer(1-lx,   ly) * Y1[0,-1] + np.outer(lx,   ly) * Y1[-1,-1]
 
     X = X1 + X2 - X12
     Y = Y1 + Y2 - Y12
@@ -280,11 +301,13 @@ def make_joukowski_classic(ref, Q, reynolds=1.e6):
     S, T = joukowski_parameter(ref, Q, reynolds)
     X, Y = joukowski_conformal(S, T)
     
+    #meshplot(S, T)
+    
     X = np.concatenate(( np.flipud(np.delete(X, 0, axis=0)), X), axis=0)
     Y = np.concatenate((-np.flipud(np.delete(Y, 0, axis=0)), Y), axis=0)
 
     return X, Y
 
 if __name__ == "__main__":
-    X, Y = make_joukowski_classic(0, 1, 1e6)
-    meshplot(X, Y)
+    X, Y = make_joukowski_classic(0, 1, 1000)
+    #meshplot(X, Y)
