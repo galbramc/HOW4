@@ -18,7 +18,7 @@ def FindStretching(n, h_min, Hc):
     # n cells, starting with the first cell size = h_min.
     
     # This guess is exact for very large size ratios
-    guess = (Hc / h_min)**(1/(n-1))
+    guess = (Hc / h_min)**(1./(n-1))
     finished = False
     while not finished:
         func = Distance(n, h_min, guess) - Hc
@@ -61,12 +61,12 @@ def Bezier(nn, smax=1, ds0=0.2, dds0=0, ds1=0.2, dds1=0):
     #ds0 = -0.2
     #ds1 = -0.2
     P0 = 0
-    P1 = ds0/3
+    P1 = ds0/5
     P2 = (dds1 + 8*ds0)/20.
     P3 = (20 + dds0 - 8*ds1)/20.
     P4 = (5 - ds1)/5.
     P5 = 1
-    t = P0*(1 - s)**5 + P1*5*s*(1-s)**4 + P2*10*s**2*(1-s)**4 + P3*10*s**3*(1-s)**2+P4*5*s**4*(1-s) + P5*s**5
+    t = P0*(1 - s)**5 + P1*5*s*(1-s)**4 + P2*10*s**2*(1-s)**3 + P3*10*s**3*(1-s)**2+P4*5*s**4*(1-s) + P5*s**5
     return t
 
 #-----------------------------------
@@ -164,7 +164,7 @@ def joukowski_parameter(ref, Q, reynolds, growth=1.3, R=100, joux=0.1):
     
     nchord=8*2**refmax           # number of elements along one side of the airfoil geometry
     nxwake=8*2**refmax           # x-wake on centerline
-    nnormal=16*2**refmax         # points normal to airfoil surface
+    nnormal=8*2**refmax         # points normal to airfoil surface
     
     # Trailing edge spacing
     if (reynolds > 5e5):
@@ -173,15 +173,16 @@ def joukowski_parameter(ref, Q, reynolds, growth=1.3, R=100, joux=0.1):
     else:
         # Laminar.  
         AR = 1
-        ds0 = 0.2
+        ds0 = 1.25
         dds0 = 0.0
-        ds1 = 0.0
-        dds1 = 10.0
+        ds1 = 0.175
+        dds1 = 0.0
 
     # Chord distribution
     #phi = np.linspace(np.pi, 0.0, nchord+1)
     #sAf = (np.cos(phi) + 1) / 2
-    sAf = Bezier(nchord,ds0=ds0,dds0=dds0,ds1=ds1,dds1=dds1)
+    phi = Bezier(nchord,ds0=ds0,dds0=dds0,ds1=ds1,dds1=dds1)
+    sAf = (1 - np.cos(np.pi*phi)) / 2
 
     sAf_half = 1-sAf[:nchord/2-1:-1]
     
