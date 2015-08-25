@@ -164,7 +164,7 @@ def joukowski_parameter(ref, Q, reynolds, growth=1.3, R=100, joux=0.1):
     
     nchord=8*2**refmax           # number of elements along one side of the airfoil geometry
     nxwake=8*2**refmax           # x-wake on centerline
-    nnormal=8*2**refmax         # points normal to airfoil surface
+    nnormal=16*2**refmax         # points normal to airfoil surface
     
     # Trailing edge spacing
     if (reynolds > 5e5):
@@ -173,10 +173,10 @@ def joukowski_parameter(ref, Q, reynolds, growth=1.3, R=100, joux=0.1):
     else:
         # Laminar.  
         AR = 1
-        ds0 = 1.25
+        ds0 = 2.5
         dds0 = 0.0
         ds1 = 0.175
-        dds1 = 0.0
+        dds1 = 2.0
 
     # Chord distribution
     #phi = np.linspace(np.pi, 0.0, nchord+1)
