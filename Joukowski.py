@@ -17,13 +17,16 @@ def make_joukowski(ref, Q, TriFlag, Distribution, FileFormat, reynolds, filename
 
     if Distribution == "Classic":
         XC, YC = make_joukowski_classic(ref, Q, reynolds)
+        nWK = 16*Q*2**ref+1
+
     elif Distribution == "Challenge":
         XC, YC = make_joukowski_challenge(ref, Q, reynolds)
+        nWK = 8*Q*2**ref+1
+
     else:
         raise ValueError("Distribution should be Classic or Challenge")
 
     nLE = 16*Q*2**ref+1
-    nWK = 8*Q*2**ref+1
     nWB = XC.shape[0]
     nr  = XC.shape[1]
 
