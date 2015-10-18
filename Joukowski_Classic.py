@@ -163,7 +163,7 @@ def joukowski_parameter(ref, Q, reynolds, growth=1.3, R=100, joux=0.1):
     assert(ref <= refmax)
     
     nchord=8*2**refmax           # number of elements along one side of the airfoil geometry
-    nxwake=8*2**refmax           # x-wake on centerline
+    nxwake=16*2**refmax           # x-wake on centerline
     nnormal=16*2**refmax         # points normal to airfoil surface
     
     # Trailing edge spacing

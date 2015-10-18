@@ -43,7 +43,7 @@ def writeGMSH(filename_base, ref, Q, TriFlag, E, V, nLE, NC, nWK, nWB, nr):
     # Airfoil
     BC = 1
     for i in xrange(int((nLE-1)/Q)):
-        f.write(str(i+1) + ' ' + str(GmshLineType) + ' 2 0 ' + str(BC) + ' ')
+        f.write(str(i+1) + ' ' + str(GmshLineType) + ' 2 ' + str(BC) + ' 0 ')
         #Write end points
         f.write(str(NC[nWK-1+Q*i,0]) + ' ' + str(NC[nWK-1+Q*(i+1),0]) + ' ')
         #Write higher-order nodes
@@ -54,7 +54,7 @@ def writeGMSH(filename_base, ref, Q, TriFlag, E, V, nLE, NC, nWK, nWB, nr):
     # Farfield inflow
     BC = 2
     for i in xrange(int((nWB-1)/Q)):
-        f.write(str(nbAirfoil+i+1) + ' ' + str(GmshLineType) + ' 2 0 ' + str(BC) + ' ')
+        f.write(str(nbAirfoil+i+1) + ' ' + str(GmshLineType) + ' 2 ' + str(BC) + ' 0 ')
         #Write end points
         f.write(str(NC[Q*i,nr-1]) + ' ' + str(NC[Q*(i+1),nr-1]) + ' ')
         #Write higher-order nodes
@@ -65,7 +65,7 @@ def writeGMSH(filename_base, ref, Q, TriFlag, E, V, nLE, NC, nWK, nWB, nr):
     # Farfield Outflow
     BC = 3
     for i in xrange(int((nr-1)/Q)):
-        f.write(str(nbAirfoil+nbInflow+i+1) + ' ' + str(GmshLineType) + ' 2 0 ' + str(BC) + ' ')
+        f.write(str(nbAirfoil+nbInflow+i+1) + ' ' + str(GmshLineType) + ' 2 ' + str(BC) + ' 0 ')
         #Write end points
         f.write(str(NC[0,Q*i]) + ' ' + str(NC[0,Q*(i+1)]) + ' ')
         #Write higher-order nodes
@@ -74,7 +74,7 @@ def writeGMSH(filename_base, ref, Q, TriFlag, E, V, nLE, NC, nWK, nWB, nr):
         f.write('\n')
         
     for i in xrange(int((nr-1)/Q)):
-        f.write(str(nbAirfoil+nbInflow+int(nbOutflow/2)+i+1) + ' ' + str(GmshLineType) + ' 2 0 ' + str(BC) + ' ')
+        f.write(str(nbAirfoil+nbInflow+int(nbOutflow/2)+i+1) + ' ' + str(GmshLineType) + ' 2 ' + str(BC) + ' 0 ')
         #Write end points
         f.write(str(NC[nWB-1,Q*i]) + ' ' + str(NC[nWB-1,Q*(i+1)]) + ' ')
         #Write higher-order nodes
