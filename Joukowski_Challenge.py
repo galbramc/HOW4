@@ -26,6 +26,7 @@ def FindStretching(n, h_min, Hc):
     # Find the ratio of successive cell sizes to get a total length of Hc from
     # n cells, starting with the first cell size = h_min.
     
+    assert( h_min > 0 )
     # This guess is exact for very large size ratios
     guess = (Hc / h_min)**(1/(n-1))
     finished = False
@@ -77,9 +78,9 @@ def coarsen(re, ref, maxref):
 
 #-----------------------------------
 def Bezier(nn, smax=1, ds0=-0.2, ds1=-0.2):
-
+   
     s0 = npy.linspace(0,smax,nn+1)
-    
+      
     #Use a Bezier curve to cluster at LE and TE: ds = -1 gives a linear distribution. Clustering is added as ds->0 from -1
     #ds0 = -0.2
     #ds1 = -0.2
@@ -90,19 +91,50 @@ def Bezier(nn, smax=1, ds0=-0.2, ds1=-0.2):
     return s1
 
 #-----------------------------------
+# def Bezier(nn, smax=1, ds0=0.2, dds0=0, ds1=0.2, dds1=0):
+#   
+#     ds0 = -ds0
+#     ds1 = -ds1
+#       
+#     #ds0 = 2.5
+#     #dds0 = 0.0
+#     #ds1 = 0.175
+#     #dds1 = 2.0
+#      
+#     ds0 = 0.2
+#     dds0 = 0.0
+#     ds1 = 0.1
+#     dds1 = 0.0
+#       
+#     s = npy.linspace(0,smax,nn+1)
+#       
+#     #Use a Bezier curve to cluster at LE and TE: ds = 1 gives a linear distribution. Clustering is added as ds->0 from 1
+#     P0 = 0
+#     P1 = ds0/5
+#     P2 = (dds1 + 8*ds0)/20.
+#     P3 = (20 + dds0 - 8*ds1)/20.
+#     P4 = (5 - ds1)/5.
+#     P5 = 1
+#     t = P0*(1 - s)**5 + P1*5*s*(1-s)**4 + P2*10*s**2*(1-s)**3 + P3*10*s**3*(1-s)**2+P4*5*s**4*(1-s) + P5*s**5
+#     return 1-t
+
+#-----------------------------------
 def Cos(nn, smax=1):
     s0 = npy.linspace(0,smax,nn+1)
     return 1-0.5*(1-npy.cos(pi*s0))
 
 #-----------------------------------
-def Joukowski_wake_x(nchordwise, nn, Hc, ds1 = -0.2):
+def Joukowski_wake_x(nchordwise, nn, Hc, ds0, ds1, AR = 1):
     
     frac = 2
     nAf = int(nchordwise/frac)
-    a = 0.1
+    
     #s = 1-npy.linspace(0,1/frac,nAf+1)
     #s = Cos(nAf,1/frac)
-    s = Bezier(nAf,1/frac,ds1=ds1)
+    s = Bezier(nAf,1/frac,ds0=ds0,ds1=ds1)
+    
+    # Joukwoski transformation
+    a = 0.1
     den  = 1 + 2*a*(1 + a)*(1 + cos(pi*s)) ;
     xnum = (1 + a*(1 + 2*a)*(1 + cos(pi*s)))*(sin(0.5*pi*s))**2 ;
     x = 1-xnum/den;
@@ -112,6 +144,7 @@ def Joukowski_wake_x(nchordwise, nn, Hc, ds1 = -0.2):
     
     #x = x/x[-1]
     
+    x /= AR
     nWake = nn-nAf
     dx = x[-1] - x[-2]
     
@@ -161,14 +194,16 @@ def make_joukowski_challenge(ref, Q, reynolds=1.e6):
     if (reynolds > 5e5):
         # Turbulent. 
         ds1 = -0.1
+        ds0 = -0.2;
     else:
         # Laminar.  
         ds1 = -0.2
+        ds0 = -0.2
     
     #--------------------#
     # load/spline points #
     #--------------------#
-    X, saf = Joukowski(nchordwise*2**ref,Q,ds1) #Don't use the max refinement to make sure the high-order nodes are distributted well
+    X, saf = Joukowski(nchordwise*2**ref,Q,ds0,ds1) #Don't use the max refinement to make sure the high-order nodes are distributted well
     
     c = max(X[:,0]) - min(X[:,0])          # chord length
     Hc = Dfarfield*c                       # farfield distance
@@ -197,7 +232,7 @@ def make_joukowski_challenge(ref, Q, reynolds=1.e6):
     #----------------------#
     nr0 = nxwake*2**maxref 
 
-    re = Joukowski_wake_x(nchordwise*2**maxref, nr0, Hc)
+    re = Joukowski_wake_x(nchordwise*2**maxref, nr0, Hc, ds0, ds1)
 
     re = coarsen(re, ref, maxref)
     rw = spaceq(re, Q)
@@ -251,13 +286,17 @@ def make_joukowski_challenge(ref, Q, reynolds=1.e6):
         wake_power = 0.8
         
         nr0 = nnormal*2**maxref
-        re = npy.zeros(nr0+1)
+        #re = npy.zeros(nr0+1)
         #delta = find_tanh_delta( dy_te/Hc, nr0 )
         #for i2 in xrange(0, nr0+1):
         #    re[i2] = tanh(i2, nr0, delta)
-        ratio = FindStretching(nr0, dy_te, Hc)
-        for i2 in xrange(0, nr0+1):
-            re[i2] = Distance(i2, dy_te, ratio)/Hc
+        #ratio = FindStretching(nr0, dy_te, Hc)
+        #for i2 in xrange(0, nr0+1):
+        #    re[i2] = Distance(i2, dy_te, ratio)/Hc
+        AR = 50
+        #ds0 = -3.0
+            
+        re = Joukowski_wake_x(nchordwise*2**maxref, nr0, Hc, ds0, ds1, AR)
 
     else:
         # Laminar.  Put two cells across the BL at the TE on the coarse mesh
@@ -422,7 +461,7 @@ def Joukowski_dxy_ds(s,a):
     return dxds, dyds
 
 #-----------------------------------
-def Joukowski(nn, Q, ds1 = -0.2):
+def Joukowski(nn, Q, ds0 = -0.2, ds1 = -0.2):
     # hardcoded analytical function
     
     X = npy.zeros([2*nn*Q,2])
@@ -437,7 +476,7 @@ def Joukowski(nn, Q, ds1 = -0.2):
     #s = Cos(nn)
     
     #Use a Bezier curve to cluster at LE and TE. def Joukowski_wake_x must use the same function.
-    s = Bezier(nn, ds1=ds1)
+    s = Bezier(nn, ds0=ds0, ds1=ds1)
     
     #print nn, s
     sL = spaceqarc(s, a, Q)

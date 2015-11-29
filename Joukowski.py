@@ -24,7 +24,7 @@ def make_joukowski(ref, Q, TriFlag, Distribution, FileFormat, reynolds, filename
         nWK = 8*Q*2**ref+1
 
     else:
-        raise ValueError("Distribution should be Classic or Challenge")
+        raise ValueError("Distribution should be 'Classic' or 'Challenge'")
 
     nLE = 16*Q*2**ref+1
     nWB = XC.shape[0]
@@ -40,10 +40,10 @@ def make_joukowski(ref, Q, TriFlag, Distribution, FileFormat, reynolds, filename
         writeLaballiur(filename_base + '_ref'+str(ref)+ '_Q'+str(Q)+'.labl', XC, YC, nWK)
     if FileFormat == 'p3dxy':
         writeNMF(filename_base + '_ref'+str(ref)+ '_Q'+str(Q)+'.nmf', XC, nLE, nWK, nWB, nr, 'z')
-        writePlot3D(filename_base + '_ref'+str(ref)+ '_Q'+str(Q)+'.p3d', XC, YC)
+        writePlot3D(filename_base + '_ref'+str(ref)+ '_Q'+str(Q)+'.p3d.x', XC, YC)
     if FileFormat == 'p3dxz':
         writeNMF(filename_base + '_ref'+str(ref)+ '_Q'+str(Q)+'.nmf', XC, nLE, nWK, nWB, nr, 'y')
-        writePlot3Dxz(filename_base + '_ref'+str(ref)+ '_Q'+str(Q)+'.p3d', XC, YC)
+        writePlot3Dxz(filename_base + '_ref'+str(ref)+ '_Q'+str(Q)+'.p3d.x', XC, YC)
     if FileFormat == 'in':
         writeOVERFLOW('grid.in.'+str(ref), XC, YC)
     if FileFormat == 'hypgen':

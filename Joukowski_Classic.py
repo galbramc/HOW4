@@ -169,7 +169,11 @@ def joukowski_parameter(ref, Q, reynolds, growth=1.3, R=100, joux=0.1):
     # Trailing edge spacing
     if (reynolds > 5e5):
         # Turbulent. 
-        ds0 = 0.1
+        AR = 15
+        ds0 = 2.5
+        dds0 = 0.0
+        ds1 = 0.175
+        dds1 = 2.0
     else:
         # Laminar.  
         AR = 1
@@ -209,6 +213,7 @@ def joukowski_parameter(ref, Q, reynolds, growth=1.3, R=100, joux=0.1):
     sy = np.zeros(nnormal+1)
     sy[0:len(sAf_half)] = sAf_half/AR
     sy_Af = sy[len(sAf_half)-1]
+    ds = sy[len(sAf_half)-1] - sy[len(sAf_half)-2]
     nNormal = nnormal+1-len(sAf_half)
     ratio = FindStretching(nNormal, ds, np.sqrt(R)-sy_Af)
     for i in xrange(nNormal+1):
@@ -310,5 +315,5 @@ def make_joukowski_classic(ref, Q, reynolds=1.e6):
     return X, Y
 
 if __name__ == "__main__":
-    X, Y = make_joukowski_classic(0, 1, 1000)
+    X, Y = make_joukowski_classic(3, 1, 1.e6)
     #meshplot(X, Y)
