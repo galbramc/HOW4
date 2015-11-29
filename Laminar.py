@@ -5,14 +5,14 @@ from Joukowski import make_joukowski
 Q = 1
 
 #The range of refinement levels to generate
-refmin = 3
-refmax = 3
+refmin = 0
+refmax = 5
 
 #Set to True for triangle grids, and False for qauds
 TriFlag=False
 
 #Used to specify the file format to dump. See Joukowski.make_joukowski for details
-FileFormat="p2d"
+FileFormat="msh"
 
 #Grid distrubution, "Classic" or "Challenge"
 Distribution = "Challenge"
