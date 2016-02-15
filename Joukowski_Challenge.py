@@ -294,7 +294,6 @@ def make_joukowski_challenge(ref, Q, reynolds=1.e6):
         #for i2 in xrange(0, nr0+1):
         #    re[i2] = Distance(i2, dy_te, ratio)/Hc
         AR = 50
-        #ds0 = -3.0
             
         re = Joukowski_wake_x(nchordwise*2**maxref, nr0, Hc, ds0, ds1, AR)
 
@@ -342,75 +341,6 @@ def make_joukowski_challenge(ref, Q, reynolds=1.e6):
         YC[i,:] = XWB[i,1] + r*(FWB[i,1]-XWB[i,1])
     
     return XC, YC
-    
-#     assert(XC.shape[0] == nWB)
-#     assert(XC.shape[1] == nr)
-# 
-#     fac = 2 if TriFlag else 1
-#     print 'Cell size ' + str( int((nWB-1)/Q) ) + 'x' + str( int((nr-1)/Q) ) + ' with '  + str( fac*int((nWB-1)/Q)*int((nr-1)/Q) ) + ' Elements'
-#     
-#     if FileFormat == 'p2d':
-#         writePlot2D(filename_base + '_ref'+str(ref)+ '_Q'+str(Q)+'.p2d.x', XC, YC)
-#     if FileFormat == 'labl':
-#         assert Q == 1
-#         writeLaballiur(filename_base + '_ref'+str(ref)+ '_Q'+str(Q)+'.labl', XC, YC, nWK)
-#     if FileFormat == 'p3dxy':
-#         writeNMF(filename_base + '_ref'+str(ref)+ '_Q'+str(Q)+'.nmf', XC, nLE, nWK, nWB, nr, 'z')
-#         writePlot3D(filename_base + '_ref'+str(ref)+ '_Q'+str(Q)+'.p3d', XC, YC)
-#     if FileFormat == 'p3dxz':
-#         writeNMF(filename_base + '_ref'+str(ref)+ '_Q'+str(Q)+'.nmf', XC, nLE, nWK, nWB, nr, 'y')
-#         writePlot3Dxz(filename_base + '_ref'+str(ref)+ '_Q'+str(Q)+'.p3d', XC, YC)
-#     if FileFormat == 'in':
-#         writeOVERFLOW('grid.in.'+str(ref), XC, YC)
-#     if FileFormat == 'hypgen':
-#         print "Normal spacing: ", "{:3.16e}".format(dx_te)
-#         writePlot2D('joukowski_c.crv', XC[:,0:1], YC[:,0:1])
-#     if FileFormat == 'ebg':
-#         writeEBG('joukowski.ebg', XC, YC, nWK)
-#     if FileFormat == 'geo':
-#         writeGEO('joukowski.geo', XC, YC, nWK)
-#          
-#     
-#     #--------------------#
-#     # Vertices, unrolled #
-#     #--------------------#
-#     V = npy.zeros((nWB*nr,2),float)
-#     V[:,0] = XC.T.reshape(nWB*nr)
-#     V[:,1] = YC.T.reshape(nWB*nr)
-#     
-#     #pyl.plot(XC.reshape(nWB*nr),YC.reshape(nWB*nr),'o')
-#     #pyl.show()
-# 
-#     #pyl.plot(V[:,0],V[:,1],'o')
-#     #pyl.show()
-# 
-#     #---------------------------------------------#
-#     # node number matrices for writing out blocks #
-#     #---------------------------------------------#
-# 
-#     NC = npy.arange(nWB*nr).reshape( (nr, nWB) ).T+1
-#     V = npy.delete(V,NC[nWB-nWK:nWB,0]-1,0)
-#     NC[nWB-nWK:nWB,0] = NC[nWK-1::-1,0]
-#     NC[:,1:] = NC[:,1:]-nWK
-#     
-#     #---------------#
-#     # form elements #
-#     #---------------#
-#     E = block_elem(NC, Q);
-# 
-#     #---------------#
-#     # write file    #
-#     #---------------#
-# 
-#     if FileFormat == 'grm':
-#         writeGRM(filename_base, ref, Q, TriFlag, E, V, nLE, NC, nWK, nWB, nr);
-#     if FileFormat == 'fec':
-#         writeVTK(filename_base, ref, Q, E, V);
-#         writeFEC(filename_base, ref, Q, E, V, nLE, NC, nWK, nWB, nr);
-#     if FileFormat == 'msh':
-#         writeGMSH(filename_base, ref, Q, TriFlag, E, V, nLE, NC, nWK, nWB, nr);
-# 
-#     print("Done with refinement " + str(ref))
     
 #-----------------------------------
 def block_elem(N, Q):

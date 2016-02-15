@@ -169,7 +169,7 @@ def joukowski_parameter(ref, Q, reynolds, growth=1.3, R=100, joux=0.1):
     # Trailing edge spacing
     if (reynolds > 5e5):
         # Turbulent. 
-        AR = 15
+        AR = 50
         ds0 = 2.5
         dds0 = 0.0
         ds1 = 0.175
