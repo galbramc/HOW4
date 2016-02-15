@@ -193,8 +193,8 @@ def make_joukowski_challenge(ref, Q, reynolds=1.e6):
     # Trailing edge spacing
     if (reynolds > 5e5):
         # Turbulent. 
-        ds1 = -0.1
-        ds0 = -0.2;
+        ds1 = -0.2
+        ds0 = -0.2
     else:
         # Laminar.  
         ds1 = -0.2
@@ -300,11 +300,12 @@ def make_joukowski_challenge(ref, Q, reynolds=1.e6):
 
     else:
         # Laminar.  Put two cells across the BL at the TE on the coarse mesh
+        AR = 1
         dy_te = 0.1 / reynolds**0.5 / 2**maxref
         wake_power = 0.5
         
         nr0 = nnormal*2**maxref
-        re = Joukowski_wake_x(nchordwise*2**maxref, nr0, Hc, ds1)
+        re = Joukowski_wake_x(nchordwise*2**maxref, nr0, Hc, ds1, AR)
 
     #print "dy_te = ", dy_te, re[1]*Hc
 
