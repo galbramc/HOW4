@@ -2,7 +2,7 @@ from Joukowski import make_joukowski
 
 # Q is the degree of the polynomial used to represent elements. For Finite Volume/Difference codes, this should be Q=1 for linear elements.
 # Finite Element codes are encouraged to use super-parametric elements with Q=4, or the highest available
-Q = 1
+Q = 4
 
 #The range of refinement levels to generate
 refmin = 0

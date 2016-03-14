@@ -304,7 +304,7 @@ def make_joukowski_challenge(ref, Q, reynolds=1.e6):
         wake_power = 0.5
         
         nr0 = nnormal*2**maxref
-        re = Joukowski_wake_x(nchordwise*2**maxref, nr0, Hc, ds1, AR)
+        re = Joukowski_wake_x(nchordwise*2**maxref, nr0, Hc, ds0, ds1, AR)
 
     #print "dy_te = ", dy_te, re[1]*Hc
 
