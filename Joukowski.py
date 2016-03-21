@@ -30,6 +30,7 @@ def make_joukowski(ref, Q, TriFlag, Distribution, FileFormat, reynolds, filename
     nWB = XC.shape[0]
     nr  = XC.shape[1]
 
+    filename_base += "_tri" if TriFlag else "_quad"
     fac = 2 if TriFlag else 1
     print 'Cell size ' + str( int((nWB-1)/Q) ) + 'x' + str( int((nr-1)/Q) ) + ' with '  + str( fac*int((nWB-1)/Q)*int((nr-1)/Q) ) + ' Elements'
     
