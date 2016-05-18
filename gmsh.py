@@ -3,7 +3,7 @@ from __future__ import division
 #===============================================================================
 def writeGMSH(filename_base, ref, Q, TriFlag, E, V, nLE, NC, nWK, nWB, nr):
 
-    filename = filename_base + ('_tri' if TriFlag else '_quad') + '_ref'+str(ref)+ '_Q'+str(Q)+'.msh'
+    filename = filename_base + '_ref'+str(ref)+ '_Q'+str(Q)+'.msh'
     print 'Writing ', filename
     f = open(filename, 'w')
 
