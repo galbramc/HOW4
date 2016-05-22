@@ -160,6 +160,166 @@ def writeNMF(fname, ni, nj):
     f.write("'tangency'        1 5   1 " + str(nk) + "   1 " +str(ni) + "\n")
     f.write("'tangency'        1 6   1 " + str(nk) + "   1 " +str(ni) + "\n")
 
+
+#===============================================================================
+def writeGRM(filename_base, ref, Q, TriFlag, E, V, NC, ni, nj):
+    #=========================#
+    # Write out the grid file #
+    #=========================#
+
+    filename = filename_base + ('_tri' if TriFlag else '_quad') + '_ref'+str(ref)+ '_Q'+str(Q)+'.grm'
+    print 'Writing ', filename
+    f = open(filename, 'w')
+     
+    nelem = E.shape[0];
+    nnode = V.shape[0];
+    
+    nInflow = int((nj-1)/Q)
+    nOutflow = nInflow
+    nWall = int((ni-1)/Q)
+    
+    fac = 2 if TriFlag else 1
+    
+    f.write('2 ' + str(nnode) + ' 1 4\n') #dim nNodes negrp nbfgrp
+     
+    #----------#
+    # Vertices #
+    #----------#
+    floatformat = "{:3.16e}"
+    
+    for i in xrange(nnode):
+        f.write(floatformat.format(V[i,0]) + ' ' + floatformat.format(V[i,1]) + '\n')
+      
+    #----------------#
+    # Boundary faces #
+    #----------------#
+        
+    # Inflow
+    f.write(str(nInflow) + '\n');
+    f.write('PXE_Shape_Edge\n')
+    for j in xrange(nInflow):
+        f.write(str(NC[0,Q*j]) + ' ' + str(NC[0,Q*(j+1)]) + '\n')
+    
+    # Outflow
+    f.write(str(nOutflow) + '\n')
+    f.write('PXE_Shape_Edge\n')
+    for j in xrange(nOutflow):
+        f.write(str(NC[ni-1,Q*j]) + ' ' + str(NC[ni-1,Q*(j+1)]) + '\n')
+      
+    # Walls
+    f.write(str(nWall) + '\n')
+    f.write('PXE_Shape_Edge\n')
+    for i in xrange(nWall):
+        f.write(str(NC[Q*i,0]) + ' ' + str(NC[Q*(i+1),0]) + '\n')
+
+    f.write(str(nWall) + '\n')
+    f.write('PXE_Shape_Edge\n')
+    for i in xrange(nWall):
+        f.write(str(NC[Q*i,nj-1]) + ' ' + str(NC[Q*(i+1),nj-1]) + '\n')
+    
+    #----------#
+    # Elements #
+    #----------#
+      
+    if TriFlag:
+        f.write(str(2*nelem)+'\n')
+        f.write(str(Q)+'\n')
+        f.write('PXE_Shape_Triangle\n')
+        f.write('UniformNodeDistribution\n')
+
+        ni = int((NC.shape[0]-1)/Q)
+        nj = int((NC.shape[1]-1)/Q)
+        
+        if Q == 1:
+            nodemap = (0,  1, 
+                       2, -1)
+            nodemap2= (0, 1, 
+                      -1, 2)
+        if Q == 2:
+            nodemap = (0,  5,  1, 
+                       4,  3, -1,   
+                       2, -1, -1)
+            
+            nodemap2= ( 0,  5,  1, 
+                       -1,  4,  3,   
+                       -1, -1,  2)
+    
+        if Q == 3:
+            nodemap = ( 0,  7,  8,  1, 
+                        6,  9,  3, -1, 
+                        5,  4, -1, -1, 
+                        2, -1, -1, -1)
+            nodemap2= ( 0,  7,  8,  1, 
+                       -1,  6,  9,  3, 
+                       -1, -1,  5,  4, 
+                       -1, -1, -1,  2)
+        if Q == 4:
+            nodemap = ( 0,  9, 10, 11,  1, 
+                        8, 12, 13,  3, -1, 
+                        7, 14,  4, -1, -1, 
+                        6,  5, -1, -1, -1, 
+                        2, -1, -1, -1, -1, )
+            nodemap2= ( 0,  9, 10, 11,  1, 
+                       -1,  8, 12, 13,  3, 
+                       -1, -1,  7, 14,  4,
+                       -1, -1, -1,  6,  5, 
+                       -1, -1, -1, -1,  2,)
+        
+        #Invert the map
+        nodemapinv  = []
+        for k in xrange(int((Q+1)*(Q+2)/2)):
+            j = 0
+            while nodemap[j] != k: j += 1
+            nodemapinv.append(j)
+    
+        nodemapinv2  = []
+        for k in xrange(int((Q+1)*(Q+2)/2)):
+            j = 0
+            while nodemap2[j] != k: j += 1
+            nodemapinv2.append(j)
+
+        for j in xrange(nj):
+            for i in xrange(int(ni/2)):
+                e = i + ni*j
+                
+                #Write nodes
+                for k in xrange(int((Q+1)*(Q+2)/2)):
+                    f.write(str(E[e,nodemapinv[k]])+' ')
+                f.write('\n')
+        
+                
+                #Write nodes
+                for k in xrange(int((Q+1)*(Q+2)/2)):
+                    f.write(str(E[e,(Q+1)*(Q+1)-1-nodemapinv[k]])+' ')
+                f.write('\n')
+                
+            for i in xrange(int(ni/2),ni):
+                e = i + ni*j
+                
+                #Write nodes
+                for k in xrange(int((Q+1)*(Q+2)/2)):
+                    f.write(str(E[e,nodemapinv2[k]])+' ')
+                f.write('\n')
+                        
+                #Write nodes
+                for k in xrange(int((Q+1)*(Q+2)/2)):
+                    f.write(str(E[e,(Q+1)*(Q+1)-1-nodemapinv2[k]])+' ')
+                f.write('\n')
+
+    else:
+        f.write(str(nelem)+'\n')
+        f.write(str(Q)+'\n')
+        f.write('PXE_Shape_Quad\n')
+        f.write('UniformNodeDistribution\n')
+        #Write nodes
+        for e in xrange(nelem):
+            for k in xrange((Q+1)*(Q+1)):
+                f.write(str(E[e,k])+' ')
+            f.write('\n')
+      
+    f.close()
+    return
+
 #===============================================================================
 def SmoothBump(ni, nj, Q, ref, TriFlag, FileFormat):
 
@@ -212,6 +372,8 @@ def SmoothBump(ni, nj, Q, ref, TriFlag, FileFormat):
 
     if FileFormat == 'msh':
         writeGMSH('SmoothBump', ref, Q, TriFlag, E, V, NC, ni, nj)
+    if FileFormat == 'grm':
+        writeGRM('SmoothBump', ref, Q, TriFlag, E, V, NC, ni, nj)
 
 
 # Q is the degree of the polynomial used to represent elements. For Finite Volume/Difference codes, this should be Q=1 for linear elements.
