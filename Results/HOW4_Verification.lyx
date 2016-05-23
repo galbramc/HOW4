@@ -1,5 +1,5 @@
-#LyX 2.0 created this file. For more info see http://www.lyx.org/
-\lyxformat 413
+#LyX 2.1 created this file. For more info see http://www.lyx.org/
+\lyxformat 474
 \begin_document
 \begin_header
 \textclass beamer
@@ -13,7 +13,6 @@
 \usepackage{graphicx}
 \usepackage{epsfig}
 \usepackage{subfigure}
-\usepackage{amssymb}
 \usepackage{amsmath, amsfonts}
 \usepackage{amsthm}
 \usepackage{color}
@@ -33,13 +32,13 @@
 \font_roman default
 \font_sans default
 \font_typewriter default
+\font_math auto
 \font_default_family default
 \use_non_tex_fonts false
 \font_sc false
 \font_osf false
 \font_sf_scale 100
 \font_tt_scale 100
-
 \graphics default
 \default_output_format default
 \output_sync 0
@@ -50,15 +49,24 @@
 \use_hyperref false
 \papersize default
 \use_geometry true
-\use_amsmath 1
-\use_esint 1
-\use_mhchem 1
-\use_mathdots 1
+\use_package amsmath 1
+\use_package amssymb 2
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
 \cite_engine basic
+\cite_engine_type default
+\biblio_style plain
 \use_bibtopic false
 \use_indices false
 \paperorientation landscape
 \suppress_date true
+\justification true
 \use_refstyle 1
 \index Index
 \shortcut idx
@@ -139,17 +147,26 @@ Massachusetts Institute of Technology}
 Jun 4, 2016
 \end_layout
 
-\begin_layout BeginFrame
-Motivation
-\end_layout
-
-\begin_layout Block
-\begin_inset ERT
+\begin_layout Frame
+\begin_inset Argument 4
 status open
 
 \begin_layout Plain Layout
+Motivation
+\end_layout
 
-{Order of Accuracy Code Verification }
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Block
+\begin_inset Argument 2
+status open
+
+\begin_layout Plain Layout
+Order of Accuracy Code Verification 
 \end_layout
 
 \end_inset
@@ -211,12 +228,11 @@ RANS: Re = 1e6 Joukowski Airfoil
 \end_layout
 
 \begin_layout Block
-\begin_inset ERT
+\begin_inset Argument 2
 status open
 
 \begin_layout Plain Layout
-
-{The importance of Meshing for High-Order Methods}
+The importance of Meshing for High-Order Methods
 \end_layout
 
 \end_inset
@@ -246,21 +262,31 @@ Sensitive to Distribution (global grid clustering)
 \end_layout
 
 \end_deeper
-\begin_layout EndFrame
+\end_deeper
+\begin_layout Separator
 
 \end_layout
 
-\begin_layout BeginFrame
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
 Contributions
 \end_layout
 
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
 \begin_layout Block
-\begin_inset ERT
+\begin_inset Argument 2
 status open
 
 \begin_layout Plain Layout
 
-{}
 \end_layout
 
 \end_inset
@@ -337,21 +363,31 @@ Discontinuous Galerkin (xflow)
 
 \end_deeper
 \end_deeper
-\begin_layout EndFrame
+\end_deeper
+\begin_layout Separator
 
 \end_layout
 
-\begin_layout BeginFrame
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
 Contributions
 \end_layout
 
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
 \begin_layout Block
-\begin_inset ERT
+\begin_inset Argument 2
 status open
 
 \begin_layout Plain Layout
 
-{}
 \end_layout
 
 \end_inset
@@ -387,25 +423,15 @@ Finite Difference (WCNS)
 \end_deeper
 \end_deeper
 \begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-
 
 \end_layout
 
 \begin_layout Block
-\begin_inset ERT
+\begin_inset Argument 2
 status open
 
 \begin_layout Plain Layout
-
-{Most Common Mistakes}
+Most Common Mistakes
 \end_layout
 
 \end_inset
@@ -423,21 +449,31 @@ Lack of precision in reference quantities
 \end_layout
 
 \end_deeper
-\begin_layout EndFrame
+\end_deeper
+\begin_layout Separator
 
 \end_layout
 
-\begin_layout BeginFrame
-Anticipated Orders of Accuracy
-\end_layout
-
-\begin_layout Block
-\begin_inset ERT
+\begin_layout Frame
+\begin_inset Argument 4
 status open
 
 \begin_layout Plain Layout
+Anticipated Orders of Accuracy of Outputs
+\end_layout
 
-{Weighted Galerkin Schemes}
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Block
+\begin_inset Argument 2
+status open
+
+\begin_layout Plain Layout
+Galerkin Finite Element Assumptions
 \end_layout
 
 \end_inset
@@ -447,44 +483,223 @@ status open
 
 \begin_deeper
 \begin_layout Itemize
-Error in norm: 
+\begin_inset Formula $L_{2}$
+\end_inset
+
+ Solution Error: 
 \begin_inset Formula $O\left(h^{P+1}\right)$
 \end_inset
 
 
 \end_layout
 
+\begin_deeper
 \begin_layout Itemize
-Error in smooth output: 
+Solution Smoothness: 
+\begin_inset Formula $u\in H^{P+1}$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Output Functional Error: 
 \begin_inset Formula $O\left(h^{2P}\right)$
 \end_inset
 
 
 \end_layout
 
+\begin_deeper
 \begin_layout Itemize
-Smoothness
+Solution, Adjoint Smoothness: 
+\begin_inset Formula $u,\psi\in H^{P+1}$
+\end_inset
+
+
 \end_layout
 
-\begin_deeper
+\end_deeper
 \begin_layout Itemize
 Mesh to capture weak singularities
 \end_layout
 
-\end_deeper
-\end_deeper
 \begin_layout Itemize
-Mesh sensitivity
+Asymptotic with uniform meshes will eventually get 2P
 \end_layout
 
-\begin_layout EndFrame
+\end_deeper
+\end_deeper
+\begin_layout Standard
+\begin_inset Tabular
+<lyxtabular version="3" rows="4" columns="3">
+<features rotate="0" tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Scheme
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Itemize
+\begin_inset Formula $L_{2}$
+\end_inset
+
+ Solution Error
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Itemize
+Output Functional Error
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Galerkin Finite Element (CG/DG/HDG)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Itemize
+\begin_inset Formula $O\left(h^{P+1}\right)$
+\end_inset
+
 
 \end_layout
 
-\begin_layout BeginFrame
-Why Verification
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Itemize
+\begin_inset Formula $O\left(h^{2P}\right)$
+\end_inset
+
+
 \end_layout
 
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Finite Volume/Difference
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Itemize
+\begin_inset Formula $O\left(h^{P+1}\right)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Itemize
+\begin_inset Formula $O\left(h^{P+1}\right)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Non-Galerkin Orthogonal (FR/SD/SBP)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Itemize
+\begin_inset Formula $O\left(h^{P+1}\right)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Itemize
+\begin_inset Formula $O\left(h^{P+1}\right)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Separator
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Is Verification Needed?
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
 \begin_layout Standard
 \begin_inset Graphics
 	filename SmoothBump_Results/SmoothBump_Overflow_1.png
@@ -495,9 +710,6 @@ Why Verification
 
 \end_layout
 
-\begin_layout EndFrame
-
-\end_layout
-
+\end_deeper
 \end_body
 \end_document
