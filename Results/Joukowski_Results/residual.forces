@@ -1,0 +1,56 @@
+#
+# Mesh     p1_dof      p1_h               p2_h            p3_h             Marshall           Cd_Residuals(p1)  Cd_Residuals(p2)  Cd_Residuals(p3)
+  4
+    0       552   0.4256282654E-01   0.2167774924E-01 0.1454324318E-01 1.21899867687741E-01   0.1656367019E+00  0.1301652364E+00  0.1229445120E+00
+    1      2128   0.2167774924E-01   0.1094220274E-01 0.7318205164E-02 1.21899867687741E-01   0.1412621839E+00  0.1230921364E+00  0.1219720598E+00
+    2      8352   0.1094220274E-01   0.5497493714E-02 0.3670917603E-02 1.21899867687741E-01   0.1267688607E+00  0.1219624655E+00  0.1219008997E+00
+    3     33088   0.5497493714E-02   0.2755416964E-02 0.1838434097E-02 1.21899867687741E-01   0.1227297641E+00  0.1219017796E+00  0.1218996118E+00
+    4    131712   0.2755416964E-02   0.1379385139E-02 0.9199635908E-03 1.21899867687741E-01   0.1220307323E+00  ----------------  ----------------
+
+    
+  Mesh       h(p1)             error(p1)          error(p2)           error(p3)           reduction(p1)       reduction(p2)       reduction(p3)
+    0    0.4256282654E-01    0.4373683421E-01    0.8265368712E-02    0.1044644312E-02
+    1    0.2167774924E-01    0.1936231621E-01    0.1192268712E-02    0.7219211226E-04    0.2258863750E+01    0.6932471369E+01    0.1447033865E+02
+    2    0.1094220274E-01    0.4868993012E-02    0.6259781226E-04    0.1032012259E-05    0.3976657219E+01    0.1904649171E+02    0.6995276619E+02 <--(6th)
+    3    0.5497493714E-02    0.8298964123E-03    0.1911912259E-05    0.2558877410E-06    0.5866988868E+01    0.3274094403E+02 <--(5th) 0.4033066434E+01 <--(2nd)
+    4    0.2755416964E-02    0.1308646123E-03    ----------------    ----------------    0.6341641166E+01 <--(2.6)
+h**1   0.5000000000E+00    (    2) First order
+h**2   0.2500000000E+00    (    4) Second order <----
+h**3   0.1250000000E+00    (    8) Third order
+h**4   0.6250000000E-01    (   16) Fourth order <----
+h**5   0.3125000000E-01    (   32) Fifth order
+h**6   0.1562500000E-01    (   64) Sixth order  <----
+
+Mesh 0
+nnodes, ntri, nedges, and nbedges
+552   1576   1104     80
+Degrees of freedom and h for elementType 1 =     552    0.4256282654E-01
+Degrees of freedom and h for elementType 3 =    2128    0.2167774924E-01
+Degrees of freedom and h for elementType 7 =    4728    0.1454324318E-01
+
+Mesh 1
+nnodes, ntri, nedges, and nbedges
+2128   6224   4256    160
+Degrees of freedom and h for elementType 1 =    2128    0.2167774924E-01
+Degrees of freedom and h for elementType 3 =    8352    0.1094220274E-01
+Degrees of freedom and h for elementType 7 =   18672    0.7318205164E-02
+
+Mesh 2
+nnodes, ntri, nedges, and nbedges
+8352  24736  16704    320
+Degrees of freedom and h for elementType 1 =    8352    0.1094220274E-01
+Degrees of freedom and h for elementType 3 =   33088    0.5497493714E-02
+Degrees of freedom and h for elementType 7 =   74208    0.3670917603E-02
+
+Mesh 3
+nnodes, ntri, nedges, and nbedges
+33088  98624  66176    640
+Degrees of freedom and h for elementType 1 =   33088    0.5497493714E-02
+Degrees of freedom and h for elementType 3 =  131712    0.2755416964E-02
+Degrees of freedom and h for elementType 7 =  295872    0.1838434097E-02
+
+Mesh 4
+131712 393856 263424   1280
+Degrees of freedom and h for elementType 1 =  131712    0.2755416964E-02
+Degrees of freedom and h for elementType 3 =  525568    0.1379385139E-02
+Degrees of freedom and h for elementType 7 = 1181568    0.9199635908E-03

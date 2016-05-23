@@ -1,0 +1,65 @@
+\mode<presentation>
+
+% From MIT Graphic Identity
+%Web-safe MIT red = hex # 993333
+%(RGB equivalent = R 153, G 51, B 51)
+%Web-safe MIT gray = hex # 666666
+%(RGB equivalent = R 102, G 102, B 102)
+
+% Definte colors (acdlred obtained from logo)
+\definecolor{acdlgray}{RGB}{172,172,172}
+\definecolor{acdlred}{RGB}{138,23,50}
+\definecolor{smoothblue}{RGB}{25,103,170}
+\definecolor{smoothgreen}{RGB}{45,169,45}
+\definecolor{mathbrown}{RGB}{163,92,6}
+
+\setbeamercolor{structure}{fg=acdlred}
+
+% Color palettes
+\setbeamercolor{palette primary}{fg=acdlred,bg=acdlgray!70}
+\setbeamercolor{palette secondary}{fg=acdlred,bg=acdlgray!80}
+\setbeamercolor{palette tertiary}{fg=acdlred,bg=acdlgray!90}
+\setbeamercolor{palette quaternary}{fg=acdlred,bg=acdlgray}
+
+\setbeamercolor{titlelike}{parent=palette quaternary}
+
+% Block titles
+%\setbeamercolor{block title}{use=structure,fg=white,bg=structure.fg!75!black}
+\setbeamercolor{block title}{use=block text,fg=white,bg=smoothblue}
+
+%\setbeamercolor{block title alerted}{use=alerted text,fg=white,bg=alerted text.fg!75!black}
+\setbeamercolor{block title alerted}{use=structure,bg=acdlred,fg=white}
+
+%\setbeamercolor{block title example}{use=example text,fg=white,bg=example text.fg!75!black}
+\setbeamercolor{block title example}{use=example text,fg=white,bg=smoothgreen}
+
+% Block bodies
+\setbeamercolor{block body}{parent=normal text,use=block title,bg=block title.bg!10!bg}
+\setbeamercolor{block body alerted}{parent=normal text,use=block title alerted,bg=block title alerted.bg!10!bg}
+\setbeamercolor{block body example}{parent=normal text,use=block title example,bg=block title example.bg!10!bg}
+
+% Other choices
+%\setbeamercolor{block title}{fg=acdlred,bg=acdlgray}
+%\setbeamercolor{block title alerted}{use=alerted text,fg=acdlred,bg=alerted text.fg!75!bg}
+%\setbeamercolor{block title example}{use=example text,fg=acdlred,bg=example text.fg!75!bg}
+
+%\setbeamercolor{block body}{parent=normal text,use=block title,bg=block title.bg!25!bg}
+%\setbeamercolor{block body alerted}{parent=normal text,use=block title alerted,bg=block title alerted.bg!25!bg}
+%\setbeamercolor{block body example}{parent=normal text,use=block title example,bg=block title example.bg!25!bg}
+
+  
+% Sidebar settings
+\setbeamercolor{sidebar}{bg=acdlgray!70}
+\setbeamercolor{palette sidebar primary}{fg=acdlred}
+\setbeamercolor{palette sidebar secondary}{fg=acdlred!75}
+\setbeamercolor{palette sidebar tertiary}{fg=acdlred!75}
+\setbeamercolor{palette sidebar quaternary}{fg=acdlred}
+
+\setbeamercolor*{separation line}{}
+\setbeamercolor*{fine separation line}{}
+
+% Use different color for math text
+\setbeamercolor{math text}{fg=black}
+
+\mode
+<all>
