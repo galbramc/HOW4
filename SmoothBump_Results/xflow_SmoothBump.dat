@@ -1,4 +1,4 @@
-VARIABLES="1/sqet(DOF)", "Entropy Error", "Work Units", "Time (s)"	
+VARIABLES="1/sqrt(DOF)", "Entropy Error", "Work Units", "Time (s)"	
 ZONE T = "UM DG Quad P0"
 0.2886751346	2.62906000E-03	8.38350500E-04	0.0041917525
 0.1443375673	3.82454300E-03	1.95010300E-03	0.009750515
