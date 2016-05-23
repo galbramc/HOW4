@@ -7,6 +7,7 @@ from fec import writeFEC
 from gmsh import writeGMSH
 from ebg import writeEBG
 from geo import writeGEO
+from curve import writeCurve
 
 from Joukowski_Challenge import make_joukowski_challenge
 from Joukowski_Classic import make_joukowski_classic
@@ -53,7 +54,9 @@ def make_joukowski(ref, Q, TriFlag, Distribution, FileFormat, reynolds, filename
         writeEBG('joukowski.ebg', XC, YC, nWK)
     if FileFormat == 'geo':
         writeGEO('joukowski.geo', XC, YC, nWK)
-         
+    if FileFormat == 'curve':
+        writeCurve(XC, YC, nWK)
+
     
     #--------------------#
     # Vertices, unrolled #

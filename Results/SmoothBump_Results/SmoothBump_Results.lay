@@ -5,6 +5,8 @@ $!VarSet |LFDSFN2| = '"Commercial_SmoothBump.dat"'
 $!VarSet |LFDSVL2| = '"1/sqrt(DOF)" "Entropy Error" "Work Units" "Time (s)"'
 $!VarSet |LFDSFN3| = '"prjectx_SmoothBump.dat"'
 $!VarSet |LFDSVL3| = '"1/sqrt(DOF)" "Entropy Error" "Work Units" "Time (s)"'
+$!VarSet |LFDSFN4| = '"prjectx_SmoothBump.dat"'
+$!VarSet |LFDSVL4| = '"1/sqrt(DOF)" "Entropy Error" "Work Units" "Time (s)"'
 $!SETSTYLEBASE FACTORY
 $!PLOTOPTIONS 
   SUBDIVIDEALLCELLS = NO
@@ -75,6 +77,17 @@ $!READDATASET  '|LFDSFN3|'
 $!REMOVEVAR |LFDSVL3|
 $!REMOVEVAR |LFDSFN3|
 $!DELETEZONES  [18-27]
+$!READDATASET  '|LFDSFN4|'
+  INITIALPLOTTYPE = XYLINE
+  INCLUDETEXT = NO
+  INCLUDEGEOM = NO
+  READDATAOPTION = APPEND
+  RESETSTYLE = NO
+  ASSIGNSTRANDIDS = YES
+  VARLOADMODE = BYNAME
+  VARNAMELIST = '|LFDSVL4|'
+$!REMOVEVAR |LFDSVL4|
+$!REMOVEVAR |LFDSFN4|
 $!FRAMELAYOUT 
   SHOWBORDER = NO
   SHOWHEADER = NO
@@ -95,7 +108,7 @@ $!FRAMENAME  = 'Frame 001'
 $!GLOBALTIME 
   SOLUTIONTIME = 0
 $!DELETELINEMAPS 
-$!ACTIVELINEMAPS  =  [1-6,8,14-15]
+$!ACTIVELINEMAPS  =  [1-6,8,14-19]
 $!GLOBALLINEPLOT 
   DATALABELS
     {
@@ -506,7 +519,115 @@ $!LINEMAP  [15]
   NAME = 'Star CCM+ Quad P1'
   ASSIGN
     {
-    ZONE = 9
+    ZONE = 18
+    XAXISVAR = 1
+    YAXISVAR = 2
+    }
+  LINES
+    {
+    COLOR = RED
+    LINETHICKNESS = 0.4
+    }
+  SYMBOLS
+    {
+    COLOR = RED
+    FILLCOLOR = RED
+    }
+  BARCHARTS
+    {
+    COLOR = RED
+    FILLCOLOR = RED
+    }
+  ERRORBARS
+    {
+    COLOR = RED
+    }
+$!LINEMAP  [16]
+  NAME = 'Star CCM+ Quad P1'
+  ASSIGN
+    {
+    ZONE = 19
+    XAXISVAR = 1
+    YAXISVAR = 2
+    }
+  LINES
+    {
+    COLOR = RED
+    LINETHICKNESS = 0.4
+    }
+  SYMBOLS
+    {
+    COLOR = RED
+    FILLCOLOR = RED
+    }
+  BARCHARTS
+    {
+    COLOR = RED
+    FILLCOLOR = RED
+    }
+  ERRORBARS
+    {
+    COLOR = RED
+    }
+$!LINEMAP  [17]
+  NAME = 'Star CCM+ Quad P1'
+  ASSIGN
+    {
+    ZONE = 20
+    XAXISVAR = 1
+    YAXISVAR = 2
+    }
+  LINES
+    {
+    COLOR = RED
+    LINETHICKNESS = 0.4
+    }
+  SYMBOLS
+    {
+    COLOR = RED
+    FILLCOLOR = RED
+    }
+  BARCHARTS
+    {
+    COLOR = RED
+    FILLCOLOR = RED
+    }
+  ERRORBARS
+    {
+    COLOR = RED
+    }
+$!LINEMAP  [18]
+  NAME = 'Star CCM+ Quad P1'
+  ASSIGN
+    {
+    ZONE = 21
+    XAXISVAR = 1
+    YAXISVAR = 2
+    }
+  LINES
+    {
+    COLOR = RED
+    LINETHICKNESS = 0.4
+    }
+  SYMBOLS
+    {
+    COLOR = RED
+    FILLCOLOR = RED
+    }
+  BARCHARTS
+    {
+    COLOR = RED
+    FILLCOLOR = RED
+    }
+  ERRORBARS
+    {
+    COLOR = RED
+    }
+$!LINEMAP  [19]
+  NAME = 'Star CCM+ Quad P1'
+  ASSIGN
+    {
+    ZONE = 22
     XAXISVAR = 1
     YAXISVAR = 2
     }

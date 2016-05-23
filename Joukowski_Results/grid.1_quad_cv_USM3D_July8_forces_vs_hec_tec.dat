@@ -1,8 +1,0 @@
- Convergence of forces with grid size, USM3D (h=h_eff)
- variables="N","h=sqrt(1/N)","C_D","C_Dv"
-ZONE, T="USM3D, July8_Grids"
-32768     0.55243E-02   0.122743E+00  0.801544E-01
-131072    0.27621E-02   0.122161E+00  0.806752E-01 
-524288    0.13811E-02   0.122053E+00  0.808210E-01 
-2097152   0.06905E-02   0.122007E+00  0.808596E-01
-

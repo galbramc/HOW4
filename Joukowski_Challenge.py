@@ -183,7 +183,7 @@ def make_joukowski_challenge(ref, Q, reynolds=1.e6):
     maxref = 6
     assert( ref <= maxref )
     Dfarfield = 100    # farfield distance from the airfoil
-    farang=0.0
+    farang=0.0*pi/180.
     nchordwise=8       # number of elements along one side of the airfoil geometry
     nxwake=8           # x-wake on centerline
     nnormal=16         # points normal to airfoil surface
@@ -218,13 +218,13 @@ def make_joukowski_challenge(ref, Q, reynolds=1.e6):
     #-------------------------------------#
     x0     = tan(farang)*Hc
     radius = (x0**2 + Hc**2)**0.5
-    t0 = npy.linspace( 3.*pi/2., 5.*pi/2., nLE)
+    t0 = npy.linspace( 3.*pi/2.+farang, 5.*pi/2.-farang, nLE)
 
-    FLE    = npy.zeros([nLE,2])
+    FLE      = npy.zeros([nLE,2])
     FLE[:,0] = x0 - radius*cos(t0)
     FLE[:,1] =      radius*sin(t0)
 
-    #pyl.plot(FLE[:,0],FLE[:,1],'o')
+    #pyl.plot(FLE[:,0],FLE[:,1],'-o')
     #pyl.show()
     
     #----------------------#
