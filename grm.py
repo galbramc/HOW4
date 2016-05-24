@@ -5,7 +5,7 @@ def writeGRM(filename_base, ref, Q, TriFlag, E, V, nLE, NC, nWK, nWB, nr):
     # Write out the grid file #
     #=========================#
 
-    filename = filename_base + ('_tri' if TriFlag else '_quad') + '_ref'+str(ref)+ '_Q'+str(Q)+'.grm'
+    filename = filename_base + '_ref'+str(ref)+ '_Q'+str(Q)+'.grm'
     print 'Writing ', filename
     f = open(filename, 'w')
      

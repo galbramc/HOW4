@@ -177,7 +177,7 @@ Order of Accuracy Code Verification
 
 \begin_deeper
 \begin_layout Itemize
-Is the code correctly implemented?
+Is the code correct?
 \end_layout
 
 \begin_layout Itemize
@@ -203,11 +203,19 @@ Inviscid: Smooth Gaussian Bump
 \end_layout
 
 \begin_layout Itemize
-Laminar: Re = 1,000 Joukowski Airfoil
+Laminar: 
+\begin_inset Formula $Re=1000$
+\end_inset
+
+ Joukowski Airfoil
 \end_layout
 
 \begin_layout Itemize
-RANS: Re = 1e6 Joukowski Airfoil
+RANS: 
+\begin_inset Formula $Re=1e6$
+\end_inset
+
+ Joukowski Airfoil
 \end_layout
 
 \end_deeper
@@ -413,16 +421,31 @@ Finite Difference (WCNS)
 
 \end_deeper
 \end_deeper
-\begin_layout Standard
-\begin_inset Note Note
-status collapsed
+\end_deeper
+\begin_layout Separator
 
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+The Goal: Verification
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
 \begin_layout Block
 \begin_inset Argument 2
 status collapsed
 
 \begin_layout Plain Layout
-Most Common Mistakes
+Verification and Validation
 \end_layout
 
 \end_inset
@@ -432,21 +455,119 @@ Most Common Mistakes
 
 \begin_deeper
 \begin_layout Itemize
-Using Sutherland's law instead of constant viscosity
+Verification: Is the code correct?
 \end_layout
 
 \begin_layout Itemize
-Lack of precision in reference quantities
+Validation: Is the mathematical model appropriate?
 \end_layout
 
 \end_deeper
+\begin_layout Separator
+
+\end_layout
+
+\begin_layout Block
+\begin_inset Argument 2
+status open
+
+\begin_layout Plain Layout
+Software Development Verification
+\end_layout
+
 \end_inset
 
 
 \end_layout
 
+\begin_deeper
+\begin_layout Columns
+
+\end_layout
+
+\begin_deeper
+\begin_layout Column
+165pt
+\end_layout
+
+\begin_layout Itemize
+Unit Testing
+\end_layout
+
+\begin_layout Itemize
+Memory Checking
+\end_layout
+
+\begin_layout Column
+165pt
+\end_layout
+
+\begin_layout Itemize
+Static Analysis
+\end_layout
+
+\begin_layout Itemize
+Continuous Integration
+\end_layout
+
+\end_deeper
 \end_deeper
 \begin_layout Separator
+
+\end_layout
+
+\begin_layout Block
+\begin_inset Argument 2
+status open
+
+\begin_layout Plain Layout
+Non-Intrusive Order of Accuracy Component Verification
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Test cases designed to Verify CFD codes
+\end_layout
+
+\begin_layout Itemize
+Structured Quadrilateral and Triangle Meshes (python scripts)
+\end_layout
+
+\begin_layout Itemize
+Participants required to use provided meshes
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Mesh independent comparison of codes
+\end_layout
+
+\end_deeper
+\end_deeper
+\end_deeper
+\begin_layout Separator
+\begin_inset Note Note
+status open
+
+\begin_layout Itemize
+Inviscid Flux: Smooth Gaussian Bump
+\end_layout
+
+\begin_layout Itemize
+Viscous Flux: Laminar Joukowski Airfoil
+\end_layout
+
+\begin_layout Itemize
+RANS Model: RANS-SA Joukowski Airfoil
+\end_layout
+
+\end_inset
+
 
 \end_layout
 
@@ -719,6 +840,593 @@ Optimal mesh distributions will observe
 status open
 
 \begin_layout Plain Layout
+Inviscid Smooth Gaussian Bump
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Columns
+
+\end_layout
+
+\begin_deeper
+\begin_layout Column
+165pt
+\end_layout
+
+\begin_layout Block
+\begin_inset Argument 2
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Used in all previous workshops (but with a variety of meshes)
+\end_layout
+
+\begin_layout Itemize
+Verify Inviscid Fluxes and BC's
+\end_layout
+
+\begin_layout Itemize
+Mach 0.5
+\end_layout
+
+\begin_layout Itemize
+Total Pressure and Temperature Inflow
+\end_layout
+
+\begin_layout Itemize
+Static Pressure Outflow
+\end_layout
+
+\begin_layout Itemize
+Entropy Error: 
+\begin_inset Formula $O\left(h^{P+1}\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Mesh is NOT optimized to minimize Entropy Error
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Column
+165pt
+\end_layout
+
+\begin_layout Standard
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "50col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename SmoothBump.png
+	width 2in
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset VSpace medskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename SmoothBump_quad.png
+	width 2in
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset VSpace medskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename SmoothBump_tri.png
+	width 2in
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Separator
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Laminar Joukowski Airfoil
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Columns
+
+\end_layout
+
+\begin_deeper
+\begin_layout Column
+165pt
+\end_layout
+
+\begin_layout Block
+\begin_inset Argument 2
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Replaces NACA0012 case in previous workshops
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+High-order accuracy was not observed due to meshing
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Verify Viscous Fluxes and BC's
+\end_layout
+
+\begin_layout Itemize
+Mach 0.5, 
+\begin_inset Formula $\alpha=0^{\circ}$
+\end_inset
+
+, 
+\begin_inset Formula $Re=1000$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Cusped Trailinge Edge
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Reduce Inviscid Singularity
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+C-grid
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Clustering at Stagnation Point and Trailing Edge
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Symmetric: 
+\begin_inset Formula $C_{l}\equiv0$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $C_{d}$
+\end_inset
+
+ Error: 
+\begin_inset Formula $O\left(h^{P+1}\right)$
+\end_inset
+
+ or 
+\begin_inset Formula $O\left(h^{2P}\right)$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Column
+165pt
+\end_layout
+
+\begin_layout Standard
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "50col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename Joukowski_Laminar_quad.png
+	width 2in
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset VSpace medskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename Joukowski_Laminar_tri.png
+	width 2in
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Separator
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+RANS Joukowski Airfoil
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Columns
+
+\end_layout
+
+\begin_deeper
+\begin_layout Column
+165pt
+\end_layout
+
+\begin_layout Block
+\begin_inset Argument 2
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Replaces NACA0012 case in previous workshops
+\end_layout
+
+\begin_layout Itemize
+Verify RANS model and BC's
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Negative SA
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Mach 0.5, 
+\begin_inset Formula $\alpha=0^{\circ}$
+\end_inset
+
+, 
+\begin_inset Formula $Re=1e6$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Cusped Trailinge Edge
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Reduce Inviscid Singularity
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+C-grid
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Clustering at Stagnation Point and Trailing Edge
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Symmetric: 
+\begin_inset Formula $C_{l}\equiv0$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $C_{d}$
+\end_inset
+
+ Error: 
+\begin_inset Formula $O\left(h^{P+1}\right)$
+\end_inset
+
+ or 
+\begin_inset Formula $O\left(h^{2P}\right)$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Column
+165pt
+\end_layout
+
+\begin_layout Standard
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "50col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename Joukowski_RANS_quad.png
+	width 2in
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset VSpace medskip
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename Joukowski_RANS_tri.png
+	width 2in
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Separator
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Orders of Accuracy Caveats
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Columns
+
+\end_layout
+
+\begin_deeper
+\begin_layout Column
+165pt
+\end_layout
+
+\begin_layout Block
+\begin_inset Argument 2
+status open
+
+\begin_layout Plain Layout
+Inviscid Entropy Error
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Norm 
+\begin_inset Formula $\rightarrow$
+\end_inset
+
+ One sided
+\end_layout
+
+\begin_layout Itemize
+Exact solution is known
+\end_layout
+
+\end_deeper
+\begin_layout Separator
+
+\end_layout
+
+\begin_layout Block
+\begin_inset Argument 2
+status open
+
+\begin_layout Plain Layout
+Drag Error
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Possible cross over
+\end_layout
+
+\begin_layout Itemize
+No exact solution
+\end_layout
+
+\end_deeper
+\begin_layout Column
+165pt
+\end_layout
+
+\begin_layout Standard
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "50col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename DragCrossover.png
+	width 2in
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Separator
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
 Is Verification Needed?
 \end_layout
 
@@ -733,7 +1441,7 @@ Is Verification Needed?
 status open
 
 \begin_layout Plain Layout
-OVERFLOW
+OVERFLOW: Smooth Gaussian Bump
 \end_layout
 
 \end_inset
@@ -747,125 +1455,108 @@ Highly reputable workhorse CFD code
 \end_layout
 
 \begin_layout Itemize
-Considred to be well validated
+Considered to be well validated
 \end_layout
 
 \end_deeper
 \begin_layout Standard
 \align center
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "50col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status collapsed
+
+\begin_layout Overprint
+\begin_inset Argument item:1
+status open
+
+\begin_layout Plain Layout
+1
+\end_layout
+
+\end_inset
+
+
 \begin_inset Graphics
 	filename SmoothBump_Results/SmoothBump_Overflow_1.png
-	height 2.5in
+	height 2.25in
+	groupId OVERFLOW
 
 \end_inset
 
 
 \end_layout
 
-\end_deeper
-\begin_layout Frame
-
-\end_layout
-
-\begin_layout Separator
-
-\end_layout
-
-\begin_layout Frame
-\begin_inset Argument 4
+\begin_layout Overprint
+\begin_inset Argument item:1
 status open
 
 \begin_layout Plain Layout
-Is Verification Needed?
+2
 \end_layout
 
 \end_inset
 
 
-\end_layout
-
-\begin_deeper
-\begin_layout Block
-\begin_inset Argument 2
-status open
-
-\begin_layout Plain Layout
-OVERFLOW
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_deeper
-\begin_layout Itemize
-Highly reputable workhorse CFD code
-\end_layout
-
-\begin_layout Itemize
-Considred to be well validated
-\end_layout
-
-\end_deeper
-\begin_layout Standard
-\align center
 \begin_inset Graphics
 	filename SmoothBump_Results/SmoothBump_Overflow_2.png
-	height 2.5in
+	height 2.25in
+	groupId OVERFLOW
 
 \end_inset
 
 
 \end_layout
 
-\end_deeper
-\begin_layout Separator
-
-\end_layout
-
-\begin_layout Frame
-\begin_inset Argument 4
+\begin_layout Overprint
+\begin_inset Argument item:1
 status open
 
 \begin_layout Plain Layout
-Is Verification Needed?
+3
 \end_layout
 
 \end_inset
 
 
-\end_layout
-
-\begin_deeper
-\begin_layout Block
-\begin_inset Argument 2
-status open
-
-\begin_layout Plain Layout
-OVERFLOW
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_deeper
-\begin_layout Itemize
-Highly reputable workhorse CFD code
-\end_layout
-
-\begin_layout Itemize
-Considred to be well validated
-\end_layout
-
-\end_deeper
-\begin_layout Standard
-\align center
 \begin_inset Graphics
 	filename SmoothBump_Results/SmoothBump_Overflow_3.png
-	height 2.5in
+	height 2.25in
+	groupId OVERFLOW
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Overprint
+\begin_inset Argument item:1
+status open
+
+\begin_layout Plain Layout
+4
+\end_layout
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename SmoothBump_Results/SmoothBump_Overflow_4.png
+	height 2.25in
+	groupId OVERFLOW
+
+\end_inset
+
+
+\end_layout
 
 \end_inset
 
@@ -882,7 +1573,7 @@ Considred to be well validated
 status open
 
 \begin_layout Plain Layout
-Is Verification Needed?
+Communication with Participants
 \end_layout
 
 \end_inset
@@ -893,10 +1584,10 @@ Is Verification Needed?
 \begin_deeper
 \begin_layout Block
 \begin_inset Argument 2
-status open
+status collapsed
 
 \begin_layout Plain Layout
-OVERFLOW
+Most Common Mistakes
 \end_layout
 
 \end_inset
@@ -906,27 +1597,164 @@ OVERFLOW
 
 \begin_deeper
 \begin_layout Itemize
-Highly reputable workhorse CFD code
+Using Sutherland's law instead of constant viscosity
 \end_layout
 
 \begin_layout Itemize
-Considred to be well validated
+Lack of precision in reference quantities
 \end_layout
 
 \end_deeper
-\begin_layout Standard
-\align center
-\begin_inset Graphics
-	filename SmoothBump_Results/SmoothBump_Overflow_4.png
-	height 2.5in
+\begin_layout Separator
+
+\end_layout
+
+\begin_layout Block
+\begin_inset Argument 2
+status open
+
+\begin_layout Plain Layout
+Other Outcomes
+\end_layout
 
 \end_inset
 
- 
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+2 Groups fixed force calculation due to 
+\begin_inset Formula $C_{l}\neq0$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+1 Group changed force calculation to residual based to get expected order
+ of accuracy
+\end_layout
+
+\begin_layout Itemize
+1 Group modified BC implementation
+\end_layout
+
+\begin_layout Itemize
+2 Groups withdrew results concluding bugs in codes
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Lack of time to resolve bugs before workshop
 \end_layout
 
 \end_deeper
+\end_deeper
+\end_deeper
+\begin_layout Separator
+
+\end_layout
+
 \begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Smooth Gaussian Bump
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout FrameSubtitle
+Finite Volume and Finite Difference
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename SmoothBump_Results/SmoothBump_FVD_Error.png
+	height 2.8in
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Separator
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Smooth Gaussian Bump
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout FrameSubtitle
+Discontinuous Galerkin
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename SmoothBump_Results/SmoothBump_DG_Quad_Error.png
+	height 2.8in
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Separator
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Smooth Gaussian Bump
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout FrameSubtitle
+Discontinuous Galerkin
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename SmoothBump_Results/SmoothBump_DG_Tri_Error.png
+	height 2.8in
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Separator
 
 \end_layout
 
