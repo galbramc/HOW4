@@ -886,6 +886,10 @@ Used in all previous workshops (but with a variety of meshes)
 \end_layout
 
 \begin_layout Itemize
+Trivial mesh works well
+\end_layout
+
+\begin_layout Itemize
 Verify Inviscid Fluxes and BC's
 \end_layout
 
@@ -1027,12 +1031,12 @@ status open
 
 \begin_deeper
 \begin_layout Itemize
-Replaces NACA0012 case in previous workshops
+C-grid: Clustering at Stagnation Point and Trailing Edge
 \end_layout
 
 \begin_deeper
 \begin_layout Itemize
-High-order accuracy was not observed due to meshing
+6 months of work to find good distribution
 \end_layout
 
 \end_deeper
@@ -1059,16 +1063,6 @@ Cusped Trailinge Edge
 \begin_deeper
 \begin_layout Itemize
 Reduce Inviscid Singularity
-\end_layout
-
-\end_deeper
-\begin_layout Itemize
-C-grid
-\end_layout
-
-\begin_deeper
-\begin_layout Itemize
-Clustering at Stagnation Point and Trailing Edge
 \end_layout
 
 \end_deeper
@@ -1190,9 +1184,15 @@ status open
 
 \begin_deeper
 \begin_layout Itemize
-Replaces NACA0012 case in previous workshops
+C-grid: Clustering at Stagnation Point and Trailing Edge
 \end_layout
 
+\begin_deeper
+\begin_layout Itemize
+4 months of work to find good distribution
+\end_layout
+
+\end_deeper
 \begin_layout Itemize
 Verify RANS model and BC's
 \end_layout
@@ -1222,16 +1222,6 @@ Cusped Trailinge Edge
 \begin_deeper
 \begin_layout Itemize
 Reduce Inviscid Singularity
-\end_layout
-
-\end_deeper
-\begin_layout Itemize
-C-grid
-\end_layout
-
-\begin_deeper
-\begin_layout Itemize
-Clustering at Stagnation Point and Trailing Edge
 \end_layout
 
 \end_deeper
@@ -1316,118 +1306,6 @@ status collapsed
 \end_layout
 
 \begin_layout Frame
-\begin_inset Argument 4
-status open
-
-\begin_layout Plain Layout
-Orders of Accuracy Caveats
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_deeper
-\begin_layout Columns
-
-\end_layout
-
-\begin_deeper
-\begin_layout Column
-165pt
-\end_layout
-
-\begin_layout Block
-\begin_inset Argument 2
-status open
-
-\begin_layout Plain Layout
-Inviscid Entropy Error
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_deeper
-\begin_layout Itemize
-Norm 
-\begin_inset Formula $\rightarrow$
-\end_inset
-
- One sided
-\end_layout
-
-\begin_layout Itemize
-Exact solution is known
-\end_layout
-
-\end_deeper
-\begin_layout Separator
-
-\end_layout
-
-\begin_layout Block
-\begin_inset Argument 2
-status open
-
-\begin_layout Plain Layout
-Drag Error
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_deeper
-\begin_layout Itemize
-Possible cross over
-\end_layout
-
-\begin_layout Itemize
-No exact solution
-\end_layout
-
-\end_deeper
-\begin_layout Column
-165pt
-\end_layout
-
-\begin_layout Standard
-\begin_inset Box Frameless
-position "t"
-hor_pos "c"
-has_inner_box 1
-inner_pos "t"
-use_parbox 0
-use_makebox 0
-width "50col%"
-special "none"
-height "1in"
-height_special "totalheight"
-status collapsed
-
-\begin_layout Plain Layout
-\begin_inset Graphics
-	filename DragCrossover.png
-	width 2in
-
-\end_inset
-
-
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\end_deeper
-\end_deeper
-\begin_layout Separator
 
 \end_layout
 
@@ -1670,6 +1548,163 @@ Lack of time to resolve bugs before workshop
 status open
 
 \begin_layout Plain Layout
+Result Caveats
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Columns
+
+\end_layout
+
+\begin_deeper
+\begin_layout Column
+165pt
+\end_layout
+
+\begin_layout Block
+\begin_inset Argument 2
+status open
+
+\begin_layout Plain Layout
+Inviscid Entropy Error
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Norm 
+\begin_inset Formula $\rightarrow$
+\end_inset
+
+ One sided
+\end_layout
+
+\begin_layout Itemize
+Exact solution is known
+\end_layout
+
+\end_deeper
+\begin_layout Separator
+
+\end_layout
+
+\begin_layout Block
+\begin_inset Argument 2
+status open
+
+\begin_layout Plain Layout
+Drag Error
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Possible cross over
+\end_layout
+
+\begin_layout Itemize
+No exact solution
+\end_layout
+
+\end_deeper
+\begin_layout Separator
+
+\end_layout
+
+\begin_layout Block
+\begin_inset Argument 2
+status open
+
+\begin_layout Plain Layout
+
+\size small
+Normalized Time 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\size small
+(Work Units) * 5s
+\end_layout
+
+\begin_layout Itemize
+Represents modern computer
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Columns
+
+\end_layout
+
+\begin_layout Columns
+
+\end_layout
+
+\begin_deeper
+\begin_layout Column
+165pt
+\end_layout
+
+\begin_layout Standard
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "50col%"
+special "none"
+height "1in"
+height_special "totalheight"
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename DragCrossover.png
+	width 2in
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Separator
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
 Smooth Gaussian Bump
 \end_layout
 
@@ -1755,6 +1790,126 @@ Discontinuous Galerkin
 \align center
 \begin_inset Graphics
 	filename SmoothBump_Results/SmoothBump_DG_Tri_Error.png
+	height 2.8in
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Separator
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Smooth Gaussian Bump
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename SmoothBump_Results/SmoothBump_FVD_Time.png
+	height 2.8in
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Separator
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Smooth Gaussian Bump
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename SmoothBump_Results/SmoothBump_NUDT_Time.png
+	height 2.8in
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Separator
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Smooth Gaussian Bump
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename SmoothBump_Results/SmoothBump_DG_Quad_Time.png
+	height 2.8in
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Separator
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Smooth Gaussian Bump
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename SmoothBump_Results/SmoothBump_DG_Tri_Time.png
 	height 2.8in
 
 \end_inset
