@@ -7,6 +7,10 @@ $!VarSet |LFDSFN3| = '"prjectx_SmoothBump.dat"'
 $!VarSet |LFDSVL3| = '"1/sqrt(DOF)" "Entropy Error" "Work Units" "Time (s)"'
 $!VarSet |LFDSFN4| = '"prjectx_SmoothBump.dat"'
 $!VarSet |LFDSVL4| = '"1/sqrt(DOF)" "Entropy Error" "Work Units" "Time (s)"'
+$!VarSet |LFDSFN5| = '"xflow_SmoothBump.dat"'
+$!VarSet |LFDSVL5| = '"1/sqrt(DOF)" "Entropy Error" "Work Units" "Time (s)"'
+$!VarSet |LFDSFN6| = '"NUDT_SmoothBump.dat"'
+$!VarSet |LFDSVL6| = '"1/sqrt(DOF)" "Entropy Error" "Work Units" "Time (s)"'
 $!SETSTYLEBASE FACTORY
 $!PLOTOPTIONS 
   SUBDIVIDEALLCELLS = NO
@@ -88,6 +92,28 @@ $!READDATASET  '|LFDSFN4|'
   VARNAMELIST = '|LFDSVL4|'
 $!REMOVEVAR |LFDSVL4|
 $!REMOVEVAR |LFDSFN4|
+$!READDATASET  '|LFDSFN5|'
+  INITIALPLOTTYPE = XYLINE
+  INCLUDETEXT = NO
+  INCLUDEGEOM = NO
+  READDATAOPTION = APPEND
+  RESETSTYLE = NO
+  ASSIGNSTRANDIDS = YES
+  VARLOADMODE = BYNAME
+  VARNAMELIST = '|LFDSVL5|'
+$!REMOVEVAR |LFDSVL5|
+$!REMOVEVAR |LFDSFN5|
+$!READDATASET  '|LFDSFN6|'
+  INITIALPLOTTYPE = XYLINE
+  INCLUDETEXT = NO
+  INCLUDEGEOM = NO
+  READDATAOPTION = APPEND
+  RESETSTYLE = NO
+  ASSIGNSTRANDIDS = YES
+  VARLOADMODE = BYNAME
+  VARNAMELIST = '|LFDSVL6|'
+$!REMOVEVAR |LFDSVL6|
+$!REMOVEVAR |LFDSFN6|
 $!FRAMELAYOUT 
   SHOWBORDER = NO
   SHOWHEADER = NO
@@ -108,7 +134,7 @@ $!FRAMENAME  = 'Frame 001'
 $!GLOBALTIME 
   SOLUTIONTIME = 0
 $!DELETELINEMAPS 
-$!ACTIVELINEMAPS  =  [1-6,8,14-19]
+$!ACTIVELINEMAPS  =  [1-8,11-14]
 $!GLOBALLINEPLOT 
   DATALABELS
     {
@@ -127,12 +153,13 @@ $!GLOBALLINEPLOT
       }
     XYPOS
       {
-      X = 96.889
-      Y = 46.932
+      X = 38.938
+      Y = 37.322
       }
+    ANCHORALIGNMENT = TOPLEFT
     }
 $!LINEMAP  [1]
-  NAME = '&DV&'
+  NAME = '&ZN&'
   ASSIGN
     {
     ZONE = 1
@@ -147,6 +174,7 @@ $!LINEMAP  [1]
     }
   SYMBOLS
     {
+    SHOW = NO
     COLOR = RED
     FILLCOLOR = RED
     }
@@ -160,7 +188,7 @@ $!LINEMAP  [1]
     COLOR = RED
     }
 $!LINEMAP  [2]
-  NAME = 'Entropy Error'
+  NAME = '&ZN&'
   ASSIGN
     {
     ZONE = 2
@@ -175,6 +203,7 @@ $!LINEMAP  [2]
     }
   SYMBOLS
     {
+    SHOW = NO
     COLOR = RED
     FILLCOLOR = RED
     }
@@ -188,7 +217,7 @@ $!LINEMAP  [2]
     COLOR = RED
     }
 $!LINEMAP  [3]
-  NAME = 'Entropy Error'
+  NAME = '&ZN&'
   ASSIGN
     {
     ZONE = 3
@@ -203,6 +232,7 @@ $!LINEMAP  [3]
     }
   SYMBOLS
     {
+    SHOW = NO
     COLOR = RED
     FILLCOLOR = RED
     }
@@ -216,7 +246,7 @@ $!LINEMAP  [3]
     COLOR = RED
     }
 $!LINEMAP  [4]
-  NAME = 'Entropy Error'
+  NAME = '&ZN&'
   ASSIGN
     {
     ZONE = 3
@@ -231,6 +261,7 @@ $!LINEMAP  [4]
     }
   SYMBOLS
     {
+    SHOW = NO
     COLOR = RED
     FILLCOLOR = RED
     }
@@ -244,7 +275,7 @@ $!LINEMAP  [4]
     COLOR = RED
     }
 $!LINEMAP  [5]
-  NAME = 'Entropy Error'
+  NAME = '&ZN&'
   ASSIGN
     {
     ZONE = 4
@@ -259,6 +290,7 @@ $!LINEMAP  [5]
     }
   SYMBOLS
     {
+    SHOW = NO
     COLOR = RED
     FILLCOLOR = RED
     }
@@ -272,7 +304,7 @@ $!LINEMAP  [5]
     COLOR = RED
     }
 $!LINEMAP  [6]
-  NAME = 'Entropy Error'
+  NAME = '&ZN&'
   ASSIGN
     {
     ZONE = 5
@@ -287,6 +319,7 @@ $!LINEMAP  [6]
     }
   SYMBOLS
     {
+    SHOW = NO
     COLOR = RED
     FILLCOLOR = RED
     }
@@ -342,6 +375,7 @@ $!LINEMAP  [8]
   SYMBOLS
     {
     COLOR = RED
+    FILLMODE = USELINECOLOR
     FILLCOLOR = RED
     }
   BARCHARTS
@@ -364,6 +398,7 @@ $!LINEMAP  [9]
   LINES
     {
     COLOR = RED
+    LINEPATTERN = LONGDASH
     LINETHICKNESS = 0.4
     }
   SYMBOLS
@@ -391,6 +426,7 @@ $!LINEMAP  [10]
   LINES
     {
     COLOR = RED
+    LINEPATTERN = DASHDOTDOT
     LINETHICKNESS = 0.4
     }
   SYMBOLS
@@ -417,12 +453,12 @@ $!LINEMAP  [11]
     }
   LINES
     {
-    COLOR = RED
+    COLOR = BLUE
     LINETHICKNESS = 0.4
     }
   SYMBOLS
     {
-    COLOR = RED
+    COLOR = BLUE
     FILLCOLOR = RED
     }
   BARCHARTS
@@ -444,12 +480,12 @@ $!LINEMAP  [12]
     }
   LINES
     {
-    COLOR = RED
+    COLOR = GREEN
     LINETHICKNESS = 0.4
     }
   SYMBOLS
     {
-    COLOR = RED
+    COLOR = GREEN
     FILLCOLOR = RED
     }
   BARCHARTS
@@ -471,12 +507,12 @@ $!LINEMAP  [13]
     }
   LINES
     {
-    COLOR = RED
+    COLOR = CUSTOM3
     LINETHICKNESS = 0.4
     }
   SYMBOLS
     {
-    COLOR = RED
+    COLOR = CUSTOM3
     FILLCOLOR = RED
     }
   BARCHARTS
@@ -498,12 +534,12 @@ $!LINEMAP  [14]
     }
   LINES
     {
-    COLOR = RED
+    COLOR = CUSTOM7
     LINETHICKNESS = 0.4
     }
   SYMBOLS
     {
-    COLOR = RED
+    COLOR = CUSTOM30
     FILLCOLOR = RED
     }
   BARCHARTS
@@ -516,7 +552,7 @@ $!LINEMAP  [14]
     COLOR = RED
     }
 $!LINEMAP  [15]
-  NAME = 'Star CCM+ Quad P1'
+  NAME = '&ZN&'
   ASSIGN
     {
     ZONE = 18
@@ -543,7 +579,7 @@ $!LINEMAP  [15]
     COLOR = RED
     }
 $!LINEMAP  [16]
-  NAME = 'Star CCM+ Quad P1'
+  NAME = '&ZN&'
   ASSIGN
     {
     ZONE = 19
@@ -570,7 +606,7 @@ $!LINEMAP  [16]
     COLOR = RED
     }
 $!LINEMAP  [17]
-  NAME = 'Star CCM+ Quad P1'
+  NAME = '&ZN&'
   ASSIGN
     {
     ZONE = 20
@@ -597,7 +633,7 @@ $!LINEMAP  [17]
     COLOR = RED
     }
 $!LINEMAP  [18]
-  NAME = 'Star CCM+ Quad P1'
+  NAME = '&ZN&'
   ASSIGN
     {
     ZONE = 21
@@ -624,10 +660,334 @@ $!LINEMAP  [18]
     COLOR = RED
     }
 $!LINEMAP  [19]
-  NAME = 'Star CCM+ Quad P1'
+  NAME = '&ZN&'
   ASSIGN
     {
     ZONE = 22
+    XAXISVAR = 1
+    YAXISVAR = 2
+    }
+  LINES
+    {
+    COLOR = RED
+    LINETHICKNESS = 0.4
+    }
+  SYMBOLS
+    {
+    COLOR = RED
+    FILLCOLOR = RED
+    }
+  BARCHARTS
+    {
+    COLOR = RED
+    FILLCOLOR = RED
+    }
+  ERRORBARS
+    {
+    COLOR = RED
+    }
+$!LINEMAP  [20]
+  NAME = '&ZN&'
+  ASSIGN
+    {
+    ZONE = 23
+    XAXISVAR = 1
+    YAXISVAR = 2
+    }
+  LINES
+    {
+    COLOR = RED
+    LINETHICKNESS = 0.4
+    }
+  SYMBOLS
+    {
+    COLOR = RED
+    FILLCOLOR = RED
+    }
+  BARCHARTS
+    {
+    COLOR = RED
+    FILLCOLOR = RED
+    }
+  ERRORBARS
+    {
+    COLOR = RED
+    }
+$!LINEMAP  [21]
+  NAME = '&ZN&'
+  ASSIGN
+    {
+    ZONE = 24
+    XAXISVAR = 1
+    YAXISVAR = 2
+    }
+  LINES
+    {
+    COLOR = RED
+    LINETHICKNESS = 0.4
+    }
+  SYMBOLS
+    {
+    COLOR = RED
+    FILLCOLOR = RED
+    }
+  BARCHARTS
+    {
+    COLOR = RED
+    FILLCOLOR = RED
+    }
+  ERRORBARS
+    {
+    COLOR = RED
+    }
+$!LINEMAP  [22]
+  NAME = '&ZN&'
+  ASSIGN
+    {
+    ZONE = 25
+    XAXISVAR = 1
+    YAXISVAR = 2
+    }
+  LINES
+    {
+    COLOR = RED
+    LINETHICKNESS = 0.4
+    }
+  SYMBOLS
+    {
+    COLOR = RED
+    FILLCOLOR = RED
+    }
+  BARCHARTS
+    {
+    COLOR = RED
+    FILLCOLOR = RED
+    }
+  ERRORBARS
+    {
+    COLOR = RED
+    }
+$!LINEMAP  [23]
+  NAME = '&ZN&'
+  ASSIGN
+    {
+    ZONE = 26
+    XAXISVAR = 1
+    YAXISVAR = 2
+    }
+  LINES
+    {
+    COLOR = RED
+    LINETHICKNESS = 0.4
+    }
+  SYMBOLS
+    {
+    COLOR = RED
+    FILLCOLOR = RED
+    }
+  BARCHARTS
+    {
+    COLOR = RED
+    FILLCOLOR = RED
+    }
+  ERRORBARS
+    {
+    COLOR = RED
+    }
+$!LINEMAP  [24]
+  NAME = '&ZN&'
+  ASSIGN
+    {
+    ZONE = 27
+    XAXISVAR = 1
+    YAXISVAR = 2
+    }
+  LINES
+    {
+    COLOR = RED
+    LINETHICKNESS = 0.4
+    }
+  SYMBOLS
+    {
+    COLOR = RED
+    FILLCOLOR = RED
+    }
+  BARCHARTS
+    {
+    COLOR = RED
+    FILLCOLOR = RED
+    }
+  ERRORBARS
+    {
+    COLOR = RED
+    }
+$!LINEMAP  [25]
+  NAME = '&ZN&'
+  ASSIGN
+    {
+    ZONE = 28
+    XAXISVAR = 1
+    YAXISVAR = 2
+    }
+  LINES
+    {
+    COLOR = RED
+    LINETHICKNESS = 0.4
+    }
+  SYMBOLS
+    {
+    COLOR = RED
+    FILLCOLOR = RED
+    }
+  BARCHARTS
+    {
+    COLOR = RED
+    FILLCOLOR = RED
+    }
+  ERRORBARS
+    {
+    COLOR = RED
+    }
+$!LINEMAP  [26]
+  NAME = '&ZN&'
+  ASSIGN
+    {
+    ZONE = 29
+    XAXISVAR = 1
+    YAXISVAR = 2
+    }
+  LINES
+    {
+    COLOR = RED
+    LINETHICKNESS = 0.4
+    }
+  SYMBOLS
+    {
+    COLOR = RED
+    FILLCOLOR = RED
+    }
+  BARCHARTS
+    {
+    COLOR = RED
+    FILLCOLOR = RED
+    }
+  ERRORBARS
+    {
+    COLOR = RED
+    }
+$!LINEMAP  [27]
+  NAME = '&ZN&'
+  ASSIGN
+    {
+    ZONE = 30
+    XAXISVAR = 1
+    YAXISVAR = 2
+    }
+  LINES
+    {
+    COLOR = RED
+    LINETHICKNESS = 0.4
+    }
+  SYMBOLS
+    {
+    COLOR = RED
+    FILLCOLOR = RED
+    }
+  BARCHARTS
+    {
+    COLOR = RED
+    FILLCOLOR = RED
+    }
+  ERRORBARS
+    {
+    COLOR = RED
+    }
+$!LINEMAP  [28]
+  NAME = '&ZN&'
+  ASSIGN
+    {
+    ZONE = 31
+    XAXISVAR = 1
+    YAXISVAR = 2
+    }
+  LINES
+    {
+    COLOR = RED
+    LINETHICKNESS = 0.4
+    }
+  SYMBOLS
+    {
+    COLOR = RED
+    FILLCOLOR = RED
+    }
+  BARCHARTS
+    {
+    COLOR = RED
+    FILLCOLOR = RED
+    }
+  ERRORBARS
+    {
+    COLOR = RED
+    }
+$!LINEMAP  [29]
+  NAME = '&ZN&'
+  ASSIGN
+    {
+    ZONE = 32
+    XAXISVAR = 1
+    YAXISVAR = 2
+    }
+  LINES
+    {
+    COLOR = RED
+    LINETHICKNESS = 0.4
+    }
+  SYMBOLS
+    {
+    COLOR = RED
+    FILLCOLOR = RED
+    }
+  BARCHARTS
+    {
+    COLOR = RED
+    FILLCOLOR = RED
+    }
+  ERRORBARS
+    {
+    COLOR = RED
+    }
+$!LINEMAP  [30]
+  NAME = '&ZN&'
+  ASSIGN
+    {
+    ZONE = 33
+    XAXISVAR = 1
+    YAXISVAR = 2
+    }
+  LINES
+    {
+    COLOR = RED
+    LINETHICKNESS = 0.4
+    }
+  SYMBOLS
+    {
+    COLOR = RED
+    FILLCOLOR = RED
+    }
+  BARCHARTS
+    {
+    COLOR = RED
+    FILLCOLOR = RED
+    }
+  ERRORBARS
+    {
+    COLOR = RED
+    }
+$!LINEMAP  [31]
+  NAME = '&ZN&'
+  ASSIGN
+    {
+    ZONE = 34
     XAXISVAR = 1
     YAXISVAR = 2
     }
@@ -656,18 +1016,145 @@ $!XYLINEAXIS
   XDETAIL 1
     {
     COORDSCALE = LOG
-    RANGEMIN = 0.001250000000000000026
-    RANGEMAX = 0.14999999999999999445
-    GRSPACING = 0.05
+    RANGEMIN = 0.001
+    RANGEMAX = 0.25
+    GRSPACING = 0.1
     }
 $!XYLINEAXIS 
   YDETAIL 1
     {
     COORDSCALE = LOG
-    RANGEMIN = 5.0000000000000003114E-10
-    RANGEMAX = 0.014999999999999999445
-    GRSPACING = 0.005
+    RANGEMIN = 5.0000000000000002E-011
+    RANGEMAX = 0.014999999999999999
+    GRSPACING = 0.002
     }
+$!LINEPLOTLAYERS 
+  SHOWSYMBOLS = YES
+$!ATTACHTEXT 
+  POSITIONCOORDSYS = GRID
+  ANCHORPOS
+    {
+    X = 0.00402852849766902
+    Y = 0.00033796001937071
+    }
+  TEXTSHAPE
+    {
+    ISBOLD = NO
+    }
+  TEXT = '1'
+$!ATTACHTEXT 
+  POSITIONCOORDSYS = GRID
+  ANCHORPOS
+    {
+    X = 0.002476609902872163
+    Y = 6.302029293538083E-006
+    }
+  TEXTSHAPE
+    {
+    ISBOLD = NO
+    }
+  TEXT = '2'
+$!ATTACHTEXT 
+  POSITIONCOORDSYS = GRID
+  ANCHORPOS
+    {
+    X = 0.001595897922931423
+    Y = 3.422749624090665E-008
+    }
+  TEXTSHAPE
+    {
+    ISBOLD = NO
+    }
+  TEXT = '3'
+$!ATTACHTEXT 
+  POSITIONCOORDSYS = GRID
+  ANCHORPOS
+    {
+    X = 0.002528434419470148
+    Y = 8.558859079483102E-009
+    }
+  TEXTSHAPE
+    {
+    ISBOLD = NO
+    }
+  TEXT = '4'
+$!ATTACHTEXT 
+  POSITIONCOORDSYS = GRID
+  ANCHORPOS
+    {
+    X = 0.003686171036454599
+    Y = 1.274448157112913E-009
+    }
+  TEXTSHAPE
+    {
+    ISBOLD = NO
+    }
+  TEXT = '5'
+$!ATTACHGEOM 
+  ANCHORPOS
+    {
+    X = 0.004553968245036991
+    Y = 0.0004397066857479504
+    }
+  LINETHICKNESS = 0.4
+  RAWDATA
+1
+3
+0 0 
+0 0.000189921644051 
+0.00203042663634 0.000189921644051 
+$!ATTACHGEOM 
+  ANCHORPOS
+    {
+    X = 0.002313555833488913
+    Y = 3.204663005529452E-006
+    }
+  LINETHICKNESS = 0.4
+  RAWDATA
+1
+3
+0 0 
+0 2.26450515584E-006 
+0.00071431620745 2.26450515584E-006 
+$!ATTACHGEOM 
+  ANCHORPOS
+    {
+    X = 0.001530681390945427
+    Y = 1.708646997398744E-008
+    }
+  LINETHICKNESS = 0.4
+  RAWDATA
+1
+3
+0 0 
+0 1.13533102919E-008 
+0.000292166805593 1.13533102919E-008 
+$!ATTACHGEOM 
+  ANCHORPOS
+    {
+    X = 0.002345852216416805
+    Y = 2.966645976999368E-009
+    }
+  LINETHICKNESS = 0.4
+  RAWDATA
+1
+3
+0 0 
+0 4.00722521832E-009 
+0.000570867501665 4.00722521832E-009 
+$!ATTACHGEOM 
+  ANCHORPOS
+    {
+    X = 0.003615290602583653
+    Y = 6.123046598617155E-010
+    }
+  LINETHICKNESS = 0.4
+  RAWDATA
+1
+3
+0 0 
+0 4.56910204116E-010 
+0.000450449588243 4.56910204116E-010 
 $!FRAMECONTROL ACTIVATEBYNUMBER
   FRAME = 1
 $!SETSTYLEBASE CONFIG

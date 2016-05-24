@@ -1,5 +1,5 @@
-#LyX 2.0 created this file. For more info see http://www.lyx.org/
-\lyxformat 413
+#LyX 2.1 created this file. For more info see http://www.lyx.org/
+\lyxformat 474
 \begin_document
 \begin_header
 \textclass beamer
@@ -23,7 +23,6 @@
 \setbeamertemplate{navigation symbols}{}
 \setbeamertemplate{caption}[numbered]
 % Added by lyx2lyx
-\usepackage{amssymb}
 \end_preamble
 \use_default_options true
 \maintain_unincluded_children false
@@ -34,13 +33,13 @@
 \font_roman default
 \font_sans default
 \font_typewriter default
+\font_math auto
 \font_default_family default
 \use_non_tex_fonts false
 \font_sc false
 \font_osf false
 \font_sf_scale 100
 \font_tt_scale 100
-
 \graphics default
 \default_output_format default
 \output_sync 0
@@ -51,15 +50,24 @@
 \use_hyperref false
 \papersize default
 \use_geometry true
-\use_amsmath 1
-\use_esint 1
-\use_mhchem 1
-\use_mathdots 1
+\use_package amsmath 1
+\use_package amssymb 2
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
 \cite_engine basic
+\cite_engine_type default
+\biblio_style plain
 \use_bibtopic false
 \use_indices false
 \paperorientation landscape
 \suppress_date true
+\justification true
 \use_refstyle 1
 \index Index
 \shortcut idx
@@ -140,38 +148,26 @@ Massachusetts Institute of Technology}
 Jun 4, 2016
 \end_layout
 
-\begin_layout BeginFrame
-Motivation
-\end_layout
-
-\begin_layout Block
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-{
-\end_layout
-
-\end_inset
-
-Order of Accuracy Code Verification 
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-}
-\end_layout
-
-\end_inset
-
-
-\begin_inset Note Note
+\begin_layout Frame
+\begin_inset Argument 4
 status open
 
 \begin_layout Plain Layout
-What this talk IS about
+Motivation
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Block
+\begin_inset Argument 2
+status collapsed
+
+\begin_layout Plain Layout
+Order of Accuracy Code Verification
 \end_layout
 
 \end_inset
@@ -223,23 +219,11 @@ RANS: Re = 1e6 Joukowski Airfoil
 \end_layout
 
 \begin_layout Block
-\begin_inset ERT
+\begin_inset Argument 2
 status collapsed
 
 \begin_layout Plain Layout
-
-{
-\end_layout
-
-\end_inset
-
 The importance of Meshing for High-Order Methods
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-}
 \end_layout
 
 \end_inset
@@ -269,37 +253,36 @@ Sensitive to Distribution (global grid clustering)
 \end_layout
 
 \end_deeper
-\begin_layout EndFrame
+\end_deeper
+\begin_layout Separator
 
 \end_layout
 
-\begin_layout BeginFrame
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
 Contributions
 \end_layout
 
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
 \begin_layout Block
-\begin_inset ERT
+\begin_inset Argument 2
 status collapsed
 
 \begin_layout Plain Layout
-
-{
-\end_layout
-
-\end_inset
-
-
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-}
-\end_layout
-
-\end_inset
-
  
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_deeper
@@ -371,32 +354,31 @@ Discontinuous Galerkin (xflow)
 
 \end_deeper
 \end_deeper
-\begin_layout EndFrame
+\end_deeper
+\begin_layout Separator
 
 \end_layout
 
-\begin_layout BeginFrame
-Contributions
-\end_layout
-
-\begin_layout Block
-\begin_inset ERT
-status collapsed
+\begin_layout Frame
+\begin_inset Argument 4
+status open
 
 \begin_layout Plain Layout
-
-{
+Contributions
 \end_layout
 
 \end_inset
 
 
-\begin_inset ERT
+\end_layout
+
+\begin_deeper
+\begin_layout Block
+\begin_inset Argument 2
 status collapsed
 
 \begin_layout Plain Layout
 
-}
 \end_layout
 
 \end_inset
@@ -433,26 +415,14 @@ Finite Difference (WCNS)
 \end_deeper
 \begin_layout Standard
 \begin_inset Note Note
-status open
+status collapsed
 
 \begin_layout Block
-\begin_inset ERT
+\begin_inset Argument 2
 status collapsed
 
 \begin_layout Plain Layout
-
-{
-\end_layout
-
-\end_inset
-
 Most Common Mistakes
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-}
 \end_layout
 
 \end_inset
@@ -475,21 +445,32 @@ Lack of precision in reference quantities
 
 \end_layout
 
-\begin_layout EndFrame
+\end_deeper
+\begin_layout Separator
 
 \end_layout
 
-\begin_layout BeginFrame
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
 Anticipated Orders of Accuracy
 \end_layout
 
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
 \begin_layout Standard
 \begin_inset Tabular
 <lyxtabular version="3" rows="4" columns="3">
-<features tabularvalignment="middle">
-<column alignment="center" valignment="top" width="0">
-<column alignment="center" valignment="top" width="0">
-<column alignment="center" valignment="top" width="0">
+<features rotate="0" tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
 <row>
 <cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
 \begin_inset Text
@@ -659,23 +640,11 @@ Non-Galerkin Orthogonal (FR/SD/SBP)
 \end_layout
 
 \begin_layout Block
-\begin_inset ERT
+\begin_inset Argument 2
 status collapsed
 
 \begin_layout Plain Layout
-
-{
-\end_layout
-
-\end_inset
-
 Galerkin Finite Element Assumptions
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-}
 \end_layout
 
 \end_inset
@@ -740,25 +709,224 @@ Optimal mesh distributions will observe
 \end_layout
 
 \end_deeper
-\begin_layout EndFrame
+\end_deeper
+\begin_layout Separator
 
 \end_layout
 
-\begin_layout BeginFrame
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
 Is Verification Needed?
 \end_layout
-
-\begin_layout Standard
-\begin_inset Graphics
-	filename SmoothBump_Results/SmoothBump_Overflow_1.png
-	width 3in
 
 \end_inset
 
 
 \end_layout
 
-\begin_layout EndFrame
+\begin_deeper
+\begin_layout Block
+\begin_inset Argument 2
+status open
+
+\begin_layout Plain Layout
+OVERFLOW
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Highly reputable workhorse CFD code
+\end_layout
+
+\begin_layout Itemize
+Considred to be well validated
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename SmoothBump_Results/SmoothBump_Overflow_1.png
+	height 2.5in
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Frame
+
+\end_layout
+
+\begin_layout Separator
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Is Verification Needed?
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Block
+\begin_inset Argument 2
+status open
+
+\begin_layout Plain Layout
+OVERFLOW
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Highly reputable workhorse CFD code
+\end_layout
+
+\begin_layout Itemize
+Considred to be well validated
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename SmoothBump_Results/SmoothBump_Overflow_2.png
+	height 2.5in
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Separator
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Is Verification Needed?
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Block
+\begin_inset Argument 2
+status open
+
+\begin_layout Plain Layout
+OVERFLOW
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Highly reputable workhorse CFD code
+\end_layout
+
+\begin_layout Itemize
+Considred to be well validated
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename SmoothBump_Results/SmoothBump_Overflow_3.png
+	height 2.5in
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Separator
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Is Verification Needed?
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Block
+\begin_inset Argument 2
+status open
+
+\begin_layout Plain Layout
+OVERFLOW
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Highly reputable workhorse CFD code
+\end_layout
+
+\begin_layout Itemize
+Considred to be well validated
+\end_layout
+
+\end_deeper
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename SmoothBump_Results/SmoothBump_Overflow_4.png
+	height 2.5in
+
+\end_inset
+
+ 
+\end_layout
+
+\end_deeper
+\begin_layout Frame
 
 \end_layout
 
