@@ -231,7 +231,7 @@ RANS:
 status collapsed
 
 \begin_layout Plain Layout
-The importance of Meshing for High-Order Methods
+The Importance of Meshing
 \end_layout
 
 \end_inset
@@ -253,11 +253,12 @@ High-order methods are less sensitive to the mesh
 \end_layout
 
 \begin_layout Itemize
-Less sensitive to Distortion and Anisotropy (local element shapes)
+Compact schemes are less sensitive to poor shape (e.g.
+ misaligned anisotropy) and mesh irregularity 
 \end_layout
 
 \begin_layout Itemize
-Sensitive to Distribution (global grid clustering)
+Solution is sensitive to global distribution
 \end_layout
 
 \end_deeper
@@ -576,7 +577,7 @@ RANS Model: RANS-SA Joukowski Airfoil
 status open
 
 \begin_layout Plain Layout
-Anticipated Orders of Accuracy
+Anticipated Order of Accuracy
 \end_layout
 
 \end_inset
@@ -719,7 +720,7 @@ Finite Volume/Difference
 \begin_layout Plain Layout
 
 \size footnotesize
-Non-Galerkin Orthogonal (FR/SD/SBP)
+Non-Galerkin Orthogonal FEM
 \end_layout
 
 \end_inset
@@ -747,7 +748,7 @@ Non-Galerkin Orthogonal (FR/SD/SBP)
 \begin_inset Formula $O\left(h^{P+1}\right)$
 \end_inset
 
-
+ 
 \end_layout
 
 \end_inset
@@ -814,6 +815,14 @@ Solution, Adjoint Smoothness:
 
 \end_deeper
 \begin_layout Itemize
+Accurate Integration
+\end_layout
+
+\begin_layout Itemize
+Adjoint Consistent
+\end_layout
+
+\begin_layout Itemize
 Asymptotic uniform mesh refinement will eventually observe 
 \begin_inset Formula $O\left(h^{2P}\right)$
 \end_inset
@@ -826,7 +835,7 @@ Optimal mesh distributions will observe
 \begin_inset Formula $O\left(h^{2P}\right)$
 \end_inset
 
-
+ with fewer DOF
 \end_layout
 
 \end_deeper
