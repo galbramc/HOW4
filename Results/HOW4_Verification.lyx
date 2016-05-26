@@ -1036,6 +1036,10 @@ C-grid: Clustering at Stagnation Point and Trailing Edge
 
 \begin_deeper
 \begin_layout Itemize
+Nested grids with fixed distribution function
+\end_layout
+
+\begin_layout Itemize
 6 months of work to find good distribution
 \end_layout
 
@@ -1188,6 +1192,10 @@ C-grid: Clustering at Stagnation Point and Trailing Edge
 \end_layout
 
 \begin_deeper
+\begin_layout Itemize
+Nested grids with fixed distribution function
+\end_layout
+
 \begin_layout Itemize
 4 months of work to find good distribution
 \end_layout
@@ -1910,6 +1918,414 @@ Smooth Gaussian Bump
 \align center
 \begin_inset Graphics
 	filename SmoothBump_Results/SmoothBump_DG_Tri_Time.png
+	height 2.8in
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Separator
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Laminar Joukowski Airfoil
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout FrameSubtitle
+Finite Volume and Finite Difference
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename Joukowski_Results/Joukowski_Laminar_FV_1.png
+	height 2.8in
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Separator
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Laminar Joukowski Airfoil
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout FrameSubtitle
+Finite Volume and Finite Difference
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename Joukowski_Results/Joukowski_Laminar_FV_2.png
+	height 2.8in
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Separator
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Laminar Joukowski Airfoil
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout FrameSubtitle
+Finite Volume and Finite Difference
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename Joukowski_Results/Joukowski_Laminar_FV_3.png
+	height 2.8in
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Separator
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Laminar Joukowski Airfoil
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout FrameSubtitle
+Finite Volume and Finite Difference
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename Joukowski_Results/Joukowski_Laminar_FV_4.png
+	height 2.8in
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Separator
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Laminar Joukowski Airfoil
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout FrameSubtitle
+Galerkin Finite Elements
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename Joukowski_Results/Joukowski_Laminar_G_1.png
+	height 2.8in
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Separator
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Laminar Joukowski Airfoil
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout FrameSubtitle
+Galerkin Finite Elements
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename Joukowski_Results/Joukowski_Laminar_G_2.png
+	height 2.8in
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Separator
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Laminar Joukowski Airfoil
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout FrameSubtitle
+Galerkin Finite Elements
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename Joukowski_Results/Joukowski_Laminar_G_3.png
+	height 2.8in
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Separator
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Laminar Joukowski Airfoil
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout FrameSubtitle
+Galerkin Finite Element Mesh Optimization
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename Joukowski_Results/Joukowski_Laminar_MOESS_1.png
+	height 2.8in
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Separator
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Laminar Joukowski Airfoil
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout FrameSubtitle
+Galerkin Finite Element Mesh Optimization
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename Joukowski_Results/Joukowski_Laminar_MOESS_2.png
+	height 2.8in
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Separator
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Laminar Joukowski Airfoil
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout FrameSubtitle
+Galerkin Finite Element Mesh Optimization
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename Joukowski_Results/Joukowski_Laminar_MOESS_3.png
+	height 2.8in
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Separator
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Laminar Joukowski Airfoil
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout FrameSubtitle
+Galerkin Finite Element Mesh Optimization
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename Joukowski_Results/Joukowski_Laminar_MOESS_4.png
+	height 2.8in
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Separator
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Laminar Joukowski Airfoil
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout FrameSubtitle
+Galerkin Finite Element Mesh Optimization
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename Joukowski_Results/Joukowski_Laminar_MOESS_5.png
 	height 2.8in
 
 \end_inset
