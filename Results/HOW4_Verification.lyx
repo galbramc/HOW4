@@ -1651,7 +1651,11 @@ Normalized Time
 \begin_layout Itemize
 
 \size small
-(Work Units) * 5s
+(Work Units) 
+\begin_inset Formula $\times$
+\end_inset
+
+ 5 s
 \end_layout
 
 \begin_layout Itemize
@@ -1945,14 +1949,124 @@ Laminar Joukowski Airfoil
 
 \begin_deeper
 \begin_layout FrameSubtitle
-Finite Volume and Finite Difference
+Drag Coefficient
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename Joukowski_Results/Joukowski_Laminar_FV_Cd_1.png
+	lyxscale 50
+	height 2.8in
+	groupId Lamianr
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Separator
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Laminar Joukowski Airfoil
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout FrameSubtitle
+Drag Coefficient
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename Joukowski_Results/Joukowski_Laminar_FV_Cd_2.png
+	lyxscale 50
+	height 2.8in
+	groupId Lamianr
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Separator
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Laminar Joukowski Airfoil
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout FrameSubtitle
+Drag Coefficient
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename Joukowski_Results/Joukowski_Laminar_G_Cd_1.png
+	lyxscale 50
+	height 2.8in
+	groupId Lamianr
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Separator
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Laminar Joukowski Airfoil
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout FrameSubtitle
+Finite Volume and Finite Difference Order of Accuracy
 \end_layout
 
 \begin_layout Standard
 \align center
 \begin_inset Graphics
 	filename Joukowski_Results/Joukowski_Laminar_FV_1.png
+	lyxscale 50
 	height 2.8in
+	groupId Lamianr
 
 \end_inset
 
@@ -1979,14 +2093,16 @@ Laminar Joukowski Airfoil
 
 \begin_deeper
 \begin_layout FrameSubtitle
-Finite Volume and Finite Difference
+Finite Volume and Finite Difference Order of Accuracy
 \end_layout
 
 \begin_layout Standard
 \align center
 \begin_inset Graphics
 	filename Joukowski_Results/Joukowski_Laminar_FV_2.png
+	lyxscale 50
 	height 2.8in
+	groupId Lamianr
 
 \end_inset
 
@@ -2013,82 +2129,16 @@ Laminar Joukowski Airfoil
 
 \begin_deeper
 \begin_layout FrameSubtitle
-Finite Volume and Finite Difference
-\end_layout
-
-\begin_layout Standard
-\align center
-\begin_inset Graphics
-	filename Joukowski_Results/Joukowski_Laminar_FV_3.png
-	height 2.8in
-
-\end_inset
-
-
-\end_layout
-
-\end_deeper
-\begin_layout Separator
-
-\end_layout
-
-\begin_layout Frame
-\begin_inset Argument 4
-status open
-
-\begin_layout Plain Layout
-Laminar Joukowski Airfoil
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_deeper
-\begin_layout FrameSubtitle
-Finite Volume and Finite Difference
-\end_layout
-
-\begin_layout Standard
-\align center
-\begin_inset Graphics
-	filename Joukowski_Results/Joukowski_Laminar_FV_4.png
-	height 2.8in
-
-\end_inset
-
-
-\end_layout
-
-\end_deeper
-\begin_layout Separator
-
-\end_layout
-
-\begin_layout Frame
-\begin_inset Argument 4
-status open
-
-\begin_layout Plain Layout
-Laminar Joukowski Airfoil
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
-\begin_deeper
-\begin_layout FrameSubtitle
-Galerkin Finite Elements
+Galerkin Finite Elements Order of Accuracy
 \end_layout
 
 \begin_layout Standard
 \align center
 \begin_inset Graphics
 	filename Joukowski_Results/Joukowski_Laminar_G_1.png
+	lyxscale 50
 	height 2.8in
+	groupId Lamianr
 
 \end_inset
 
@@ -2115,14 +2165,16 @@ Laminar Joukowski Airfoil
 
 \begin_deeper
 \begin_layout FrameSubtitle
-Galerkin Finite Elements
+Galerkin Finite Elements Order of Accuracy
 \end_layout
 
 \begin_layout Standard
 \align center
 \begin_inset Graphics
 	filename Joukowski_Results/Joukowski_Laminar_G_2.png
+	lyxscale 50
 	height 2.8in
+	groupId Lamianr
 
 \end_inset
 
@@ -2149,17 +2201,286 @@ Laminar Joukowski Airfoil
 
 \begin_deeper
 \begin_layout FrameSubtitle
-Galerkin Finite Elements
+Galerkin Finite Elements Order of Accuracy
 \end_layout
 
 \begin_layout Standard
 \align center
 \begin_inset Graphics
 	filename Joukowski_Results/Joukowski_Laminar_G_3.png
+	lyxscale 50
 	height 2.8in
+	groupId Lamianr
 
 \end_inset
 
+
+\end_layout
+
+\end_deeper
+\begin_layout Separator
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Laminar Joukowski Airfoil
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout FrameSubtitle
+Timing
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename Joukowski_Results/Joukowski_Laminar_FV_Time_1.png
+	lyxscale 50
+	height 2.8in
+	groupId Lamianr
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Separator
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Laminar Joukowski Airfoil
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout FrameSubtitle
+Timing
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename Joukowski_Results/Joukowski_Laminar_FV_Time_2.png
+	lyxscale 50
+	height 2.8in
+	groupId Lamianr
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Separator
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Laminar Joukowski Airfoil
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout FrameSubtitle
+Timing
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename Joukowski_Results/Joukowski_Laminar_G_Time_1.png
+	lyxscale 50
+	height 2.8in
+	groupId Lamianr
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Separator
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Output Based (Adjoint) Mesh Adaptation
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Block
+
+\size small
+\begin_inset Argument 2
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\size small
+Contrived problem to alleviate mesh generation
+\end_layout
+
+\begin_layout Itemize
+
+\size small
+6 moths to develop grids that observe 
+\begin_inset Formula $O\left(h^{2P}\right)$
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Separator
+
+\end_layout
+
+\begin_layout Block
+
+\size small
+\begin_inset Argument 2
+status open
+
+\begin_layout Plain Layout
+Hanging Node or P-Adaptation
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\size small
+Local refinement by subdividing or increase polynomial degree of elements
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\size small
+Restricted to coarse grid topology
+\end_layout
+
+\begin_layout Itemize
+Unlikely to observe 
+\size small
+
+\begin_inset Formula $O\left(h^{2P}\right)$
+\end_inset
+
+ error decrease
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Separator
+
+\end_layout
+
+\begin_layout Block
+
+\size small
+\begin_inset Argument 2
+status collapsed
+
+\begin_layout Plain Layout
+Mesh Optimization via Error Sampling and Synthesis (MOESS)
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Optimization statement:
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\size small
+Find mesh distribution that minimizes output error such that the total DOF
+ count is fixed
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+
+\size small
+Complete remesh on each adaptation
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+
+\size small
+Independent of starting grid topology
+\end_layout
+
+\begin_layout Itemize
+Often observes 
+\size small
+
+\begin_inset Formula $O\left(h^{2P}\right)$
+\end_inset
+
+ error decrease
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Separator
 
 \end_layout
 
@@ -2190,7 +2511,9 @@ Galerkin Finite Element Mesh Optimization
 \align center
 \begin_inset Graphics
 	filename Joukowski_Results/Joukowski_Laminar_MOESS_1.png
+	lyxscale 50
 	height 2.8in
+	groupId Lamianr
 
 \end_inset
 
@@ -2224,7 +2547,9 @@ Galerkin Finite Element Mesh Optimization
 \align center
 \begin_inset Graphics
 	filename Joukowski_Results/Joukowski_Laminar_MOESS_2.png
+	lyxscale 50
 	height 2.8in
+	groupId Lamianr
 
 \end_inset
 
@@ -2258,7 +2583,9 @@ Galerkin Finite Element Mesh Optimization
 \align center
 \begin_inset Graphics
 	filename Joukowski_Results/Joukowski_Laminar_MOESS_3.png
+	lyxscale 50
 	height 2.8in
+	groupId Lamianr
 
 \end_inset
 
@@ -2292,7 +2619,9 @@ Galerkin Finite Element Mesh Optimization
 \align center
 \begin_inset Graphics
 	filename Joukowski_Results/Joukowski_Laminar_MOESS_4.png
+	lyxscale 50
 	height 2.8in
+	groupId Lamianr
 
 \end_inset
 
@@ -2326,7 +2655,81 @@ Galerkin Finite Element Mesh Optimization
 \align center
 \begin_inset Graphics
 	filename Joukowski_Results/Joukowski_Laminar_MOESS_5.png
+	lyxscale 50
 	height 2.8in
+	groupId Lamianr
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Separator
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Laminar Joukowski Airfoil
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout FrameSubtitle
+Galerkin Finite Element Mesh Optimization Timing
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename Joukowski_Results/Joukowski_Laminar_MOESS_Time_1.png
+	lyxscale 50
+	height 2.8in
+	groupId Lamianr
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Separator
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Laminar Joukowski Airfoil
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout FrameSubtitle
+Galerkin Finite Element Mesh Optimization Timing
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename Joukowski_Results/Joukowski_Laminar_MOESS_Time_2.png
+	lyxscale 50
+	height 2.8in
+	groupId Lamianr
 
 \end_inset
 

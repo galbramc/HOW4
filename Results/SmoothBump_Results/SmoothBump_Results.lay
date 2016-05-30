@@ -11,6 +11,8 @@ $!VarSet |LFDSFN5| = '"xflow_SmoothBump.dat"'
 $!VarSet |LFDSVL5| = '"1/sqrt(DOF)" "Entropy Error" "Work Units" "Time (s)"'
 $!VarSet |LFDSFN6| = '"NUDT_SmoothBump.dat"'
 $!VarSet |LFDSVL6| = '"1/sqrt(DOF)" "Entropy Error" "Work Units" "Time (s)"'
+$!VarSet |LFDSFN7| = '"LiU_SmoothBump.dat"'
+$!VarSet |LFDSVL7| = '"1/sqrt(DOF)" "Entropy Error" "Work Units" "Time (s)"'
 $!SETSTYLEBASE FACTORY
 $!PLOTOPTIONS 
   SUBDIVIDEALLCELLS = NO
@@ -119,6 +121,17 @@ $!READDATASET  '|LFDSFN6|'
   VARNAMELIST = '|LFDSVL6|'
 $!REMOVEVAR |LFDSVL6|
 $!REMOVEVAR |LFDSFN6|
+$!READDATASET  '|LFDSFN7|'
+  INITIALPLOTTYPE = XYLINE
+  INCLUDETEXT = NO
+  INCLUDEGEOM = NO
+  READDATAOPTION = APPEND
+  RESETSTYLE = NO
+  ASSIGNSTRANDIDS = YES
+  VARLOADMODE = BYNAME
+  VARNAMELIST = '|LFDSVL7|'
+$!REMOVEVAR |LFDSVL7|
+$!REMOVEVAR |LFDSFN7|
 $!RENAMEDATASETVAR 
   VAR = 4
   NAME = 'Normalized Time (s)'
@@ -142,7 +155,7 @@ $!FRAMENAME  = 'Frame 001'
 $!GLOBALTIME 
   SOLUTIONTIME = 0
 $!DELETELINEMAPS 
-$!ACTIVELINEMAPS  =  [1-4,8,11-14,23-26,28-31]
+$!ACTIVELINEMAPS  =  [1-4,8,11-16,32-34]
 $!GLOBALLINEPLOT 
   DATALABELS
     {
@@ -1097,6 +1110,93 @@ $!LINEMAP  [31]
     {
     COLOR = RED
     }
+$!LINEMAP  [32]
+  NAME = '&ZN&'
+  ASSIGN
+    {
+    ZONE = 35
+    XAXISVAR = 4
+    YAXISVAR = 2
+    }
+  LINES
+    {
+    COLOR = CUSTOM3
+    LINEPATTERN = LONGDASH
+    LINETHICKNESS = 0.4
+    }
+  SYMBOLS
+    {
+    COLOR = CUSTOM3
+    FILLCOLOR = RED
+    SIZE = 1.5
+    }
+  BARCHARTS
+    {
+    COLOR = RED
+    FILLCOLOR = RED
+    }
+  ERRORBARS
+    {
+    COLOR = RED
+    }
+$!LINEMAP  [33]
+  NAME = '&ZN&'
+  ASSIGN
+    {
+    ZONE = 36
+    XAXISVAR = 4
+    YAXISVAR = 2
+    }
+  LINES
+    {
+    COLOR = CUSTOM3
+    LINEPATTERN = DASHDOT
+    LINETHICKNESS = 0.4
+    }
+  SYMBOLS
+    {
+    COLOR = CUSTOM3
+    FILLCOLOR = RED
+    SIZE = 1.5
+    }
+  BARCHARTS
+    {
+    COLOR = RED
+    FILLCOLOR = RED
+    }
+  ERRORBARS
+    {
+    COLOR = RED
+    }
+$!LINEMAP  [34]
+  NAME = '&ZN&'
+  ASSIGN
+    {
+    ZONE = 37
+    XAXISVAR = 4
+    YAXISVAR = 2
+    }
+  LINES
+    {
+    COLOR = CUSTOM3
+    LINEPATTERN = DASHDOTDOT
+    LINETHICKNESS = 0.4
+    }
+  SYMBOLS
+    {
+    COLOR = CUSTOM3
+    FILLCOLOR = RED
+    SIZE = 1.5
+    }
+  BARCHARTS
+    {
+    COLOR = RED
+    FILLCOLOR = RED
+    }
+  ERRORBARS
+    {
+    COLOR = RED
+    }
 $!XYLINEAXIS 
   DEPXTOYRATIO = 1
   VIEWPORTPOSITION
@@ -1218,7 +1318,7 @@ $!FRAMENAME  = 'Frame 001'
 $!GLOBALTIME 
   SOLUTIONTIME = 0
 $!DELETELINEMAPS 
-$!ACTIVELINEMAPS  =  [1-6,27-31]
+$!ACTIVELINEMAPS  =  [1-6,8,11-16,32-34]
 $!GLOBALLINEPLOT 
   DATALABELS
     {
@@ -2131,6 +2231,90 @@ $!LINEMAP  [31]
       GEOMSHAPE = DEL
       }
     COLOR = RED
+    FILLCOLOR = RED
+    }
+  BARCHARTS
+    {
+    COLOR = RED
+    FILLCOLOR = RED
+    }
+  ERRORBARS
+    {
+    COLOR = RED
+    }
+$!LINEMAP  [32]
+  NAME = '&ZN&'
+  ASSIGN
+    {
+    ZONE = 35
+    XAXISVAR = 1
+    YAXISVAR = 2
+    }
+  LINES
+    {
+    COLOR = CUSTOM3
+    LINEPATTERN = LONGDASH
+    LINETHICKNESS = 0.4
+    }
+  SYMBOLS
+    {
+    COLOR = CUSTOM3
+    FILLCOLOR = RED
+    }
+  BARCHARTS
+    {
+    COLOR = RED
+    FILLCOLOR = RED
+    }
+  ERRORBARS
+    {
+    COLOR = RED
+    }
+$!LINEMAP  [33]
+  NAME = '&ZN&'
+  ASSIGN
+    {
+    ZONE = 36
+    XAXISVAR = 1
+    YAXISVAR = 2
+    }
+  LINES
+    {
+    COLOR = CUSTOM3
+    LINEPATTERN = DASHDOT
+    LINETHICKNESS = 0.4
+    }
+  SYMBOLS
+    {
+    COLOR = CUSTOM3
+    FILLCOLOR = RED
+    }
+  BARCHARTS
+    {
+    COLOR = RED
+    FILLCOLOR = RED
+    }
+  ERRORBARS
+    {
+    COLOR = RED
+    }
+$!LINEMAP  [34]
+  NAME = '&ZN&'
+  ASSIGN
+    {
+    ZONE = 37
+    XAXISVAR = 1
+    YAXISVAR = 2
+    }
+  LINES
+    {
+    COLOR = CUSTOM3
+    LINEPATTERN = DASHDOTDOT
+    LINETHICKNESS = 0.4
+    }
+  SYMBOLS
+    {
+    COLOR = CUSTOM3
     FILLCOLOR = RED
     }
   BARCHARTS
