@@ -258,7 +258,7 @@ Compact schemes are less sensitive to poor shape (e.g.
 \end_layout
 
 \begin_layout Itemize
-Solution is sensitive to global distribution
+Accuracy is sensitive to global distribution
 \end_layout
 
 \end_deeper
@@ -2428,7 +2428,7 @@ Drag Coefficient
 status open
 
 \begin_layout Plain Layout
-Laminar Joukowski Airfoil
+RANS Joukowski Airfoil
 \end_layout
 
 \end_inset
@@ -2464,7 +2464,7 @@ Finite Volume and Finite Difference Order of Accuracy
 status open
 
 \begin_layout Plain Layout
-Laminar Joukowski Airfoil
+RANS Joukowski Airfoil
 \end_layout
 
 \end_inset
@@ -2481,6 +2481,78 @@ Galerkin Finite Elements Order of Accuracy
 \align center
 \begin_inset Graphics
 	filename Joukowski_Results/Joukowski_RANS_G_1.png
+	lyxscale 50
+	height 2.8in
+	groupId Lamianr
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Separator
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+RANS Joukowski Airfoil
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout FrameSubtitle
+Timing
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename Joukowski_Results/Joukowski_RANS_FV_Time_1.png
+	lyxscale 50
+	height 2.8in
+	groupId Lamianr
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Separator
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+RANS Joukowski Airfoil
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout FrameSubtitle
+Timing
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename Joukowski_Results/Joukowski_RANS_G_Time_1.png
 	lyxscale 50
 	height 2.8in
 	groupId Lamianr
@@ -2901,6 +2973,256 @@ Galerkin Finite Element Mesh Optimization Timing
 
 \end_layout
 
+\end_deeper
+\begin_layout Separator
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+RANS Joukowski Airfoil
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout FrameSubtitle
+Galerkin Finite Element Mesh Optimization
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename Joukowski_Results/Joukowski_RANS_MOESS_1.png
+	lyxscale 50
+	height 2.8in
+	groupId Lamianr
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Separator
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+RANS Joukowski Airfoil
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout FrameSubtitle
+Galerkin Finite Element Mesh Optimization
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename Joukowski_Results/Joukowski_RANS_MOESS_2.png
+	lyxscale 50
+	height 2.8in
+	groupId Lamianr
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Separator
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+RANS Joukowski Airfoil
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout FrameSubtitle
+Galerkin Finite Element Mesh Optimization
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename Joukowski_Results/Joukowski_RANS_MOESS_3.png
+	lyxscale 50
+	height 2.8in
+	groupId Lamianr
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Separator
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+RANS Joukowski Airfoil
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout FrameSubtitle
+Galerkin Finite Element Mesh Optimization Timing
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename Joukowski_Results/Joukowski_RANS_MOESS_Time_1.png
+	lyxscale 50
+	height 2.8in
+	groupId Lamianr
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Separator
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+RANS Joukowski Airfoil
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout FrameSubtitle
+Galerkin Finite Element Mesh Optimization Timing
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename Joukowski_Results/Joukowski_RANS_MOESS_Time_2.png
+	lyxscale 50
+	height 2.8in
+	groupId Lamianr
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+RANS Joukowski Airfoil
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout FrameSubtitle
+Galerkin Finite Element Mesh Optimization Timing
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename Joukowski_Results/Joukowski_RANS_MOESS_Time_3.png
+	lyxscale 50
+	height 2.8in
+	groupId Lamianr
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Separator
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Conclusion
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Block
+\begin_inset Argument 2
+status open
+
+\begin_layout Plain Layout
+Verification
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+It's important
+\end_layout
+
+\end_deeper
 \end_deeper
 \begin_layout Separator
 

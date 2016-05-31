@@ -29,13 +29,9 @@ $!GLOBALPAPER
       BOTTOMHARDCLIPOFFSET = 0.125
       }
     }
-$!SETAUXDATA 
-  AUXDATALOCATION = LAYOUT
-  NAME = 'UI.FirstPageOffset'
-  VALUESTRING = '1'
 ### Page Number 1 ###
 $!PAGE 
-  NAME = 'Time'
+  NAME = 'Slope'
   PAPERATTRIBUTES
     {
     BACKGROUNDCOLOR = WHITE
@@ -135,6 +131,1208 @@ $!REMOVEVAR |LFDSFN7|
 $!RENAMEDATASETVAR 
   VAR = 4
   NAME = 'Normalized Time (s)'
+$!FRAMELAYOUT 
+  SHOWBORDER = NO
+  SHOWHEADER = NO
+  ISTRANSPARENT = YES
+  HEADERCOLOR = RED
+  XYPOS
+    {
+    X = 1
+    Y = 0.25
+    }
+  WIDTH = 9
+  HEIGHT = 8
+$!THREEDAXIS 
+  ASPECTRATIOLIMIT = 25
+  BOXASPECTRATIOLIMIT = 25
+$!PLOTTYPE  = XYLINE
+$!FRAMENAME  = 'Frame 001'
+$!GLOBALTIME 
+  SOLUTIONTIME = 0
+$!DELETELINEMAPS 
+$!ACTIVELINEMAPS  =  [1-4,6-10]
+$!GLOBALLINEPLOT 
+  DATALABELS
+    {
+    DISTANCESKIP = 5
+    }
+  LEGEND
+    {
+    SHOW = YES
+    TEXTSHAPE
+      {
+      HEIGHT = 2.5
+      }
+    BOX
+      {
+      BOXTYPE = NONE
+      }
+    XYPOS
+      {
+      X = 52.758
+      Y = 50.47
+      }
+    ANCHORALIGNMENT = TOPLEFT
+    }
+$!LINEMAP  [1]
+  NAME = '&ZN&'
+  ASSIGN
+    {
+    ZONE = 1
+    XAXISVAR = 1
+    YAXISVAR = 2
+    SHOWINLEGEND = NEVER
+    }
+  LINES
+    {
+    COLOR = BLACK
+    LINETHICKNESS = 0.4
+    }
+  SYMBOLS
+    {
+    SHOW = NO
+    COLOR = RED
+    FILLCOLOR = RED
+    }
+  BARCHARTS
+    {
+    COLOR = RED
+    FILLCOLOR = RED
+    }
+  ERRORBARS
+    {
+    COLOR = RED
+    }
+$!LINEMAP  [2]
+  NAME = '&ZN&'
+  ASSIGN
+    {
+    ZONE = 2
+    XAXISVAR = 1
+    YAXISVAR = 2
+    SHOWINLEGEND = NEVER
+    }
+  LINES
+    {
+    COLOR = BLACK
+    LINETHICKNESS = 0.4
+    }
+  SYMBOLS
+    {
+    SHOW = NO
+    COLOR = RED
+    FILLCOLOR = RED
+    }
+  BARCHARTS
+    {
+    COLOR = RED
+    FILLCOLOR = RED
+    }
+  ERRORBARS
+    {
+    COLOR = RED
+    }
+$!LINEMAP  [3]
+  NAME = '&ZN&'
+  ASSIGN
+    {
+    ZONE = 3
+    XAXISVAR = 1
+    YAXISVAR = 2
+    SHOWINLEGEND = NEVER
+    }
+  LINES
+    {
+    COLOR = BLACK
+    LINETHICKNESS = 0.4
+    }
+  SYMBOLS
+    {
+    SHOW = NO
+    COLOR = RED
+    FILLCOLOR = RED
+    }
+  BARCHARTS
+    {
+    COLOR = RED
+    FILLCOLOR = RED
+    }
+  ERRORBARS
+    {
+    COLOR = RED
+    }
+$!LINEMAP  [4]
+  NAME = '&ZN&'
+  ASSIGN
+    {
+    ZONE = 3
+    XAXISVAR = 1
+    YAXISVAR = 2
+    SHOWINLEGEND = NEVER
+    }
+  LINES
+    {
+    COLOR = BLACK
+    LINETHICKNESS = 0.4
+    }
+  SYMBOLS
+    {
+    SHOW = NO
+    COLOR = RED
+    FILLCOLOR = RED
+    }
+  BARCHARTS
+    {
+    COLOR = RED
+    FILLCOLOR = RED
+    }
+  ERRORBARS
+    {
+    COLOR = RED
+    }
+$!LINEMAP  [5]
+  NAME = '&ZN&'
+  ASSIGN
+    {
+    ZONE = 4
+    XAXISVAR = 1
+    YAXISVAR = 2
+    SHOWINLEGEND = NEVER
+    }
+  LINES
+    {
+    COLOR = BLACK
+    LINETHICKNESS = 0.4
+    }
+  SYMBOLS
+    {
+    SHOW = NO
+    COLOR = RED
+    FILLCOLOR = RED
+    }
+  BARCHARTS
+    {
+    COLOR = RED
+    FILLCOLOR = RED
+    }
+  ERRORBARS
+    {
+    COLOR = RED
+    }
+$!LINEMAP  [6]
+  NAME = '&ZN&'
+  ASSIGN
+    {
+    ZONE = 5
+    XAXISVAR = 1
+    YAXISVAR = 2
+    SHOWINLEGEND = NEVER
+    }
+  LINES
+    {
+    COLOR = BLACK
+    LINETHICKNESS = 0.4
+    }
+  SYMBOLS
+    {
+    SHOW = NO
+    COLOR = RED
+    FILLCOLOR = RED
+    }
+  BARCHARTS
+    {
+    COLOR = RED
+    FILLCOLOR = RED
+    }
+  ERRORBARS
+    {
+    COLOR = RED
+    }
+$!LINEMAP  [7]
+  NAME = '&ZN&'
+  ASSIGN
+    {
+    ZONE = 10
+    XAXISVAR = 1
+    YAXISVAR = 2
+    }
+  LINES
+    {
+    COLOR = RED
+    LINETHICKNESS = 0.4
+    }
+  SYMBOLS
+    {
+    COLOR = RED
+    FILLCOLOR = RED
+    }
+  BARCHARTS
+    {
+    COLOR = RED
+    FILLCOLOR = RED
+    }
+  ERRORBARS
+    {
+    COLOR = RED
+    }
+$!LINEMAP  [8]
+  NAME = '&ZN&'
+  ASSIGN
+    {
+    ZONE = 11
+    XAXISVAR = 1
+    YAXISVAR = 2
+    }
+  LINES
+    {
+    COLOR = RED
+    LINETHICKNESS = 0.4
+    }
+  SYMBOLS
+    {
+    COLOR = RED
+    FILLMODE = USELINECOLOR
+    FILLCOLOR = RED
+    }
+  BARCHARTS
+    {
+    COLOR = RED
+    FILLCOLOR = RED
+    }
+  ERRORBARS
+    {
+    COLOR = RED
+    }
+$!LINEMAP  [9]
+  NAME = '&ZN&'
+  ASSIGN
+    {
+    ZONE = 12
+    XAXISVAR = 1
+    YAXISVAR = 2
+    }
+  LINES
+    {
+    COLOR = RED
+    LINEPATTERN = LONGDASH
+    LINETHICKNESS = 0.4
+    }
+  SYMBOLS
+    {
+    COLOR = RED
+    FILLCOLOR = RED
+    }
+  BARCHARTS
+    {
+    COLOR = RED
+    FILLCOLOR = RED
+    }
+  ERRORBARS
+    {
+    COLOR = RED
+    }
+$!LINEMAP  [10]
+  NAME = '&ZN&'
+  ASSIGN
+    {
+    ZONE = 13
+    XAXISVAR = 1
+    YAXISVAR = 2
+    }
+  LINES
+    {
+    COLOR = RED
+    LINEPATTERN = DASHDOTDOT
+    LINETHICKNESS = 0.4
+    }
+  SYMBOLS
+    {
+    COLOR = RED
+    FILLCOLOR = RED
+    }
+  BARCHARTS
+    {
+    COLOR = RED
+    FILLCOLOR = RED
+    }
+  ERRORBARS
+    {
+    COLOR = RED
+    }
+$!LINEMAP  [11]
+  NAME = '&ZN&'
+  ASSIGN
+    {
+    ZONE = 6
+    XAXISVAR = 1
+    YAXISVAR = 2
+    }
+  LINES
+    {
+    COLOR = BLUE
+    LINETHICKNESS = 0.4
+    }
+  SYMBOLS
+    {
+    COLOR = BLUE
+    FILLCOLOR = RED
+    }
+  BARCHARTS
+    {
+    COLOR = RED
+    FILLCOLOR = RED
+    }
+  ERRORBARS
+    {
+    COLOR = RED
+    }
+$!LINEMAP  [12]
+  NAME = '&ZN&'
+  ASSIGN
+    {
+    ZONE = 7
+    XAXISVAR = 1
+    YAXISVAR = 2
+    }
+  LINES
+    {
+    COLOR = GREEN
+    LINETHICKNESS = 0.4
+    }
+  SYMBOLS
+    {
+    COLOR = GREEN
+    FILLCOLOR = RED
+    }
+  BARCHARTS
+    {
+    COLOR = RED
+    FILLCOLOR = RED
+    }
+  ERRORBARS
+    {
+    COLOR = RED
+    }
+$!LINEMAP  [13]
+  NAME = '&ZN&'
+  ASSIGN
+    {
+    ZONE = 8
+    XAXISVAR = 1
+    YAXISVAR = 2
+    }
+  LINES
+    {
+    COLOR = CUSTOM3
+    LINETHICKNESS = 0.4
+    }
+  SYMBOLS
+    {
+    COLOR = CUSTOM3
+    FILLCOLOR = RED
+    }
+  BARCHARTS
+    {
+    COLOR = RED
+    FILLCOLOR = RED
+    }
+  ERRORBARS
+    {
+    COLOR = RED
+    }
+$!LINEMAP  [14]
+  NAME = '&ZN&'
+  ASSIGN
+    {
+    ZONE = 9
+    XAXISVAR = 1
+    YAXISVAR = 2
+    }
+  LINES
+    {
+    COLOR = CUSTOM32
+    LINETHICKNESS = 0.4
+    }
+  SYMBOLS
+    {
+    COLOR = CUSTOM32
+    FILLCOLOR = RED
+    }
+  BARCHARTS
+    {
+    COLOR = RED
+    FILLCOLOR = RED
+    }
+  ERRORBARS
+    {
+    COLOR = RED
+    }
+$!LINEMAP  [15]
+  NAME = '&ZN&'
+  ASSIGN
+    {
+    ZONE = 33
+    XAXISVAR = 1
+    YAXISVAR = 2
+    }
+  LINES
+    {
+    COLOR = RED
+    LINETHICKNESS = 0.4
+    }
+  SYMBOLS
+    {
+    SYMBOLSHAPE
+      {
+      GEOMSHAPE = CIRCLE
+      }
+    COLOR = RED
+    FILLCOLOR = RED
+    SIZE = 2
+    }
+  BARCHARTS
+    {
+    COLOR = RED
+    FILLCOLOR = RED
+    }
+  ERRORBARS
+    {
+    COLOR = RED
+    }
+$!LINEMAP  [16]
+  NAME = '&ZN&'
+  ASSIGN
+    {
+    ZONE = 34
+    XAXISVAR = 1
+    YAXISVAR = 2
+    }
+  LINES
+    {
+    COLOR = RED
+    LINETHICKNESS = 0.4
+    }
+  SYMBOLS
+    {
+    SYMBOLSHAPE
+      {
+      GEOMSHAPE = CIRCLE
+      }
+    COLOR = RED
+    FILLMODE = USELINECOLOR
+    FILLCOLOR = RED
+    SIZE = 2
+    }
+  BARCHARTS
+    {
+    COLOR = RED
+    FILLCOLOR = RED
+    }
+  ERRORBARS
+    {
+    COLOR = RED
+    }
+$!LINEMAP  [17]
+  NAME = '&ZN&'
+  ASSIGN
+    {
+    ZONE = 18
+    XAXISVAR = 1
+    YAXISVAR = 2
+    }
+  LINES
+    {
+    COLOR = RED
+    LINETHICKNESS = 0.4
+    }
+  SYMBOLS
+    {
+    COLOR = RED
+    FILLMODE = USELINECOLOR
+    FILLCOLOR = RED
+    }
+  BARCHARTS
+    {
+    COLOR = RED
+    FILLCOLOR = RED
+    }
+  ERRORBARS
+    {
+    COLOR = RED
+    }
+$!LINEMAP  [18]
+  NAME = '&ZN&'
+  ASSIGN
+    {
+    ZONE = 19
+    XAXISVAR = 1
+    YAXISVAR = 2
+    }
+  LINES
+    {
+    COLOR = RED
+    LINEPATTERN = DASHED
+    LINETHICKNESS = 0.4
+    }
+  SYMBOLS
+    {
+    COLOR = RED
+    FILLMODE = USELINECOLOR
+    FILLCOLOR = RED
+    }
+  BARCHARTS
+    {
+    COLOR = RED
+    FILLCOLOR = RED
+    }
+  ERRORBARS
+    {
+    COLOR = RED
+    }
+$!LINEMAP  [19]
+  NAME = '&ZN&'
+  ASSIGN
+    {
+    ZONE = 20
+    XAXISVAR = 1
+    YAXISVAR = 2
+    }
+  LINES
+    {
+    COLOR = RED
+    LINEPATTERN = LONGDASH
+    LINETHICKNESS = 0.4
+    }
+  SYMBOLS
+    {
+    COLOR = RED
+    FILLMODE = USELINECOLOR
+    FILLCOLOR = RED
+    }
+  BARCHARTS
+    {
+    COLOR = RED
+    FILLCOLOR = RED
+    }
+  ERRORBARS
+    {
+    COLOR = RED
+    }
+$!LINEMAP  [20]
+  NAME = '&ZN&'
+  ASSIGN
+    {
+    ZONE = 21
+    XAXISVAR = 1
+    YAXISVAR = 2
+    }
+  LINES
+    {
+    COLOR = RED
+    LINEPATTERN = DASHDOT
+    LINETHICKNESS = 0.4
+    }
+  SYMBOLS
+    {
+    COLOR = RED
+    FILLMODE = USELINECOLOR
+    FILLCOLOR = RED
+    }
+  BARCHARTS
+    {
+    COLOR = RED
+    FILLCOLOR = RED
+    }
+  ERRORBARS
+    {
+    COLOR = RED
+    }
+$!LINEMAP  [21]
+  NAME = '&ZN&'
+  ASSIGN
+    {
+    ZONE = 22
+    XAXISVAR = 1
+    YAXISVAR = 2
+    }
+  LINES
+    {
+    COLOR = RED
+    LINEPATTERN = DASHDOTDOT
+    LINETHICKNESS = 0.4
+    }
+  SYMBOLS
+    {
+    COLOR = RED
+    FILLMODE = USELINECOLOR
+    FILLCOLOR = RED
+    }
+  BARCHARTS
+    {
+    COLOR = RED
+    FILLCOLOR = RED
+    }
+  ERRORBARS
+    {
+    COLOR = RED
+    }
+$!LINEMAP  [22]
+  NAME = '&ZN&'
+  ASSIGN
+    {
+    ZONE = 23
+    XAXISVAR = 1
+    YAXISVAR = 2
+    }
+  LINES
+    {
+    COLOR = BLUE
+    LINETHICKNESS = 0.4
+    }
+  SYMBOLS
+    {
+    COLOR = BLUE
+    FILLCOLOR = RED
+    }
+  BARCHARTS
+    {
+    COLOR = RED
+    FILLCOLOR = RED
+    }
+  ERRORBARS
+    {
+    COLOR = RED
+    }
+$!LINEMAP  [23]
+  NAME = '&ZN&'
+  ASSIGN
+    {
+    ZONE = 24
+    XAXISVAR = 1
+    YAXISVAR = 2
+    }
+  LINES
+    {
+    COLOR = BLUE
+    LINEPATTERN = DASHED
+    LINETHICKNESS = 0.4
+    }
+  SYMBOLS
+    {
+    COLOR = BLUE
+    FILLCOLOR = RED
+    }
+  BARCHARTS
+    {
+    COLOR = RED
+    FILLCOLOR = RED
+    }
+  ERRORBARS
+    {
+    COLOR = RED
+    }
+$!LINEMAP  [24]
+  NAME = '&ZN&'
+  ASSIGN
+    {
+    ZONE = 25
+    XAXISVAR = 1
+    YAXISVAR = 2
+    }
+  LINES
+    {
+    COLOR = BLUE
+    LINEPATTERN = LONGDASH
+    LINETHICKNESS = 0.4
+    }
+  SYMBOLS
+    {
+    COLOR = BLUE
+    FILLCOLOR = RED
+    }
+  BARCHARTS
+    {
+    COLOR = RED
+    FILLCOLOR = RED
+    }
+  ERRORBARS
+    {
+    COLOR = RED
+    }
+$!LINEMAP  [25]
+  NAME = '&ZN&'
+  ASSIGN
+    {
+    ZONE = 26
+    XAXISVAR = 1
+    YAXISVAR = 2
+    }
+  LINES
+    {
+    COLOR = BLUE
+    LINEPATTERN = DASHDOT
+    LINETHICKNESS = 0.4
+    }
+  SYMBOLS
+    {
+    COLOR = BLUE
+    FILLCOLOR = RED
+    }
+  BARCHARTS
+    {
+    COLOR = RED
+    FILLCOLOR = RED
+    }
+  ERRORBARS
+    {
+    COLOR = RED
+    }
+$!LINEMAP  [26]
+  NAME = '&ZN&'
+  ASSIGN
+    {
+    ZONE = 27
+    XAXISVAR = 1
+    YAXISVAR = 2
+    }
+  LINES
+    {
+    COLOR = BLUE
+    LINEPATTERN = DASHDOTDOT
+    LINETHICKNESS = 0.4
+    }
+  SYMBOLS
+    {
+    COLOR = BLUE
+    FILLCOLOR = RED
+    }
+  BARCHARTS
+    {
+    COLOR = RED
+    FILLCOLOR = RED
+    }
+  ERRORBARS
+    {
+    COLOR = RED
+    }
+$!LINEMAP  [27]
+  NAME = '&ZN&'
+  ASSIGN
+    {
+    ZONE = 28
+    XAXISVAR = 1
+    YAXISVAR = 2
+    }
+  LINES
+    {
+    COLOR = RED
+    LINETHICKNESS = 0.4
+    }
+  SYMBOLS
+    {
+    SYMBOLSHAPE
+      {
+      GEOMSHAPE = DEL
+      }
+    COLOR = RED
+    FILLCOLOR = RED
+    }
+  BARCHARTS
+    {
+    COLOR = RED
+    FILLCOLOR = RED
+    }
+  ERRORBARS
+    {
+    COLOR = RED
+    }
+$!LINEMAP  [28]
+  NAME = '&ZN&'
+  ASSIGN
+    {
+    ZONE = 29
+    XAXISVAR = 1
+    YAXISVAR = 2
+    }
+  LINES
+    {
+    COLOR = RED
+    LINEPATTERN = DASHED
+    LINETHICKNESS = 0.4
+    }
+  SYMBOLS
+    {
+    SYMBOLSHAPE
+      {
+      GEOMSHAPE = DEL
+      }
+    COLOR = RED
+    FILLCOLOR = RED
+    }
+  BARCHARTS
+    {
+    COLOR = RED
+    FILLCOLOR = RED
+    }
+  ERRORBARS
+    {
+    COLOR = RED
+    }
+$!LINEMAP  [29]
+  NAME = '&ZN&'
+  ASSIGN
+    {
+    ZONE = 30
+    XAXISVAR = 1
+    YAXISVAR = 2
+    }
+  LINES
+    {
+    COLOR = RED
+    LINEPATTERN = LONGDASH
+    LINETHICKNESS = 0.4
+    }
+  SYMBOLS
+    {
+    SYMBOLSHAPE
+      {
+      GEOMSHAPE = DEL
+      }
+    COLOR = RED
+    FILLCOLOR = RED
+    }
+  BARCHARTS
+    {
+    COLOR = RED
+    FILLCOLOR = RED
+    }
+  ERRORBARS
+    {
+    COLOR = RED
+    }
+$!LINEMAP  [30]
+  NAME = '&ZN&'
+  ASSIGN
+    {
+    ZONE = 31
+    XAXISVAR = 1
+    YAXISVAR = 2
+    }
+  LINES
+    {
+    COLOR = RED
+    LINEPATTERN = DASHDOT
+    LINETHICKNESS = 0.4
+    }
+  SYMBOLS
+    {
+    SYMBOLSHAPE
+      {
+      GEOMSHAPE = DEL
+      }
+    COLOR = RED
+    FILLCOLOR = RED
+    }
+  BARCHARTS
+    {
+    COLOR = RED
+    FILLCOLOR = RED
+    }
+  ERRORBARS
+    {
+    COLOR = RED
+    }
+$!LINEMAP  [31]
+  NAME = '&ZN&'
+  ASSIGN
+    {
+    ZONE = 32
+    XAXISVAR = 1
+    YAXISVAR = 2
+    }
+  LINES
+    {
+    COLOR = RED
+    LINEPATTERN = DASHDOTDOT
+    LINETHICKNESS = 0.4
+    }
+  SYMBOLS
+    {
+    SYMBOLSHAPE
+      {
+      GEOMSHAPE = DEL
+      }
+    COLOR = RED
+    FILLCOLOR = RED
+    }
+  BARCHARTS
+    {
+    COLOR = RED
+    FILLCOLOR = RED
+    }
+  ERRORBARS
+    {
+    COLOR = RED
+    }
+$!LINEMAP  [32]
+  NAME = '&ZN&'
+  ASSIGN
+    {
+    ZONE = 35
+    XAXISVAR = 1
+    YAXISVAR = 2
+    }
+  LINES
+    {
+    COLOR = CUSTOM3
+    LINEPATTERN = LONGDASH
+    LINETHICKNESS = 0.4
+    }
+  SYMBOLS
+    {
+    COLOR = CUSTOM3
+    FILLCOLOR = RED
+    }
+  BARCHARTS
+    {
+    COLOR = RED
+    FILLCOLOR = RED
+    }
+  ERRORBARS
+    {
+    COLOR = RED
+    }
+$!LINEMAP  [33]
+  NAME = '&ZN&'
+  ASSIGN
+    {
+    ZONE = 36
+    XAXISVAR = 1
+    YAXISVAR = 2
+    }
+  LINES
+    {
+    COLOR = CUSTOM3
+    LINEPATTERN = DASHDOT
+    LINETHICKNESS = 0.4
+    }
+  SYMBOLS
+    {
+    COLOR = CUSTOM3
+    FILLCOLOR = RED
+    }
+  BARCHARTS
+    {
+    COLOR = RED
+    FILLCOLOR = RED
+    }
+  ERRORBARS
+    {
+    COLOR = RED
+    }
+$!LINEMAP  [34]
+  NAME = '&ZN&'
+  ASSIGN
+    {
+    ZONE = 37
+    XAXISVAR = 1
+    YAXISVAR = 2
+    }
+  LINES
+    {
+    COLOR = CUSTOM3
+    LINEPATTERN = DASHDOTDOT
+    LINETHICKNESS = 0.4
+    }
+  SYMBOLS
+    {
+    COLOR = CUSTOM3
+    FILLCOLOR = RED
+    }
+  BARCHARTS
+    {
+    COLOR = RED
+    FILLCOLOR = RED
+    }
+  ERRORBARS
+    {
+    COLOR = RED
+    }
+$!XYLINEAXIS 
+  DEPXTOYRATIO = 1
+$!XYLINEAXIS 
+  XDETAIL 1
+    {
+    COORDSCALE = LOG
+    RANGEMIN = 0.0010000000000000000208
+    RANGEMAX = 0.25
+    GRSPACING = 0.1
+    }
+$!XYLINEAXIS 
+  YDETAIL 1
+    {
+    COORDSCALE = LOG
+    RANGEMIN = 5.0000000000000001822E-11
+    RANGEMAX = 0.014999999999999999445
+    GRSPACING = 0.002
+    }
+$!LINEPLOTLAYERS 
+  SHOWSYMBOLS = YES
+$!ATTACHTEXT 
+  POSITIONCOORDSYS = GRID
+  ANCHORPOS
+    {
+    X = 0.00402852849766902
+    Y = 0.00033796001937071
+    }
+  TEXTSHAPE
+    {
+    ISBOLD = NO
+    }
+  TEXT = '1'
+$!ATTACHTEXT 
+  POSITIONCOORDSYS = GRID
+  ANCHORPOS
+    {
+    X = 0.002476609902872163
+    Y = 6.302029293538083E-06
+    }
+  TEXTSHAPE
+    {
+    ISBOLD = NO
+    }
+  TEXT = '2'
+$!ATTACHTEXT 
+  POSITIONCOORDSYS = GRID
+  ANCHORPOS
+    {
+    X = 0.001595897922931423
+    Y = 3.422749624090665E-08
+    }
+  TEXTSHAPE
+    {
+    ISBOLD = NO
+    }
+  TEXT = '3'
+$!ATTACHTEXT 
+  POSITIONCOORDSYS = GRID
+  ANCHORPOS
+    {
+    X = 0.002528434419470148
+    Y = 8.558859079483102E-09
+    }
+  TEXTSHAPE
+    {
+    ISBOLD = NO
+    }
+  TEXT = '4'
+$!ATTACHTEXT 
+  POSITIONCOORDSYS = GRID
+  ANCHORPOS
+    {
+    X = 0.003686171036454599
+    Y = 1.274448157112913E-09
+    }
+  TEXTSHAPE
+    {
+    ISBOLD = NO
+    }
+  TEXT = '5'
+$!ATTACHGEOM 
+  ANCHORPOS
+    {
+    X = 0.004553968245036991
+    Y = 0.0004397066857479504
+    }
+  LINETHICKNESS = 0.4
+  RAWDATA
+1
+3
+0 0 
+0 0.000189921644051 
+0.00203042663634 0.000189921644051 
+$!ATTACHGEOM 
+  ANCHORPOS
+    {
+    X = 0.002313555833488913
+    Y = 3.204663005529452E-06
+    }
+  LINETHICKNESS = 0.4
+  RAWDATA
+1
+3
+0 0 
+0 2.26450515584E-06 
+0.00071431620745 2.26450515584E-06 
+$!ATTACHGEOM 
+  ANCHORPOS
+    {
+    X = 0.001530681390945427
+    Y = 1.708646997398744E-08
+    }
+  LINETHICKNESS = 0.4
+  RAWDATA
+1
+3
+0 0 
+0 1.13533102919E-08 
+0.000292166805593 1.13533102919E-08 
+$!ATTACHGEOM 
+  ANCHORPOS
+    {
+    X = 0.002345852216416805
+    Y = 2.966645976999368E-09
+    }
+  LINETHICKNESS = 0.4
+  RAWDATA
+1
+3
+0 0 
+0 4.00722521832E-09 
+0.000570867501665 4.00722521832E-09 
+$!ATTACHGEOM 
+  ANCHORPOS
+    {
+    X = 0.003615290602583653
+    Y = 6.123046598617155E-10
+    }
+  LINETHICKNESS = 0.4
+  RAWDATA
+1
+3
+0 0 
+0 4.56910204116E-10 
+0.000450449588243 4.56910204116E-10 
+$!FRAMECONTROL ACTIVATEBYNUMBER
+  FRAME = 1
+### Page Number 2 ###
+$!PAGECONTROL CREATE
+$!PAGE 
+  NAME = 'Time'
+  PAPERATTRIBUTES
+    {
+    BACKGROUNDCOLOR = WHITE
+    ISTRANSPARENT = YES
+    ORIENTPORTRAIT = NO
+    SHOWGRID = YES
+    SHOWRULER = NO
+    SHOWPAPER = YES
+    PAPERSIZE = LETTER
+    RULERSPACING = ONEINCH
+    PAPERGRIDSPACING = HALFINCH
+    REGIONINWORKAREA
+      {
+      X1 = 1
+      Y1 = 0.25
+      X2 = 10
+      Y2 = 8.25
+      }
+    }
+### Frame Number 1, Page Number 2 ###
+$!ATTACHDATASET 
+  PAGENUM = 2
+  FRAME = 1
 $!FRAMELAYOUT 
   SHOWBORDER = NO
   SHOWHEADER = NO
@@ -1269,1208 +2467,6 @@ $!ATTACHTEXT
     ISBOLD = NO
     }
   TEXT = '10 h'
-$!FRAMECONTROL ACTIVATEBYNUMBER
-  FRAME = 1
-### Page Number 2 ###
-$!PAGECONTROL CREATE
-$!PAGE 
-  NAME = 'Slope'
-  PAPERATTRIBUTES
-    {
-    BACKGROUNDCOLOR = WHITE
-    ISTRANSPARENT = YES
-    ORIENTPORTRAIT = NO
-    SHOWGRID = YES
-    SHOWRULER = NO
-    SHOWPAPER = YES
-    PAPERSIZE = LETTER
-    RULERSPACING = ONEINCH
-    PAPERGRIDSPACING = HALFINCH
-    REGIONINWORKAREA
-      {
-      X1 = 1
-      Y1 = 0.25
-      X2 = 10
-      Y2 = 8.25
-      }
-    }
-### Frame Number 1, Page Number 2 ###
-$!ATTACHDATASET 
-  PAGENUM = 2
-  FRAME = 1
-$!FRAMELAYOUT 
-  SHOWBORDER = NO
-  SHOWHEADER = NO
-  ISTRANSPARENT = YES
-  HEADERCOLOR = RED
-  XYPOS
-    {
-    X = 1
-    Y = 0.25
-    }
-  WIDTH = 9
-  HEIGHT = 8
-$!THREEDAXIS 
-  ASPECTRATIOLIMIT = 25
-  BOXASPECTRATIOLIMIT = 25
-$!PLOTTYPE  = XYLINE
-$!FRAMENAME  = 'Frame 001'
-$!GLOBALTIME 
-  SOLUTIONTIME = 0
-$!DELETELINEMAPS 
-$!ACTIVELINEMAPS  =  [1-6,8,11-16,32-34]
-$!GLOBALLINEPLOT 
-  DATALABELS
-    {
-    DISTANCESKIP = 5
-    }
-  LEGEND
-    {
-    SHOW = YES
-    TEXTSHAPE
-      {
-      HEIGHT = 2.5
-      }
-    BOX
-      {
-      BOXTYPE = NONE
-      }
-    XYPOS
-      {
-      X = 54.756
-      Y = 50.47
-      }
-    ANCHORALIGNMENT = TOPLEFT
-    }
-$!LINEMAP  [1]
-  NAME = '&ZN&'
-  ASSIGN
-    {
-    ZONE = 1
-    XAXISVAR = 1
-    YAXISVAR = 2
-    SHOWINLEGEND = NEVER
-    }
-  LINES
-    {
-    COLOR = BLACK
-    LINETHICKNESS = 0.4
-    }
-  SYMBOLS
-    {
-    SHOW = NO
-    COLOR = RED
-    FILLCOLOR = RED
-    }
-  BARCHARTS
-    {
-    COLOR = RED
-    FILLCOLOR = RED
-    }
-  ERRORBARS
-    {
-    COLOR = RED
-    }
-$!LINEMAP  [2]
-  NAME = '&ZN&'
-  ASSIGN
-    {
-    ZONE = 2
-    XAXISVAR = 1
-    YAXISVAR = 2
-    SHOWINLEGEND = NEVER
-    }
-  LINES
-    {
-    COLOR = BLACK
-    LINETHICKNESS = 0.4
-    }
-  SYMBOLS
-    {
-    SHOW = NO
-    COLOR = RED
-    FILLCOLOR = RED
-    }
-  BARCHARTS
-    {
-    COLOR = RED
-    FILLCOLOR = RED
-    }
-  ERRORBARS
-    {
-    COLOR = RED
-    }
-$!LINEMAP  [3]
-  NAME = '&ZN&'
-  ASSIGN
-    {
-    ZONE = 3
-    XAXISVAR = 1
-    YAXISVAR = 2
-    SHOWINLEGEND = NEVER
-    }
-  LINES
-    {
-    COLOR = BLACK
-    LINETHICKNESS = 0.4
-    }
-  SYMBOLS
-    {
-    SHOW = NO
-    COLOR = RED
-    FILLCOLOR = RED
-    }
-  BARCHARTS
-    {
-    COLOR = RED
-    FILLCOLOR = RED
-    }
-  ERRORBARS
-    {
-    COLOR = RED
-    }
-$!LINEMAP  [4]
-  NAME = '&ZN&'
-  ASSIGN
-    {
-    ZONE = 3
-    XAXISVAR = 1
-    YAXISVAR = 2
-    SHOWINLEGEND = NEVER
-    }
-  LINES
-    {
-    COLOR = BLACK
-    LINETHICKNESS = 0.4
-    }
-  SYMBOLS
-    {
-    SHOW = NO
-    COLOR = RED
-    FILLCOLOR = RED
-    }
-  BARCHARTS
-    {
-    COLOR = RED
-    FILLCOLOR = RED
-    }
-  ERRORBARS
-    {
-    COLOR = RED
-    }
-$!LINEMAP  [5]
-  NAME = '&ZN&'
-  ASSIGN
-    {
-    ZONE = 4
-    XAXISVAR = 1
-    YAXISVAR = 2
-    SHOWINLEGEND = NEVER
-    }
-  LINES
-    {
-    COLOR = BLACK
-    LINETHICKNESS = 0.4
-    }
-  SYMBOLS
-    {
-    SHOW = NO
-    COLOR = RED
-    FILLCOLOR = RED
-    }
-  BARCHARTS
-    {
-    COLOR = RED
-    FILLCOLOR = RED
-    }
-  ERRORBARS
-    {
-    COLOR = RED
-    }
-$!LINEMAP  [6]
-  NAME = '&ZN&'
-  ASSIGN
-    {
-    ZONE = 5
-    XAXISVAR = 1
-    YAXISVAR = 2
-    SHOWINLEGEND = NEVER
-    }
-  LINES
-    {
-    COLOR = BLACK
-    LINETHICKNESS = 0.4
-    }
-  SYMBOLS
-    {
-    SHOW = NO
-    COLOR = RED
-    FILLCOLOR = RED
-    }
-  BARCHARTS
-    {
-    COLOR = RED
-    FILLCOLOR = RED
-    }
-  ERRORBARS
-    {
-    COLOR = RED
-    }
-$!LINEMAP  [7]
-  NAME = '&ZN&'
-  ASSIGN
-    {
-    ZONE = 10
-    XAXISVAR = 1
-    YAXISVAR = 2
-    }
-  LINES
-    {
-    COLOR = RED
-    LINETHICKNESS = 0.4
-    }
-  SYMBOLS
-    {
-    COLOR = RED
-    FILLCOLOR = RED
-    }
-  BARCHARTS
-    {
-    COLOR = RED
-    FILLCOLOR = RED
-    }
-  ERRORBARS
-    {
-    COLOR = RED
-    }
-$!LINEMAP  [8]
-  NAME = '&ZN&'
-  ASSIGN
-    {
-    ZONE = 11
-    XAXISVAR = 1
-    YAXISVAR = 2
-    }
-  LINES
-    {
-    COLOR = RED
-    LINETHICKNESS = 0.4
-    }
-  SYMBOLS
-    {
-    COLOR = RED
-    FILLMODE = USELINECOLOR
-    FILLCOLOR = RED
-    }
-  BARCHARTS
-    {
-    COLOR = RED
-    FILLCOLOR = RED
-    }
-  ERRORBARS
-    {
-    COLOR = RED
-    }
-$!LINEMAP  [9]
-  NAME = '&ZN&'
-  ASSIGN
-    {
-    ZONE = 12
-    XAXISVAR = 1
-    YAXISVAR = 2
-    }
-  LINES
-    {
-    COLOR = RED
-    LINEPATTERN = LONGDASH
-    LINETHICKNESS = 0.4
-    }
-  SYMBOLS
-    {
-    COLOR = RED
-    FILLCOLOR = RED
-    }
-  BARCHARTS
-    {
-    COLOR = RED
-    FILLCOLOR = RED
-    }
-  ERRORBARS
-    {
-    COLOR = RED
-    }
-$!LINEMAP  [10]
-  NAME = '&ZN&'
-  ASSIGN
-    {
-    ZONE = 13
-    XAXISVAR = 1
-    YAXISVAR = 2
-    }
-  LINES
-    {
-    COLOR = RED
-    LINEPATTERN = DASHDOTDOT
-    LINETHICKNESS = 0.4
-    }
-  SYMBOLS
-    {
-    COLOR = RED
-    FILLCOLOR = RED
-    }
-  BARCHARTS
-    {
-    COLOR = RED
-    FILLCOLOR = RED
-    }
-  ERRORBARS
-    {
-    COLOR = RED
-    }
-$!LINEMAP  [11]
-  NAME = '&ZN&'
-  ASSIGN
-    {
-    ZONE = 6
-    XAXISVAR = 1
-    YAXISVAR = 2
-    }
-  LINES
-    {
-    COLOR = BLUE
-    LINETHICKNESS = 0.4
-    }
-  SYMBOLS
-    {
-    COLOR = BLUE
-    FILLCOLOR = RED
-    }
-  BARCHARTS
-    {
-    COLOR = RED
-    FILLCOLOR = RED
-    }
-  ERRORBARS
-    {
-    COLOR = RED
-    }
-$!LINEMAP  [12]
-  NAME = '&ZN&'
-  ASSIGN
-    {
-    ZONE = 7
-    XAXISVAR = 1
-    YAXISVAR = 2
-    }
-  LINES
-    {
-    COLOR = GREEN
-    LINETHICKNESS = 0.4
-    }
-  SYMBOLS
-    {
-    COLOR = GREEN
-    FILLCOLOR = RED
-    }
-  BARCHARTS
-    {
-    COLOR = RED
-    FILLCOLOR = RED
-    }
-  ERRORBARS
-    {
-    COLOR = RED
-    }
-$!LINEMAP  [13]
-  NAME = '&ZN&'
-  ASSIGN
-    {
-    ZONE = 8
-    XAXISVAR = 1
-    YAXISVAR = 2
-    }
-  LINES
-    {
-    COLOR = CUSTOM3
-    LINETHICKNESS = 0.4
-    }
-  SYMBOLS
-    {
-    COLOR = CUSTOM3
-    FILLCOLOR = RED
-    }
-  BARCHARTS
-    {
-    COLOR = RED
-    FILLCOLOR = RED
-    }
-  ERRORBARS
-    {
-    COLOR = RED
-    }
-$!LINEMAP  [14]
-  NAME = '&ZN&'
-  ASSIGN
-    {
-    ZONE = 9
-    XAXISVAR = 1
-    YAXISVAR = 2
-    }
-  LINES
-    {
-    COLOR = CUSTOM32
-    LINETHICKNESS = 0.4
-    }
-  SYMBOLS
-    {
-    COLOR = CUSTOM32
-    FILLCOLOR = RED
-    }
-  BARCHARTS
-    {
-    COLOR = RED
-    FILLCOLOR = RED
-    }
-  ERRORBARS
-    {
-    COLOR = RED
-    }
-$!LINEMAP  [15]
-  NAME = '&ZN&'
-  ASSIGN
-    {
-    ZONE = 33
-    XAXISVAR = 1
-    YAXISVAR = 2
-    }
-  LINES
-    {
-    COLOR = RED
-    LINETHICKNESS = 0.4
-    }
-  SYMBOLS
-    {
-    SYMBOLSHAPE
-      {
-      GEOMSHAPE = CIRCLE
-      }
-    COLOR = RED
-    FILLCOLOR = RED
-    SIZE = 2
-    }
-  BARCHARTS
-    {
-    COLOR = RED
-    FILLCOLOR = RED
-    }
-  ERRORBARS
-    {
-    COLOR = RED
-    }
-$!LINEMAP  [16]
-  NAME = '&ZN&'
-  ASSIGN
-    {
-    ZONE = 34
-    XAXISVAR = 1
-    YAXISVAR = 2
-    }
-  LINES
-    {
-    COLOR = RED
-    LINETHICKNESS = 0.4
-    }
-  SYMBOLS
-    {
-    SYMBOLSHAPE
-      {
-      GEOMSHAPE = CIRCLE
-      }
-    COLOR = RED
-    FILLMODE = USELINECOLOR
-    FILLCOLOR = RED
-    SIZE = 2
-    }
-  BARCHARTS
-    {
-    COLOR = RED
-    FILLCOLOR = RED
-    }
-  ERRORBARS
-    {
-    COLOR = RED
-    }
-$!LINEMAP  [17]
-  NAME = '&ZN&'
-  ASSIGN
-    {
-    ZONE = 18
-    XAXISVAR = 1
-    YAXISVAR = 2
-    }
-  LINES
-    {
-    COLOR = RED
-    LINETHICKNESS = 0.4
-    }
-  SYMBOLS
-    {
-    COLOR = RED
-    FILLMODE = USELINECOLOR
-    FILLCOLOR = RED
-    }
-  BARCHARTS
-    {
-    COLOR = RED
-    FILLCOLOR = RED
-    }
-  ERRORBARS
-    {
-    COLOR = RED
-    }
-$!LINEMAP  [18]
-  NAME = '&ZN&'
-  ASSIGN
-    {
-    ZONE = 19
-    XAXISVAR = 1
-    YAXISVAR = 2
-    }
-  LINES
-    {
-    COLOR = RED
-    LINEPATTERN = DASHED
-    LINETHICKNESS = 0.4
-    }
-  SYMBOLS
-    {
-    COLOR = RED
-    FILLMODE = USELINECOLOR
-    FILLCOLOR = RED
-    }
-  BARCHARTS
-    {
-    COLOR = RED
-    FILLCOLOR = RED
-    }
-  ERRORBARS
-    {
-    COLOR = RED
-    }
-$!LINEMAP  [19]
-  NAME = '&ZN&'
-  ASSIGN
-    {
-    ZONE = 20
-    XAXISVAR = 1
-    YAXISVAR = 2
-    }
-  LINES
-    {
-    COLOR = RED
-    LINEPATTERN = LONGDASH
-    LINETHICKNESS = 0.4
-    }
-  SYMBOLS
-    {
-    COLOR = RED
-    FILLMODE = USELINECOLOR
-    FILLCOLOR = RED
-    }
-  BARCHARTS
-    {
-    COLOR = RED
-    FILLCOLOR = RED
-    }
-  ERRORBARS
-    {
-    COLOR = RED
-    }
-$!LINEMAP  [20]
-  NAME = '&ZN&'
-  ASSIGN
-    {
-    ZONE = 21
-    XAXISVAR = 1
-    YAXISVAR = 2
-    }
-  LINES
-    {
-    COLOR = RED
-    LINEPATTERN = DASHDOT
-    LINETHICKNESS = 0.4
-    }
-  SYMBOLS
-    {
-    COLOR = RED
-    FILLMODE = USELINECOLOR
-    FILLCOLOR = RED
-    }
-  BARCHARTS
-    {
-    COLOR = RED
-    FILLCOLOR = RED
-    }
-  ERRORBARS
-    {
-    COLOR = RED
-    }
-$!LINEMAP  [21]
-  NAME = '&ZN&'
-  ASSIGN
-    {
-    ZONE = 22
-    XAXISVAR = 1
-    YAXISVAR = 2
-    }
-  LINES
-    {
-    COLOR = RED
-    LINEPATTERN = DASHDOTDOT
-    LINETHICKNESS = 0.4
-    }
-  SYMBOLS
-    {
-    COLOR = RED
-    FILLMODE = USELINECOLOR
-    FILLCOLOR = RED
-    }
-  BARCHARTS
-    {
-    COLOR = RED
-    FILLCOLOR = RED
-    }
-  ERRORBARS
-    {
-    COLOR = RED
-    }
-$!LINEMAP  [22]
-  NAME = '&ZN&'
-  ASSIGN
-    {
-    ZONE = 23
-    XAXISVAR = 1
-    YAXISVAR = 2
-    }
-  LINES
-    {
-    COLOR = BLUE
-    LINETHICKNESS = 0.4
-    }
-  SYMBOLS
-    {
-    COLOR = BLUE
-    FILLCOLOR = RED
-    }
-  BARCHARTS
-    {
-    COLOR = RED
-    FILLCOLOR = RED
-    }
-  ERRORBARS
-    {
-    COLOR = RED
-    }
-$!LINEMAP  [23]
-  NAME = '&ZN&'
-  ASSIGN
-    {
-    ZONE = 24
-    XAXISVAR = 1
-    YAXISVAR = 2
-    }
-  LINES
-    {
-    COLOR = BLUE
-    LINEPATTERN = DASHED
-    LINETHICKNESS = 0.4
-    }
-  SYMBOLS
-    {
-    COLOR = BLUE
-    FILLCOLOR = RED
-    }
-  BARCHARTS
-    {
-    COLOR = RED
-    FILLCOLOR = RED
-    }
-  ERRORBARS
-    {
-    COLOR = RED
-    }
-$!LINEMAP  [24]
-  NAME = '&ZN&'
-  ASSIGN
-    {
-    ZONE = 25
-    XAXISVAR = 1
-    YAXISVAR = 2
-    }
-  LINES
-    {
-    COLOR = BLUE
-    LINEPATTERN = LONGDASH
-    LINETHICKNESS = 0.4
-    }
-  SYMBOLS
-    {
-    COLOR = BLUE
-    FILLCOLOR = RED
-    }
-  BARCHARTS
-    {
-    COLOR = RED
-    FILLCOLOR = RED
-    }
-  ERRORBARS
-    {
-    COLOR = RED
-    }
-$!LINEMAP  [25]
-  NAME = '&ZN&'
-  ASSIGN
-    {
-    ZONE = 26
-    XAXISVAR = 1
-    YAXISVAR = 2
-    }
-  LINES
-    {
-    COLOR = BLUE
-    LINEPATTERN = DASHDOT
-    LINETHICKNESS = 0.4
-    }
-  SYMBOLS
-    {
-    COLOR = BLUE
-    FILLCOLOR = RED
-    }
-  BARCHARTS
-    {
-    COLOR = RED
-    FILLCOLOR = RED
-    }
-  ERRORBARS
-    {
-    COLOR = RED
-    }
-$!LINEMAP  [26]
-  NAME = '&ZN&'
-  ASSIGN
-    {
-    ZONE = 27
-    XAXISVAR = 1
-    YAXISVAR = 2
-    }
-  LINES
-    {
-    COLOR = BLUE
-    LINEPATTERN = DASHDOTDOT
-    LINETHICKNESS = 0.4
-    }
-  SYMBOLS
-    {
-    COLOR = BLUE
-    FILLCOLOR = RED
-    }
-  BARCHARTS
-    {
-    COLOR = RED
-    FILLCOLOR = RED
-    }
-  ERRORBARS
-    {
-    COLOR = RED
-    }
-$!LINEMAP  [27]
-  NAME = '&ZN&'
-  ASSIGN
-    {
-    ZONE = 28
-    XAXISVAR = 1
-    YAXISVAR = 2
-    }
-  LINES
-    {
-    COLOR = RED
-    LINETHICKNESS = 0.4
-    }
-  SYMBOLS
-    {
-    SYMBOLSHAPE
-      {
-      GEOMSHAPE = DEL
-      }
-    COLOR = RED
-    FILLCOLOR = RED
-    }
-  BARCHARTS
-    {
-    COLOR = RED
-    FILLCOLOR = RED
-    }
-  ERRORBARS
-    {
-    COLOR = RED
-    }
-$!LINEMAP  [28]
-  NAME = '&ZN&'
-  ASSIGN
-    {
-    ZONE = 29
-    XAXISVAR = 1
-    YAXISVAR = 2
-    }
-  LINES
-    {
-    COLOR = RED
-    LINEPATTERN = DASHED
-    LINETHICKNESS = 0.4
-    }
-  SYMBOLS
-    {
-    SYMBOLSHAPE
-      {
-      GEOMSHAPE = DEL
-      }
-    COLOR = RED
-    FILLCOLOR = RED
-    }
-  BARCHARTS
-    {
-    COLOR = RED
-    FILLCOLOR = RED
-    }
-  ERRORBARS
-    {
-    COLOR = RED
-    }
-$!LINEMAP  [29]
-  NAME = '&ZN&'
-  ASSIGN
-    {
-    ZONE = 30
-    XAXISVAR = 1
-    YAXISVAR = 2
-    }
-  LINES
-    {
-    COLOR = RED
-    LINEPATTERN = LONGDASH
-    LINETHICKNESS = 0.4
-    }
-  SYMBOLS
-    {
-    SYMBOLSHAPE
-      {
-      GEOMSHAPE = DEL
-      }
-    COLOR = RED
-    FILLCOLOR = RED
-    }
-  BARCHARTS
-    {
-    COLOR = RED
-    FILLCOLOR = RED
-    }
-  ERRORBARS
-    {
-    COLOR = RED
-    }
-$!LINEMAP  [30]
-  NAME = '&ZN&'
-  ASSIGN
-    {
-    ZONE = 31
-    XAXISVAR = 1
-    YAXISVAR = 2
-    }
-  LINES
-    {
-    COLOR = RED
-    LINEPATTERN = DASHDOT
-    LINETHICKNESS = 0.4
-    }
-  SYMBOLS
-    {
-    SYMBOLSHAPE
-      {
-      GEOMSHAPE = DEL
-      }
-    COLOR = RED
-    FILLCOLOR = RED
-    }
-  BARCHARTS
-    {
-    COLOR = RED
-    FILLCOLOR = RED
-    }
-  ERRORBARS
-    {
-    COLOR = RED
-    }
-$!LINEMAP  [31]
-  NAME = '&ZN&'
-  ASSIGN
-    {
-    ZONE = 32
-    XAXISVAR = 1
-    YAXISVAR = 2
-    }
-  LINES
-    {
-    COLOR = RED
-    LINEPATTERN = DASHDOTDOT
-    LINETHICKNESS = 0.4
-    }
-  SYMBOLS
-    {
-    SYMBOLSHAPE
-      {
-      GEOMSHAPE = DEL
-      }
-    COLOR = RED
-    FILLCOLOR = RED
-    }
-  BARCHARTS
-    {
-    COLOR = RED
-    FILLCOLOR = RED
-    }
-  ERRORBARS
-    {
-    COLOR = RED
-    }
-$!LINEMAP  [32]
-  NAME = '&ZN&'
-  ASSIGN
-    {
-    ZONE = 35
-    XAXISVAR = 1
-    YAXISVAR = 2
-    }
-  LINES
-    {
-    COLOR = CUSTOM3
-    LINEPATTERN = LONGDASH
-    LINETHICKNESS = 0.4
-    }
-  SYMBOLS
-    {
-    COLOR = CUSTOM3
-    FILLCOLOR = RED
-    }
-  BARCHARTS
-    {
-    COLOR = RED
-    FILLCOLOR = RED
-    }
-  ERRORBARS
-    {
-    COLOR = RED
-    }
-$!LINEMAP  [33]
-  NAME = '&ZN&'
-  ASSIGN
-    {
-    ZONE = 36
-    XAXISVAR = 1
-    YAXISVAR = 2
-    }
-  LINES
-    {
-    COLOR = CUSTOM3
-    LINEPATTERN = DASHDOT
-    LINETHICKNESS = 0.4
-    }
-  SYMBOLS
-    {
-    COLOR = CUSTOM3
-    FILLCOLOR = RED
-    }
-  BARCHARTS
-    {
-    COLOR = RED
-    FILLCOLOR = RED
-    }
-  ERRORBARS
-    {
-    COLOR = RED
-    }
-$!LINEMAP  [34]
-  NAME = '&ZN&'
-  ASSIGN
-    {
-    ZONE = 37
-    XAXISVAR = 1
-    YAXISVAR = 2
-    }
-  LINES
-    {
-    COLOR = CUSTOM3
-    LINEPATTERN = DASHDOTDOT
-    LINETHICKNESS = 0.4
-    }
-  SYMBOLS
-    {
-    COLOR = CUSTOM3
-    FILLCOLOR = RED
-    }
-  BARCHARTS
-    {
-    COLOR = RED
-    FILLCOLOR = RED
-    }
-  ERRORBARS
-    {
-    COLOR = RED
-    }
-$!XYLINEAXIS 
-  DEPXTOYRATIO = 1
-$!XYLINEAXIS 
-  XDETAIL 1
-    {
-    COORDSCALE = LOG
-    RANGEMIN = 0.0010000000000000000208
-    RANGEMAX = 0.25
-    GRSPACING = 0.1
-    }
-$!XYLINEAXIS 
-  YDETAIL 1
-    {
-    COORDSCALE = LOG
-    RANGEMIN = 5.0000000000000001822E-11
-    RANGEMAX = 0.014999999999999999445
-    GRSPACING = 0.002
-    }
-$!LINEPLOTLAYERS 
-  SHOWSYMBOLS = YES
-$!ATTACHTEXT 
-  POSITIONCOORDSYS = GRID
-  ANCHORPOS
-    {
-    X = 0.00402852849766902
-    Y = 0.00033796001937071
-    }
-  TEXTSHAPE
-    {
-    ISBOLD = NO
-    }
-  TEXT = '1'
-$!ATTACHTEXT 
-  POSITIONCOORDSYS = GRID
-  ANCHORPOS
-    {
-    X = 0.002476609902872163
-    Y = 6.302029293538083E-06
-    }
-  TEXTSHAPE
-    {
-    ISBOLD = NO
-    }
-  TEXT = '2'
-$!ATTACHTEXT 
-  POSITIONCOORDSYS = GRID
-  ANCHORPOS
-    {
-    X = 0.001595897922931423
-    Y = 3.422749624090665E-08
-    }
-  TEXTSHAPE
-    {
-    ISBOLD = NO
-    }
-  TEXT = '3'
-$!ATTACHTEXT 
-  POSITIONCOORDSYS = GRID
-  ANCHORPOS
-    {
-    X = 0.002528434419470148
-    Y = 8.558859079483102E-09
-    }
-  TEXTSHAPE
-    {
-    ISBOLD = NO
-    }
-  TEXT = '4'
-$!ATTACHTEXT 
-  POSITIONCOORDSYS = GRID
-  ANCHORPOS
-    {
-    X = 0.003686171036454599
-    Y = 1.274448157112913E-09
-    }
-  TEXTSHAPE
-    {
-    ISBOLD = NO
-    }
-  TEXT = '5'
-$!ATTACHGEOM 
-  ANCHORPOS
-    {
-    X = 0.004553968245036991
-    Y = 0.0004397066857479504
-    }
-  LINETHICKNESS = 0.4
-  RAWDATA
-1
-3
-0 0 
-0 0.000189921644051 
-0.00203042663634 0.000189921644051 
-$!ATTACHGEOM 
-  ANCHORPOS
-    {
-    X = 0.002313555833488913
-    Y = 3.204663005529452E-06
-    }
-  LINETHICKNESS = 0.4
-  RAWDATA
-1
-3
-0 0 
-0 2.26450515584E-06 
-0.00071431620745 2.26450515584E-06 
-$!ATTACHGEOM 
-  ANCHORPOS
-    {
-    X = 0.001530681390945427
-    Y = 1.708646997398744E-08
-    }
-  LINETHICKNESS = 0.4
-  RAWDATA
-1
-3
-0 0 
-0 1.13533102919E-08 
-0.000292166805593 1.13533102919E-08 
-$!ATTACHGEOM 
-  ANCHORPOS
-    {
-    X = 0.002345852216416805
-    Y = 2.966645976999368E-09
-    }
-  LINETHICKNESS = 0.4
-  RAWDATA
-1
-3
-0 0 
-0 4.00722521832E-09 
-0.000570867501665 4.00722521832E-09 
-$!ATTACHGEOM 
-  ANCHORPOS
-    {
-    X = 0.003615290602583653
-    Y = 6.123046598617155E-10
-    }
-  LINETHICKNESS = 0.4
-  RAWDATA
-1
-3
-0 0 
-0 4.56910204116E-10 
-0.000450449588243 4.56910204116E-10 
 $!FRAMECONTROL ACTIVATEBYNUMBER
   FRAME = 1
 $!SETSTYLEBASE CONFIG
