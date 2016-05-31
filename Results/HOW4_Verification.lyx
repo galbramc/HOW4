@@ -411,13 +411,23 @@ Discontinuous Galerkin (ProjectX)
 
 \end_deeper
 \begin_layout Itemize
-Shengye Wang , Yaming Chen, Xiaogang Deng (National U.
+Shengye Wang, Yaming Chen, Xiaogang Deng (National U.
  of Defense Technology, China)
 \end_layout
 
 \begin_deeper
 \begin_layout Itemize
 Finite Difference (WCNS)
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Peter Eliasson, Jan Nordstrom, Marco Kupiainen (Linkoping U., China)
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Summation By Parts (LiU SBP)
 \end_layout
 
 \end_deeper
@@ -492,11 +502,11 @@ Software Development Verification
 \end_layout
 
 \begin_layout Itemize
-Unit Testing
+Unit testing
 \end_layout
 
 \begin_layout Itemize
-Memory Checking
+Memory checking
 \end_layout
 
 \begin_layout Column
@@ -504,11 +514,11 @@ Memory Checking
 \end_layout
 
 \begin_layout Itemize
-Static Analysis
+Static analysis
 \end_layout
 
 \begin_layout Itemize
-Continuous Integration
+Continuous integration
 \end_layout
 
 \end_deeper
@@ -532,11 +542,17 @@ Non-Intrusive Order of Accuracy Component Verification
 
 \begin_deeper
 \begin_layout Itemize
-Test cases designed to Verify CFD codes
+Test cases designed to 
+\shape italic
+\size small
+verify
+\shape default
+\size default
+ CFD codes
 \end_layout
 
 \begin_layout Itemize
-Structured Quadrilateral and Triangle Meshes (python scripts)
+Structured quadrilateral and triangle meshes (python scripts)
 \end_layout
 
 \begin_layout Itemize
@@ -890,7 +906,7 @@ Trivial mesh works well
 \end_layout
 
 \begin_layout Itemize
-Verify Inviscid Fluxes and BC's
+Verify inviscid fluxes and BC's
 \end_layout
 
 \begin_layout Itemize
@@ -898,15 +914,15 @@ Mach 0.5
 \end_layout
 
 \begin_layout Itemize
-Total Pressure and Temperature Inflow
+Total pressure and temperature inflow
 \end_layout
 
 \begin_layout Itemize
-Static Pressure Outflow
+Static pressure outflow
 \end_layout
 
 \begin_layout Itemize
-Entropy Error: 
+Entropy error: 
 \begin_inset Formula $O\left(h^{P+1}\right)$
 \end_inset
 
@@ -915,7 +931,7 @@ Entropy Error:
 
 \begin_deeper
 \begin_layout Itemize
-Mesh is NOT optimized to minimize Entropy Error
+Mesh is NOT optimized to minimize entropy error
 \end_layout
 
 \end_deeper
@@ -1031,23 +1047,19 @@ status open
 
 \begin_deeper
 \begin_layout Itemize
-C-grid: Clustering at Stagnation Point and Trailing Edge
+Verify viscous fluxes and BC's
+\end_layout
+
+\begin_layout Itemize
+Cusped trailing edge
 \end_layout
 
 \begin_deeper
 \begin_layout Itemize
-Nested grids with fixed distribution function
-\end_layout
-
-\begin_layout Itemize
-6 months of work to find good distribution
+Reduce inviscid singularity
 \end_layout
 
 \end_deeper
-\begin_layout Itemize
-Verify Viscous Fluxes and BC's
-\end_layout
-
 \begin_layout Itemize
 Mach 0.5, 
 \begin_inset Formula $\alpha=0^{\circ}$
@@ -1061,16 +1073,6 @@ Mach 0.5,
 \end_layout
 
 \begin_layout Itemize
-Cusped Trailinge Edge
-\end_layout
-
-\begin_deeper
-\begin_layout Itemize
-Reduce Inviscid Singularity
-\end_layout
-
-\end_deeper
-\begin_layout Itemize
 Symmetric: 
 \begin_inset Formula $C_{l}\equiv0$
 \end_inset
@@ -1079,10 +1081,24 @@ Symmetric:
 \end_layout
 
 \begin_layout Itemize
+C-grid: Clustering at stagnation point and trailing edge
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Nested grids with fixed distribution function
+\end_layout
+
+\begin_layout Itemize
+6 months of work to find good distribution
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
 \begin_inset Formula $C_{d}$
 \end_inset
 
- Error: 
+ error: 
 \begin_inset Formula $O\left(h^{P+1}\right)$
 \end_inset
 
@@ -1188,26 +1204,22 @@ status open
 
 \begin_deeper
 \begin_layout Itemize
-C-grid: Clustering at Stagnation Point and Trailing Edge
-\end_layout
-
-\begin_deeper
-\begin_layout Itemize
-Nested grids with fixed distribution function
-\end_layout
-
-\begin_layout Itemize
-4 months of work to find good distribution
-\end_layout
-
-\end_deeper
-\begin_layout Itemize
 Verify RANS model and BC's
 \end_layout
 
 \begin_deeper
 \begin_layout Itemize
-Negative SA
+Negative-SA
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Cusped trailing edge
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Reduce inviscid singularity
 \end_layout
 
 \end_deeper
@@ -1224,16 +1236,6 @@ Mach 0.5,
 \end_layout
 
 \begin_layout Itemize
-Cusped Trailinge Edge
-\end_layout
-
-\begin_deeper
-\begin_layout Itemize
-Reduce Inviscid Singularity
-\end_layout
-
-\end_deeper
-\begin_layout Itemize
 Symmetric: 
 \begin_inset Formula $C_{l}\equiv0$
 \end_inset
@@ -1242,10 +1244,24 @@ Symmetric:
 \end_layout
 
 \begin_layout Itemize
+C-grid: Clustering at stagnation point and trailing edge
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Nested grids with fixed distribution function
+\end_layout
+
+\begin_layout Itemize
+4 months of work to find good distribution
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
 \begin_inset Formula $C_{d}$
 \end_inset
 
- Error: 
+ error: 
 \begin_inset Formula $O\left(h^{P+1}\right)$
 \end_inset
 
@@ -1350,7 +1366,10 @@ Highly reputable workhorse CFD code
 \end_layout
 
 \begin_layout Itemize
-Considered to be well validated
+Considered to be well 
+\shape italic
+\size small
+validated
 \end_layout
 
 \end_deeper
@@ -1536,7 +1555,7 @@ Other Outcomes
 \end_layout
 
 \begin_layout Itemize
-2 Groups withdrew results concluding bugs in codes
+2 Groups withdrew results concluding bugs in their codes
 \end_layout
 
 \begin_deeper
@@ -1638,7 +1657,7 @@ status open
 
 \begin_layout Plain Layout
 
-\size small
+\size normal
 Normalized Time 
 \end_layout
 
@@ -1649,8 +1668,6 @@ Normalized Time
 
 \begin_deeper
 \begin_layout Itemize
-
-\size small
 (Work Units) 
 \begin_inset Formula $\times$
 \end_inset
@@ -2335,6 +2352,154 @@ Timing
 status open
 
 \begin_layout Plain Layout
+RANS Joukowski Airfoil
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout FrameSubtitle
+Drag Coefficient
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename Joukowski_Results/Joukowski_RANS_FV_Cd_1.png
+	lyxscale 50
+	height 2.8in
+	groupId Lamianr
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Frame
+
+\end_layout
+
+\begin_layout Separator
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+RANS Joukowski Airfoil
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout FrameSubtitle
+Drag Coefficient
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename Joukowski_Results/Joukowski_RANS_G_Cd_1.png
+	lyxscale 50
+	height 2.8in
+	groupId Lamianr
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Separator
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Laminar Joukowski Airfoil
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout FrameSubtitle
+Finite Volume and Finite Difference Order of Accuracy
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename Joukowski_Results/Joukowski_RANS_FV_1.png
+	lyxscale 50
+	height 2.8in
+	groupId Lamianr
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Separator
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
+Laminar Joukowski Airfoil
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_deeper
+\begin_layout FrameSubtitle
+Galerkin Finite Elements Order of Accuracy
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename Joukowski_Results/Joukowski_RANS_G_1.png
+	lyxscale 50
+	height 2.8in
+	groupId Lamianr
+
+\end_inset
+
+
+\end_layout
+
+\end_deeper
+\begin_layout Separator
+
+\end_layout
+
+\begin_layout Frame
+\begin_inset Argument 4
+status open
+
+\begin_layout Plain Layout
 Output Based (Adjoint) Mesh Adaptation
 \end_layout
 
@@ -2369,7 +2534,7 @@ Contrived problem to alleviate mesh generation
 \begin_layout Itemize
 
 \size small
-6 moths to develop grids that observe 
+6 months to develop grids that observe 
 \begin_inset Formula $O\left(h^{2P}\right)$
 \end_inset
 
