@@ -1,6 +1,10 @@
 #!MC 1410
 $!VarSet |LFDSFN1| = '"Laminar_AdaptPtTt/P1_5kdof.dat" "Laminar_AdaptPtTt/P1_10kdof.dat" "Laminar_AdaptPtTt/P1_20kdof.dat" "Laminar_AdaptPtTt/P1_40kdof.dat" "Laminar_AdaptPtTt/P1_80kdof.dat" "Laminar_AdaptPtTt/P2_5kdof.dat" "Laminar_AdaptPtTt/P2_10kdof.dat" "Laminar_AdaptPtTt/P2_20kdof.dat" "Laminar_AdaptPtTt/P2_40kdof.dat" "Laminar_AdaptPtTt/P2_80kdof.dat" "Laminar_AdaptPtTt/P3_5kdof.dat" "Laminar_AdaptPtTt/P3_10kdof.dat" "Laminar_AdaptPtTt/P3_20kdof.dat" "Laminar_AdaptPtTt/P3_40kdof.dat" "Laminar_AdaptPtTt/P3_80kdof.dat"'
 $!VarSet |LFDSVL1| = '"DOF" "Cd Error Indicator" "Cd Error Estimate" "Cd" "Cl"'
+$!VarSet |LFDSFN2| = '"Laminar_AdaptPtTt/Slopes.dat"'
+$!VarSet |LFDSVL2| = '"DOF" "Cd Error Indicator" "Cd Error Estimate" "Cd" "Cl" "1/sqrt(DOF)" "Cd Error" "“1/sqrt(DOF)”"'
+$!VarSet |LFDSFN3| = '"Laminar_AdaptPtTt/Slopes.dat"'
+$!VarSet |LFDSVL3| = '"DOF" "Cd Error Indicator" "Cd Error Estimate" "Cd" "Cl" "1/sqrt(DOF)" "Cd Error"'
 $!SETSTYLEBASE FACTORY
 $!PLOTOPTIONS 
   SUBDIVIDEALLCELLS = NO
@@ -26,7 +30,7 @@ $!PAGE
     ORIENTPORTRAIT = NO
     SHOWGRID = YES
     SHOWRULER = NO
-    SHOWPAPER = NO
+    SHOWPAPER = YES
     PAPERSIZE = LETTER
     RULERSPACING = ONEINCH
     PAPERGRIDSPACING = HALFINCH
@@ -54,9 +58,37 @@ $!ALTERDATA
   EQUATION = '{Cd}=2*{Cd}'
 $!ALTERDATA 
   EQUATION = '{Cd Error}=abs({Cd}-1.2184595545750500E-01)'
+$!READDATASET  '|LFDSFN2|'
+  INITIALPLOTTYPE = XYLINE
+  INCLUDETEXT = NO
+  INCLUDEGEOM = NO
+  READDATAOPTION = APPEND
+  RESETSTYLE = NO
+  ASSIGNSTRANDIDS = YES
+  VARLOADMODE = BYNAME
+  VARNAMELIST = '|LFDSVL2|'
+$!REMOVEVAR |LFDSVL2|
+$!REMOVEVAR |LFDSFN2|
+$!DELETEZONES  [16-18]
+$!DELETEVARS  [8]
+$!READDATASET  '|LFDSFN3|'
+  INITIALPLOTTYPE = XYLINE
+  INCLUDETEXT = NO
+  INCLUDEGEOM = NO
+  READDATAOPTION = APPEND
+  RESETSTYLE = NO
+  ASSIGNSTRANDIDS = YES
+  VARLOADMODE = BYNAME
+  VARNAMELIST = '|LFDSVL3|'
+$!REMOVEVAR |LFDSVL3|
+$!REMOVEVAR |LFDSFN3|
+$!RENAMEDATASETVAR 
+  VAR = 7
+  NAME = 'C<sub>d</sub> Error'
 $!FRAMELAYOUT 
   SHOWBORDER = NO
   SHOWHEADER = NO
+  ISTRANSPARENT = YES
   HEADERCOLOR = RED
   XYPOS
     {
@@ -73,7 +105,7 @@ $!FRAMENAME  = 'Frame 001'
 $!GLOBALTIME 
   SOLUTIONTIME = 0
 $!DELETELINEMAPS 
-$!ACTIVELINEMAPS  =  [1-15]
+$!ACTIVELINEMAPS  =  [1-18]
 $!GLOBALLINEPLOT 
   DATALABELS
     {
@@ -81,13 +113,19 @@ $!GLOBALLINEPLOT
     }
   LEGEND
     {
+    SHOW = YES
+    BOX
+      {
+      BOXTYPE = NONE
+      }
     XYPOS
       {
-      X = 95
+      X = 91.718
+      Y = 31.204
       }
     }
 $!LINEMAP  [1]
-  NAME = '&DV&'
+  NAME = 'MIT DG MOESS P1'
   ASSIGN
     {
     ZONE = 1
@@ -101,9 +139,13 @@ $!LINEMAP  [1]
     }
   SYMBOLS
     {
+    SYMBOLSHAPE
+      {
+      GEOMSHAPE = DEL
+      }
     COLOR = RED
     FILLCOLOR = RED
-    SIZE = 2
+    SIZE = 1.5
     }
   BARCHARTS
     {
@@ -114,8 +156,15 @@ $!LINEMAP  [1]
     {
     COLOR = RED
     }
+  INDICES
+    {
+    IRANGE
+      {
+      MIN = -5
+      }
+    }
 $!LINEMAP  [2]
-  NAME = 'Cd Error'
+  NAME = 'MIT DG MOESS P1'
   ASSIGN
     {
     ZONE = 2
@@ -129,9 +178,13 @@ $!LINEMAP  [2]
     }
   SYMBOLS
     {
+    SYMBOLSHAPE
+      {
+      GEOMSHAPE = DEL
+      }
     COLOR = RED
     FILLCOLOR = RED
-    SIZE = 2
+    SIZE = 1.5
     }
   BARCHARTS
     {
@@ -142,8 +195,15 @@ $!LINEMAP  [2]
     {
     COLOR = RED
     }
+  INDICES
+    {
+    IRANGE
+      {
+      MIN = -5
+      }
+    }
 $!LINEMAP  [3]
-  NAME = 'Cd Error'
+  NAME = 'MIT DG MOESS P1'
   ASSIGN
     {
     ZONE = 3
@@ -157,9 +217,13 @@ $!LINEMAP  [3]
     }
   SYMBOLS
     {
+    SYMBOLSHAPE
+      {
+      GEOMSHAPE = DEL
+      }
     COLOR = RED
     FILLCOLOR = RED
-    SIZE = 2
+    SIZE = 1.5
     }
   BARCHARTS
     {
@@ -170,8 +234,15 @@ $!LINEMAP  [3]
     {
     COLOR = RED
     }
+  INDICES
+    {
+    IRANGE
+      {
+      MIN = -5
+      }
+    }
 $!LINEMAP  [4]
-  NAME = 'Cd Error'
+  NAME = 'MIT DG MOESS P1'
   ASSIGN
     {
     ZONE = 4
@@ -185,9 +256,13 @@ $!LINEMAP  [4]
     }
   SYMBOLS
     {
+    SYMBOLSHAPE
+      {
+      GEOMSHAPE = DEL
+      }
     COLOR = RED
     FILLCOLOR = RED
-    SIZE = 2
+    SIZE = 1.5
     }
   BARCHARTS
     {
@@ -198,8 +273,15 @@ $!LINEMAP  [4]
     {
     COLOR = RED
     }
+  INDICES
+    {
+    IRANGE
+      {
+      MIN = -5
+      }
+    }
 $!LINEMAP  [5]
-  NAME = 'Cd Error'
+  NAME = 'MIT DG MOESS P1'
   ASSIGN
     {
     ZONE = 5
@@ -213,9 +295,13 @@ $!LINEMAP  [5]
     }
   SYMBOLS
     {
+    SYMBOLSHAPE
+      {
+      GEOMSHAPE = DEL
+      }
     COLOR = RED
     FILLCOLOR = RED
-    SIZE = 2
+    SIZE = 1.5
     }
   BARCHARTS
     {
@@ -226,8 +312,15 @@ $!LINEMAP  [5]
     {
     COLOR = RED
     }
+  INDICES
+    {
+    IRANGE
+      {
+      MIN = -5
+      }
+    }
 $!LINEMAP  [6]
-  NAME = 'Cd Error'
+  NAME = 'MIT DG MOESS P2'
   ASSIGN
     {
     ZONE = 6
@@ -241,9 +334,13 @@ $!LINEMAP  [6]
     }
   SYMBOLS
     {
+    SYMBOLSHAPE
+      {
+      GEOMSHAPE = DEL
+      }
     COLOR = BLUE
     FILLCOLOR = RED
-    SIZE = 2
+    SIZE = 1.5
     }
   BARCHARTS
     {
@@ -254,8 +351,15 @@ $!LINEMAP  [6]
     {
     COLOR = RED
     }
+  INDICES
+    {
+    IRANGE
+      {
+      MIN = -5
+      }
+    }
 $!LINEMAP  [7]
-  NAME = 'Cd Error'
+  NAME = 'MIT DG MOESS P2'
   ASSIGN
     {
     ZONE = 7
@@ -269,9 +373,13 @@ $!LINEMAP  [7]
     }
   SYMBOLS
     {
+    SYMBOLSHAPE
+      {
+      GEOMSHAPE = DEL
+      }
     COLOR = BLUE
     FILLCOLOR = RED
-    SIZE = 2
+    SIZE = 1.5
     }
   BARCHARTS
     {
@@ -282,8 +390,15 @@ $!LINEMAP  [7]
     {
     COLOR = RED
     }
+  INDICES
+    {
+    IRANGE
+      {
+      MIN = -5
+      }
+    }
 $!LINEMAP  [8]
-  NAME = 'Cd Error'
+  NAME = 'MIT DG MOESS P2'
   ASSIGN
     {
     ZONE = 8
@@ -297,9 +412,13 @@ $!LINEMAP  [8]
     }
   SYMBOLS
     {
+    SYMBOLSHAPE
+      {
+      GEOMSHAPE = DEL
+      }
     COLOR = BLUE
     FILLCOLOR = RED
-    SIZE = 2
+    SIZE = 1.5
     }
   BARCHARTS
     {
@@ -310,8 +429,15 @@ $!LINEMAP  [8]
     {
     COLOR = RED
     }
+  INDICES
+    {
+    IRANGE
+      {
+      MIN = -5
+      }
+    }
 $!LINEMAP  [9]
-  NAME = 'Cd Error'
+  NAME = 'MIT DG MOESS P2'
   ASSIGN
     {
     ZONE = 9
@@ -325,9 +451,13 @@ $!LINEMAP  [9]
     }
   SYMBOLS
     {
+    SYMBOLSHAPE
+      {
+      GEOMSHAPE = DEL
+      }
     COLOR = BLUE
     FILLCOLOR = RED
-    SIZE = 2
+    SIZE = 1.5
     }
   BARCHARTS
     {
@@ -338,8 +468,15 @@ $!LINEMAP  [9]
     {
     COLOR = RED
     }
+  INDICES
+    {
+    IRANGE
+      {
+      MIN = -5
+      }
+    }
 $!LINEMAP  [10]
-  NAME = 'Cd Error'
+  NAME = 'MIT DG MOESS P2'
   ASSIGN
     {
     ZONE = 10
@@ -353,9 +490,13 @@ $!LINEMAP  [10]
     }
   SYMBOLS
     {
+    SYMBOLSHAPE
+      {
+      GEOMSHAPE = DEL
+      }
     COLOR = BLUE
     FILLCOLOR = RED
-    SIZE = 2
+    SIZE = 1.5
     }
   BARCHARTS
     {
@@ -366,8 +507,15 @@ $!LINEMAP  [10]
     {
     COLOR = RED
     }
+  INDICES
+    {
+    IRANGE
+      {
+      MIN = -5
+      }
+    }
 $!LINEMAP  [11]
-  NAME = 'Cd Error'
+  NAME = 'MIT DG MOESS P3'
   ASSIGN
     {
     ZONE = 11
@@ -381,9 +529,13 @@ $!LINEMAP  [11]
     }
   SYMBOLS
     {
+    SYMBOLSHAPE
+      {
+      GEOMSHAPE = DEL
+      }
     COLOR = CUSTOM3
     FILLCOLOR = RED
-    SIZE = 2
+    SIZE = 1.5
     }
   BARCHARTS
     {
@@ -394,8 +546,15 @@ $!LINEMAP  [11]
     {
     COLOR = RED
     }
+  INDICES
+    {
+    IRANGE
+      {
+      MIN = -5
+      }
+    }
 $!LINEMAP  [12]
-  NAME = 'Cd Error'
+  NAME = 'MIT DG MOESS P3'
   ASSIGN
     {
     ZONE = 12
@@ -409,9 +568,13 @@ $!LINEMAP  [12]
     }
   SYMBOLS
     {
+    SYMBOLSHAPE
+      {
+      GEOMSHAPE = DEL
+      }
     COLOR = CUSTOM3
     FILLCOLOR = RED
-    SIZE = 2
+    SIZE = 1.5
     }
   BARCHARTS
     {
@@ -422,8 +585,15 @@ $!LINEMAP  [12]
     {
     COLOR = RED
     }
+  INDICES
+    {
+    IRANGE
+      {
+      MIN = -5
+      }
+    }
 $!LINEMAP  [13]
-  NAME = 'Cd Error'
+  NAME = 'MIT DG MOESS P3'
   ASSIGN
     {
     ZONE = 13
@@ -437,9 +607,13 @@ $!LINEMAP  [13]
     }
   SYMBOLS
     {
+    SYMBOLSHAPE
+      {
+      GEOMSHAPE = DEL
+      }
     COLOR = CUSTOM3
     FILLCOLOR = RED
-    SIZE = 2
+    SIZE = 1.5
     }
   BARCHARTS
     {
@@ -450,8 +624,15 @@ $!LINEMAP  [13]
     {
     COLOR = RED
     }
+  INDICES
+    {
+    IRANGE
+      {
+      MIN = -5
+      }
+    }
 $!LINEMAP  [14]
-  NAME = 'Cd Error'
+  NAME = 'MIT DG MOESS P3'
   ASSIGN
     {
     ZONE = 14
@@ -465,9 +646,13 @@ $!LINEMAP  [14]
     }
   SYMBOLS
     {
+    SYMBOLSHAPE
+      {
+      GEOMSHAPE = DEL
+      }
     COLOR = CUSTOM3
     FILLCOLOR = RED
-    SIZE = 2
+    SIZE = 1.5
     }
   BARCHARTS
     {
@@ -478,8 +663,15 @@ $!LINEMAP  [14]
     {
     COLOR = RED
     }
+  INDICES
+    {
+    IRANGE
+      {
+      MIN = -5
+      }
+    }
 $!LINEMAP  [15]
-  NAME = 'Cd Error'
+  NAME = 'MIT DG MOESS P3'
   ASSIGN
     {
     ZONE = 15
@@ -493,9 +685,13 @@ $!LINEMAP  [15]
     }
   SYMBOLS
     {
+    SYMBOLSHAPE
+      {
+      GEOMSHAPE = DEL
+      }
     COLOR = CUSTOM3
     FILLCOLOR = RED
-    SIZE = 2
+    SIZE = 1.5
     }
   BARCHARTS
     {
@@ -505,6 +701,100 @@ $!LINEMAP  [15]
   ERRORBARS
     {
     COLOR = RED
+    }
+  INDICES
+    {
+    IRANGE
+      {
+      MIN = -5
+      }
+    }
+$!LINEMAP  [16]
+  NAME = '&ZN&'
+  ASSIGN
+    {
+    ZONE = 16
+    XAXISVAR = 6
+    YAXISVAR = 7
+    SHOWINLEGEND = NEVER
+    }
+  LINES
+    {
+    COLOR = BLACK
+    LINETHICKNESS = 0.4
+    }
+  SYMBOLS
+    {
+    SHOW = NO
+    COLOR = CUSTOM1
+    FILLCOLOR = CUSTOM1
+    }
+  BARCHARTS
+    {
+    COLOR = CUSTOM1
+    FILLCOLOR = CUSTOM1
+    }
+  ERRORBARS
+    {
+    COLOR = CUSTOM1
+    }
+$!LINEMAP  [17]
+  NAME = '&ZN&'
+  ASSIGN
+    {
+    ZONE = 17
+    XAXISVAR = 6
+    YAXISVAR = 7
+    SHOWINLEGEND = NEVER
+    }
+  LINES
+    {
+    COLOR = BLACK
+    LINETHICKNESS = 0.4
+    }
+  SYMBOLS
+    {
+    SHOW = NO
+    COLOR = CUSTOM1
+    FILLCOLOR = CUSTOM1
+    }
+  BARCHARTS
+    {
+    COLOR = CUSTOM1
+    FILLCOLOR = CUSTOM1
+    }
+  ERRORBARS
+    {
+    COLOR = CUSTOM1
+    }
+$!LINEMAP  [18]
+  NAME = '&ZN&'
+  ASSIGN
+    {
+    ZONE = 18
+    XAXISVAR = 6
+    YAXISVAR = 7
+    SHOWINLEGEND = NEVER
+    }
+  LINES
+    {
+    COLOR = BLACK
+    LINETHICKNESS = 0.4
+    }
+  SYMBOLS
+    {
+    SHOW = NO
+    COLOR = CUSTOM1
+    FILLCOLOR = CUSTOM1
+    }
+  BARCHARTS
+    {
+    COLOR = CUSTOM1
+    FILLCOLOR = CUSTOM1
+    }
+  ERRORBARS
+    {
+    COLOR = CUSTOM1
     }
 $!XYLINEAXIS 
   DEPXTOYRATIO = 1
@@ -523,9 +813,85 @@ $!XYLINEAXIS
     RANGEMIN = 1.0000000000000000623E-09
     RANGEMAX = 0.025000000000000001388
     GRSPACING = 0.005
+    TITLE
+      {
+      OFFSET = 8
+      }
     }
 $!LINEPLOTLAYERS 
   SHOWSYMBOLS = YES
+$!ATTACHTEXT 
+  ANCHORPOS
+    {
+    X = 25.38790797217764
+    Y = 61.47672552166935
+    }
+  TEXTSHAPE
+    {
+    ISBOLD = NO
+    }
+  TEXT = '2'
+$!ATTACHTEXT 
+  ANCHORPOS
+    {
+    X = 23.67576243980738
+    Y = 38.8443017656501
+    }
+  TEXTSHAPE
+    {
+    ISBOLD = NO
+    }
+  TEXT = '4'
+$!ATTACHTEXT 
+  ANCHORPOS
+    {
+    X = 25.95862314963438
+    Y = 22.95345104333868
+    }
+  TEXTSHAPE
+    {
+    ISBOLD = NO
+    }
+  TEXT = '6'
+$!ATTACHGEOM 
+  ANCHORPOS
+    {
+    X = 0.004091242462719073
+    Y = 2.911503170209986E-05
+    }
+  LINETHICKNESS = 0.4
+  RAWDATA
+1
+3
+1.79604212462E-05 5.27245402285E-13 
+-1.34432895371E-10 1.87502901099E-05 
+0.00122981879395 1.87502901099E-05 
+$!ATTACHGEOM 
+  ANCHORPOS
+    {
+    X = 0.003950355194808022
+    Y = 2.167323456220827E-07
+    }
+  LINETHICKNESS = 0.4
+  RAWDATA
+1
+3
+0 0 
+0 1.5245696261E-07 
+0.000574555888306 1.5245696261E-07 
+$!ATTACHGEOM 
+  ANCHORPOS
+    {
+    X = 0.004312050370190134
+    Y = 5.395947717279067E-09
+    }
+  LINETHICKNESS = 0.4
+  RAWDATA
+1
+3
+0 0 
+0 4.47221948363E-09 
+0.000478010566439 4.47221948363E-09 
 $!FRAMECONTROL ACTIVATEBYNUMBER
   FRAME = 1
 $!SETSTYLEBASE CONFIG
